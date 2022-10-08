@@ -1,3 +1,6 @@
+/**
+ * Het onderdeel dat zich bezighoud met de server verbinding
+ */
 public class Connection extends Game {
     public Connection(){
 

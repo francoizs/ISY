@@ -1,3 +1,8 @@
+/**
+ * Het spel zelf
+ * @version 0.2
+ */
+
 import java.util.Scanner;
 
 public class Game extends Main{
@@ -11,7 +16,8 @@ public class Game extends Main{
     }
 
     /**
-     * Shows the menu of the game (interface).
+     * Shows the startup menu of the game and allows you to pick the neccesary settings (interface).
+     * @author Anton Bijker
      */
     public static void gamestartmenu(){
         Player player1=null;
@@ -42,6 +48,13 @@ public class Game extends Main{
         movemenu(player1,player2);
 
     }
+
+    /**
+     * speelt het spel en vraagt moves aan van spelers  (mist nog wel een manier om te weten wanneer het spel over is)
+     * @author Anton Bijker
+     * @param player1 de 2 spelers die het spelen
+     * @param player2 de 2 spelers die het spelen     *
+     */
 
     public static void movemenu(Player player1, Player player2){
         Board newboard = new Board(3,3);

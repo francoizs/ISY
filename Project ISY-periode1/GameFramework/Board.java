@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Het spel zelf
+ * @version 0.2
+ */
 public class Board extends Game{
 
     private char board[][] ; // char datatype gebruikt omdat de speler zal  alleen maar 1 char gebruiken, namelijk 'X' of 'O'
