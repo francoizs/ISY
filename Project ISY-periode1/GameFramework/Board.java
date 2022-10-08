@@ -71,6 +71,7 @@ public class Board{
 
     /**
      * Adds a move to the board.
+     * @authur Ihab Al-Safadi
      */
 
     public int[] coordinate(int position){
