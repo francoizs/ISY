@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Het spel zelf
+ * Het spelbord en alles wat daarmee gebeurt
  * @version 0.2
  */
 public class Board extends Game{

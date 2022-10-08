@@ -1,9 +1,9 @@
-/**
- * Het spel zelf
- * @version 0.2
- */
 
 import java.util.Scanner;
+/**
+* Het spel zelf
+* @version 0.2
+*/
 
 public class Game extends Main{
     public Game(){
