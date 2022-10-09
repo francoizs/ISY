@@ -19,7 +19,8 @@ public class Game extends Main{
      * Shows the startup menu of the game and allows you to pick the neccesary settings (interface).
      * @author Anton Bijker
      */
-    public static void gamestartmenu(){
+    public static void gamestartmenu() {
+        // Connection connection = new Connection();
         Player player1=null;
         Player player2=null;
         Scanner in = new Scanner(System.in);
