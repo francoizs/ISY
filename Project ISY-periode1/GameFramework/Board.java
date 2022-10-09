@@ -121,9 +121,14 @@ public class Board extends Game{
     /**
      * Checks whether the board is full or not.
      * @return true or false
+     * @author Ihab Al-Safadi
      */
     public boolean isFull(){
-        boolean placeHolder = false;
-        return placeHolder;
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                if(board[row][col] == ' ') {return false;}
+            }
+        }
+        return true;
     }
 }
