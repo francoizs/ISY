@@ -35,7 +35,7 @@ public class Board extends Game{
     /**
      *
      * @return
-     * @authur Ihab Al-Safadi
+     * @author Ihab Al-Safadi
      */
 
     public  String toString(){
@@ -69,14 +69,15 @@ public class Board extends Game{
 
     /**
      * Clears the board without needing a new board.
+     * @author Francois Dieleman
      */
-    public char[][] clear(char board[][]) {
+    
+    public void clear() {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 board[row][col] = ' ';
             }
         }
-        return board;
     }
 
     /**
@@ -107,7 +108,7 @@ public class Board extends Game{
          */
                 int[] coordinates = coordinate(position);
                 if(board[coordinates[0]][coordinates[1]] ==' '){board[coordinates[0]][coordinates[1]] = teken;}
-                else {System.out.println("Dit plek is niet beschikbaar");}
+                else {System.out.println("Deze plek is niet beschikbaar");}
             }
 
     /**
