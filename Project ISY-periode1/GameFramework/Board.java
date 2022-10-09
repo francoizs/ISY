@@ -37,7 +37,7 @@ public class Board{
     public  String toString(){
         /**
         //Representation of the board, bij deze methode wordt de inhoud van de Board object omgezet naar String datatype.
-         Bovenden deze methode maakt de grens voor de board.
+         Bovendien maakt deze methode de grens voor de board.
          */
 
         StringBuilder grens = new StringBuilder() ;
@@ -66,7 +66,13 @@ public class Board{
     /**
      * Clears the board without needing a new board.
      */
-    public void clear(){
+    public char[][] clear(char board[][]) {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                board[row][col] = ' ';
+            }
+        }
+        return board;
     }
 
     /**
