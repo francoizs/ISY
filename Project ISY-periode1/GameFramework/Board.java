@@ -33,6 +33,24 @@ public class Board extends Game{
     }
 
     /**
+     * Geef de breedte van het bord
+     * @return width
+     * @author Aaldert Kroes
+     */
+    public int getWidth(){
+        return this.width;
+    }
+
+    /**
+     * Geef de hoogte van het bord
+     * @return height
+     * @author Aaldert Kroes
+     */
+    public int getHeight(){
+        return this.height;
+    }
+
+    /**
      *
      * @return
      * @author Ihab Al-Safadi

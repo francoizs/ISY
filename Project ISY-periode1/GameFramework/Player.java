@@ -22,5 +22,22 @@ public class Player extends Game
         this.piece=piece;
     }
 
+    /**
+     * Getter voor playernumber
+     * @return playernumber
+     * @author Aaldert Kroes
+     */
+    public int getPlayernumber(){
+        return this.playernumber;
+    }
+
+    /**
+     * Getter voor piece
+     * @return piece
+     * @author Aaldert Kroes
+     */
+    public char getPiece(){
+        return this.piece;
+    }
 
 }
