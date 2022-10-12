@@ -20,7 +20,7 @@ public class Game extends Main{
      * @author Anton Bijker
      */
     public static void gamestartmenu() {
-        // Connection connection = new Connection();
+        Connection connection = new Connection();
         Player player1=null;
         Player player2=null;
         Scanner in = new Scanner(System.in);

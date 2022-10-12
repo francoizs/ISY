@@ -1,5 +1,7 @@
+
 /**
  * Het onderdeel dat zich bezighoud met de server verbinding
+ * java -jar newgameserver-*VERSION*.jar
  */
 import java.net.*;
 import java.io.*;
@@ -12,6 +14,8 @@ public class Connection extends Game {
     private InputStreamReader inputReader;
     private PrintWriter output;
     private OutputStreamWriter outputWriter;
+    private BufferedReader scanner;
+    private InputStreamReader scannerReader;
 
 
     /**
@@ -24,74 +28,52 @@ public class Connection extends Game {
         try
         {
             socket = new Socket(HOST, PORT);
-
-        }
-        catch(UnknownHostException u)
-        {
-            System.out.println(u);
-        }
-        catch(IOException i)
-        {
-            System.out.println(i);
-        }
-        // tijdelijke methode om te testen
-        while (true) {
-            String recieved = receive();
-            System.out.println(recieved);
-            if (recieved.contains("New Game Server")) {
-                send("login *onze groep*");
-            }
-            if (recieved.contains("WIN") || recieved.contains("LOSS") || recieved.contains("DRAW")) {
-                break;
-            }
-            
-        }
-        
-
-        // close the connection
-        try
-        {
-            input.close();
-            inputReader.close();
-            socket.close();
-        }
-        catch(IOException i)
-        {
-            System.out.println(i);
-        }
-    }
-
-    /**
-     * Sends a message to the server.
-     * @author Francois Dieleman
-     */
-    public void send(String message) {
-        try {
-            outputWriter = new OutputStreamWriter(socket.getOutputStream());
-            output = new PrintWriter(outputWriter, true);
-            output.println(message);
-
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-    }
-
-    /**
-     * Expects an answer from the server.
-     * @author Francois Dieleman
-     */
-    public String receive() {
-        String message = "";
-        try {
             inputReader = new InputStreamReader(socket.getInputStream());
             input = new BufferedReader(inputReader);
-            message = input.readLine();
+            outputWriter = new OutputStreamWriter(socket.getOutputStream());
+            output = new PrintWriter(outputWriter, true);
+            scanner = new BufferedReader(new InputStreamReader(System.in));
+            scannerReader = new InputStreamReader(System.in);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            int counter = 0;
+
+        
+            // tijdelijke methode om te testentry {
+                
+            while (true) {
+            try{
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+                while (input.ready()) {
+                    String line = input.readLine();
+                    System.out.println(line);
+                    counter++;
+                    if (counter == 2) {
+                        String message = scanner.readLine();
+                        output.println(message);
+
+                    }
+                    else if (line.contains("YOURTURN")) {
+                        String message = scanner.readLine();
+                        output.println(message);
+                    }
+                    else if (line.contains("ERR")) {
+                        String message = scanner.readLine();
+                        output.println(message);
+                    }
+                    else if (line.contains("WIN") || line.contains("LOSE") || line.contains("DRAW")) {
+                        // System.exit(0);
+                    }
+                }
+            }
         }
-        return message;
-    }   
+        catch (IOException e)
+        {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    
 }
