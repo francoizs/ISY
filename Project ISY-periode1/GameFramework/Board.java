@@ -120,6 +120,96 @@ public class Board extends Game{
         return coordinate;
     }
     
+    
+    /**
+     * 
+     * @param piecs
+     * @return
+     * @authur Ihab Al-Safadi
+     */
+
+    public Boolean win(char piecs){
+        return winHorizontal(piecs) || winvertical(piecs) || winDiagonalLinks(piecs) || winDiagonalRight(piecs);
+    }
+
+    /**
+     *
+     * @param piecs // Dit wordt toegevoergd vanuit de game class bv X en O.
+     * @return
+     * @authur Ihab Al-Safadi
+     */
+
+    public Boolean winvertical(char piecs){
+
+        String winner = "";
+        for(int row = 0; row < this.height-2; row++){
+            for(int col = 0; col < this.width; col++){
+                if(board[row][col] == piecs
+                        && board[row+1][col] == piecs
+                        && board[row+2][col] == piecs){ return true;}
+            }
+        }
+        return false;
+    }
+
+    /***
+     *
+     * @param piecs
+     * @return
+     * @authur Ihab Al-Safadi
+     */
+    public Boolean winHorizontal(char piecs){
+
+        String winner = "";
+        for(int row = 0; row < this.height; row++){
+            for(int col = 0; col < this.width-2; col++){
+                 if(board[row][col] == piecs &&
+                        board[row][col+1] == piecs &&
+                        board[row][col+2] == piecs){return true;}
+            }
+        }
+        return false;
+    }
+
+    /***
+     *
+     * @param piecs
+     * @return
+     * @authur Ihab Al-Safadi
+     */
+    public Boolean winDiagonalLinks(char piecs){
+
+        String winner = "";
+        for(int row = 0; row < this.height-2; row++){
+            for(int col = 0; col < this.width-2; col++){
+                 if(board[row][col] == piecs &&
+                        board[row+1][col+1] == piecs &&
+                        board[row+2][col+2] == piecs){return true;}
+            }
+        }
+        return false;
+    }
+
+    /***
+     * @authur Ihab Al-Safadi
+     * @param piecs
+     * @return
+     */
+
+    public Boolean winDiagonalRight(char piecs){
+
+        String winner = "";
+        for(int row = 0; row < this.height-2; row++){
+            for(int col = 0; col < this.width-2; col++){
+                 if(board[row][this.width-1] == piecs &&
+                        board[row+1][this.width -2] == piecs &&
+                        board[row+2][this.width -3] == piecs){return true;}
+            }
+        }
+        return false;
+    }
+
+    
     public void add(char teken, int position){
         /**
          * voeg een zet toe aan het baord
