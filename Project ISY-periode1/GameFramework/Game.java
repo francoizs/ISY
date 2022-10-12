@@ -63,15 +63,20 @@ public class Game extends Main{
         int move=0;
         int move2=0;
         Scanner in = new Scanner(System.in);
-        //while (!Board.win)
+        while (!newboard.isFull()){
             System.out.println("Speler 1 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
             move = in.nextInt();
             newboard.add(player1.piece,move);
             System.out.println(newboard);
+            if (newboard.win(player1.piece)) {System.out.println("Speler 1 is de winnaar!");break;}
+            if (newboard.isFull()) break;
             System.out.println("Speler 2 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
             move2 = in.nextInt();
             newboard.add(player2.piece,move2);
             System.out.println(newboard);
+            if (newboard.win(player2.piece)){
+                System.out.println("Speler 2 is de winnaar!"); break; }}
+        if (newboard.isFull()) System.out.println("het bord is vol, gelijkspel!");;
 
     }
     /**

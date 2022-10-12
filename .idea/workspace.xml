@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="438c8d43-7a03-499a-b91f-035ba1f7a5fd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Gametest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project ISY-periode1/GameFramework/Gametest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +32,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/anton/OneDrive/Documenten/GitHub/ISY"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
