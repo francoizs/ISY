@@ -3,7 +3,7 @@
  * @author Aaldert Kroes
  * @version 1.0
  */
-/*
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,4 +57,3 @@ public class Gametest {
         //assertEquals('X', player2.getPiece());        <- Geeft fout: juist
     }
 }
-*/

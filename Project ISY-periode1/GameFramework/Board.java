@@ -129,7 +129,7 @@ public class Board extends Game{
      */
 
     public Boolean win(char piecs){
-        return winHorizontal(piecs) || winvertical(piecs) || winDiagonalLinks(piecs) || winDiagonalRight(piecs);
+        return winHorizontal(piecs) || winvertical(piecs) || winDiagonalLeft(piecs) || winDiagonalRight(piecs);
     }
 
     /**
@@ -175,7 +175,7 @@ public class Board extends Game{
      * @return
      * @authur Ihab Al-Safadi
      */
-    public Boolean winDiagonalLinks(char piecs){
+    public Boolean winDiagonalLeft(char piecs){
 
         for(int row = 0; row < this.height-2; row++){
             for(int col = 0; col < this.width-2; col++){
@@ -183,6 +183,7 @@ public class Board extends Game{
                         board[row+1][col+1] == piecs &&
                         board[row+2][col+2] == piecs){return true;}
             }
+
         }
         return false;
     }
