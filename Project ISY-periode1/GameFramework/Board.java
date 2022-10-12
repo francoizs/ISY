@@ -140,8 +140,7 @@ public class Board extends Game{
      */
 
     public Boolean winvertical(char piecs){
-
-        String winner = "";
+        
         for(int row = 0; row < this.height-2; row++){
             for(int col = 0; col < this.width; col++){
                 if(board[row][col] == piecs
@@ -160,7 +159,6 @@ public class Board extends Game{
      */
     public Boolean winHorizontal(char piecs){
 
-        String winner = "";
         for(int row = 0; row < this.height; row++){
             for(int col = 0; col < this.width-2; col++){
                  if(board[row][col] == piecs &&
@@ -179,7 +177,6 @@ public class Board extends Game{
      */
     public Boolean winDiagonalLinks(char piecs){
 
-        String winner = "";
         for(int row = 0; row < this.height-2; row++){
             for(int col = 0; col < this.width-2; col++){
                  if(board[row][col] == piecs &&
@@ -198,7 +195,6 @@ public class Board extends Game{
 
     public Boolean winDiagonalRight(char piecs){
 
-        String winner = "";
         for(int row = 0; row < this.height-2; row++){
             for(int col = 0; col < this.width-2; col++){
                  if(board[row][this.width-1] == piecs &&
