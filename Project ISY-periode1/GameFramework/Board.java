@@ -55,7 +55,7 @@ public class Board extends Game{
      * @return
      * @author Ihab Al-Safadi
      */
-
+    @Override
     public  String toString(){
         /**
         //Representation of the board, bij deze methode wordt de inhoud van de Board object omgezet naar String datatype.
