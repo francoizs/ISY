@@ -3,7 +3,7 @@
  * @author Anton Bijker
  * @version 1.0
  */
-public class Player extends Game
+public class Player
 {
     boolean isAI;
     int playernumber;
