@@ -121,6 +121,16 @@ public class Board extends Game{
     }
     
     
+     public boolean allowMove(int position){
+        
+        int[] check_coordinate = coordinate(position); // retrieve the coordinate
+        if(board[check_coordinate[0]][check_coordinate[1]] != ' '){return false;}
+        return true;
+    }
+    
+    
+    
+    
     /**
      * 
      * @param piecs
