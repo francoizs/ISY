@@ -66,12 +66,14 @@ public class Game extends Main{
         while (!newboard.isFull()){
             System.out.println("Speler 1 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
             move = in.nextInt();
+            while(!newboard.allowMove(move)){System.out.println("plek is bezit probeer opnieuw"); move = in.nextInt();}
             newboard.add(player1.piece,move);
             System.out.println(newboard);
             if (newboard.win(player1.piece)) {System.out.println("Speler 1 is de winnaar!");break;}
             if (newboard.isFull()) break;
             System.out.println("Speler 2 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
             move2 = in.nextInt();
+            while(!newboard.allowMove(move2)){System.out.println("plek is bezit probeer opnieuw"); move2 = in.nextInt();}
             newboard.add(player2.piece,move2);
             System.out.println(newboard);
             if (newboard.win(player2.piece)){
