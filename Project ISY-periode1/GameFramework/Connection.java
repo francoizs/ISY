@@ -5,7 +5,6 @@
  */
 import java.net.*;
 import java.io.*;
-
 /**
 * de class die de connectie legt met de server
 * @version 0.2
@@ -14,7 +13,9 @@ import java.io.*;
 public class Connection extends Game {
 
     public static final int PORT = 7789; // de poort waarop de server luistert
-    public static final String HOST = "145.33.225.170"; // het ip adres van de server
+    public static final String HOST = "localhost"; // het ip adres van de server
+
+    public static String userName;
 
     static Socket socket; // maakt de socket voor de verbinding
     {
@@ -82,9 +83,13 @@ public class Connection extends Game {
     public void run(){ // de run methode die de commando's naar de server stuurt
         try
         { // try catch voor de input
+            System.out.println("Welkom! Voer je naam in:"); // vraagt de naam van de speler
+            userName = stdIn.readLine(); // leest de naam van de speler
             String CLIinput; // maakt de string voor de input
             Recieve reciever = new Recieve(); // maakt de reciever voor de input
             reciever.start(); // start de reciever
+            output.println("login " + userName); // stuurt de naam naar de server
+
             while (true) { // een while loop die de commando's naar de server stuurt
                 if ((CLIinput = stdIn.readLine()) != null) { // als de input niet leeg is
                     output.println(CLIinput); // stuur de input naar de server
@@ -102,15 +107,40 @@ public class Connection extends Game {
 
 /**
 * de class die de alles leest van de server
-* @version 0.1
+* @version 0.3
 * @author Francois Dieleman
 */
 class Recieve extends Thread { // maakt de reciever voor de input
     public void run() { // de run methode die de input van de server leest
         try { // try catch voor de input
+            Board board = null; // maakt het bord
             while (true) { // een while loop die de input van de server leest
+
                 if (Connection.input.ready()) { // als de input niet leeg is
-                    System.out.println(Connection.input.readLine()); // print de input
+                    String input = Connection.input.readLine(); // maakt de string voor de input
+                    System.out.println(input); // print de input
+//                    SVR GAME MOVE {PLAYER: "frans", MOVE: "1", DETAILS: ""}
+
+                    if (input.contains("SVR GAME MATCH")) {
+                        String[] parsed = input.split(" ");
+                        String gametype = parsed[6].replace("\"", "").replace(",", "");
+                        if (gametype.equals("Tic-tac-toe")) {
+                            board = new Board(3, 3);
+                        }
+                    }
+
+                    if (input.contains("SVR GAME MOVE")) {
+                        String[] parsed = input.split(" ");
+                        String player = parsed[4].replace("\"", "").replace(",", "");
+                        int move = Integer.parseInt(parsed[6].replace("\"", "").replace(",", ""));
+                        assert board != null;
+                        if (player.equals(Connection.userName)) {
+                            board.add('X', move);
+                        } else {
+                            board.add('O', move);
+                        }
+                        System.out.println(board);
+                    }
                 }
             }
         } catch (IOException e) { // catch voor de input

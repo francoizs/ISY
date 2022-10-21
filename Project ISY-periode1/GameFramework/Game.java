@@ -21,6 +21,7 @@ public class Game extends Main{
      */
     public static void gamestartmenu() {
         Connection connection = new Connection();
+        connection.run();
         Player player1=null;
         Player player2=null;
         Scanner in = new Scanner(System.in);
