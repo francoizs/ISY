@@ -119,7 +119,12 @@ public class Board extends Game{
 
         return coordinate;
     }
-    
+     /**
+     *
+     * @param position
+     * @return
+     * @authur Ihab Al-Safadi
+     */
     
      public boolean allowMove(int position){
         
