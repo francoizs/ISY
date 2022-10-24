@@ -21,11 +21,15 @@ public class Game extends Main{
      * @author Anton Bijker
      */
     public static void gamestartmenu() {
-//        Connection connection = new Connection();
-//        connection.run();
+        Scanner in = new Scanner(System.in);
+        System.out.println("Wilt u via de server spelen of lokaal? (server/lokaal)");
+        String answer = in.nextLine();
+        if (answer.equals("server")) {
+            Connection connection = new Connection();
+            connection.run();
+        }
         Player player1=null;
         Player player2=null;
-        Scanner in = new Scanner(System.in);
         System.out.println("Welkom bij Tictactoe!");
         String isAI = " ";
         while (!isAI.equals("n") && !isAI.equals("y")){      // Voor nu alleen implementatie voor non-AI dus y is hier geen goed antwoord

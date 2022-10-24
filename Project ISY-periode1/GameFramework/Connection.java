@@ -13,7 +13,7 @@ import java.io.*;
 public class Connection extends Game {
 
     public static final int PORT = 7789; // de poort waarop de server luistert
-    public static final String HOST = "localhost"; // het ip adres van de server
+    public static final String HOST = "localhost"; // het IP-adres van de server
 
     public static String userName;
 
@@ -21,9 +21,6 @@ public class Connection extends Game {
     {
             try {
                 socket = new Socket(HOST, PORT);
-            } catch (UnknownHostException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -121,25 +118,25 @@ class Recieve extends Thread { // maakt de reciever voor de input
                     System.out.println(input); // print de input
 //                    SVR GAME MOVE {PLAYER: "frans", MOVE: "1", DETAILS: ""}
 
-                    if (input.contains("SVR GAME MATCH")) {
-                        String[] parsed = input.split(" ");
-                        String gametype = parsed[6].replace("\"", "").replace(",", "");
-                        if (gametype.equals("Tic-tac-toe")) {
-                            board = new Board(3, 3);
+                    if (input.contains("SVR GAME MATCH")) { // als de input een match is
+                        String[] parsed = input.split(" "); // split de input
+                        String gametype = parsed[6].replace("\"", "").replace(",", ""); // maakt de string voor het speltype
+                        if (gametype.equals("Tic-tac-toe")) { // als het speltype tic-tac-toe is
+                            board = new Board(3, 3); // maakt het bord
                         }
                     }
 
-                    if (input.contains("SVR GAME MOVE")) {
-                        String[] parsed = input.split(" ");
-                        String player = parsed[4].replace("\"", "").replace(",", "");
-                        int move = Integer.parseInt(parsed[6].replace("\"", "").replace(",", ""));
-                        assert board != null;
-                        if (player.equals(Connection.userName)) {
-                            board.add('X', move);
-                        } else {
-                            board.add('O', move);
+                    if (input.contains("SVR GAME MOVE")) { // als de input een move is
+                        String[] parsed = input.split(" "); // split de input
+                        String player = parsed[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler
+                        int move = Integer.parseInt(parsed[6].replace("\"", "").replace(",", "")); // maakt de int voor de move
+                        assert board != null; // zorgt dat het bord niet leeg is
+                        if (player.equals(Connection.userName)) { // als de speler de speler is
+                            board.add('X', move); // voegt de X toe aan het bord
+                        } else { // als de speler de tegenstander is
+                            board.add('O', move); // voegt de O toe aan het bord
                         }
-                        System.out.println(board);
+                        System.out.println(board); // print het bord
                     }
                 }
             }
