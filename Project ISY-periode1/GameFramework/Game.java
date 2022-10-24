@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 /**
 * Het spel zelf
@@ -20,14 +21,14 @@ public class Game extends Main{
      * @author Anton Bijker
      */
     public static void gamestartmenu() {
-        Connection connection = new Connection();
-        connection.run();
+//        Connection connection = new Connection();
+//        connection.run();
         Player player1=null;
         Player player2=null;
         Scanner in = new Scanner(System.in);
         System.out.println("Welkom bij Tictactoe!");
         String isAI = " ";
-        while (!isAI.equals("n")){      // Voor nu alleen implementatie voor non-AI dus y is hier geen goed antwoord
+        while (!isAI.equals("n") && !isAI.equals("y")){      // Voor nu alleen implementatie voor non-AI dus y is hier geen goed antwoord
             System.out.println("Is de eerste speler een AI? y/n");
             isAI= in.nextLine();}
         if (isAI.equals("n")){
@@ -37,7 +38,7 @@ public class Game extends Main{
             player1 = new Player(1,true,'X');
         }
         String isAI2="";
-        while (!isAI2.equals("n")){      // Voor nu alleen implementatie voor non-AI dus y is hier geen goed antwoord
+        while (!isAI2.equals("n") && !isAI2.equals("y")){      // Voor nu alleen implementatie voor non-AI dus y is hier geen goed antwoord
             System.out.println("Is de tweede speler een AI? y/n");
             isAI2= in.nextLine();}
         if (isAI2.equals("n")){
@@ -61,25 +62,48 @@ public class Game extends Main{
     public static void movemenu(Player player1, Player player2){
         Board newboard = new Board(3,3);
         System.out.println(newboard);
+        ArrayList<Integer> movesPlayer1 = new ArrayList<Integer>();
+        ArrayList<Integer> movesPlayer2 = new ArrayList<Integer>();
         int move=0;
         int move2=0;
         Scanner in = new Scanner(System.in);
         while (!newboard.isFull()){
-            System.out.println("Speler 1 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
-            move = in.nextInt();
-            while(!newboard.allowMove(move)){System.out.println("plek is bezit probeer opnieuw"); move = in.nextInt();}
-            newboard.add(player1.piece,move);
+            if (player1.isAI) {
+                move = AI.TicTacToeAI1(movesPlayer2, movesPlayer1);
+                newboard.add(player1.piece, move);
+                movesPlayer1.add(move);
+            } else {
+                System.out.println("Speler 1 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
+                move = in.nextInt();
+                while (!newboard.allowMove(move)) {
+                    System.out.println("plek is bezet probeer opnieuw");
+                    move = in.nextInt();
+                }
+                newboard.add(player1.piece, move);
+                movesPlayer1.add(move);
+            }
             System.out.println(newboard);
             if (newboard.win(player1.piece)) {System.out.println("Speler 1 is de winnaar!");break;}
             if (newboard.isFull()) break;
-            System.out.println("Speler 2 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
-            move2 = in.nextInt();
-            while(!newboard.allowMove(move2)){System.out.println("plek is bezit probeer opnieuw"); move2 = in.nextInt();}
-            newboard.add(player2.piece,move2);
+            if (player2.isAI) {
+                move2 = AI.TicTacToeAI2(movesPlayer1, movesPlayer2);
+                newboard.add(player2.piece, move2);
+                movesPlayer2.add(move2);
+            } else {
+                System.out.println("Speler 2 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
+                move2 = in.nextInt();
+                while (!newboard.allowMove(move2)) {
+                    System.out.println("plek is bezet probeer opnieuw");
+                    move2 = in.nextInt();
+                }
+                newboard.add(player2.piece, move2);
+                movesPlayer2.add(move2);
+            }
             System.out.println(newboard);
             if (newboard.win(player2.piece)){
-                System.out.println("Speler 2 is de winnaar!"); break; }}
-        if (newboard.isFull()) System.out.println("het bord is vol, gelijkspel!");;
+                System.out.println("Speler 2 is de winnaar!"); break; }
+        }
+        if (newboard.isFull() && !newboard.win(player1.piece) && !newboard.win(player2.piece)) System.out.println("het bord is vol, gelijkspel!");;
 
     }
     /**

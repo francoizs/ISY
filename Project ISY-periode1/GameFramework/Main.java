@@ -1,7 +1,7 @@
 /**
  * Project intelligente Systemen
  * @version 0.2
- * @author Ihab Al-Safadi, Anton Bijker, Aaldert Kroes (voeg je eigen naam toe als je dit leest)
+ * @author Ihab Al-Safadi, Anton Bijker, Aaldert Kroes, Mart de Vries (voeg je eigen naam toe als je dit leest)
  */
 public class Main {
 

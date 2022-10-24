@@ -39,5 +39,4 @@ public class Player
     public char getPiece(){
         return this.piece;
     }
-
 }
