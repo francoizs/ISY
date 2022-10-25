@@ -1,7 +1,7 @@
-
 /**
  * Het onderdeel dat zich bezighoud met de server verbinding
  * java -jar newgameserver-*VERSION*.jar
+ * 145.33.225.170
  */
 import java.net.*;
 import java.io.*;
@@ -38,7 +38,7 @@ public class Connection extends Game {
     static InputStreamReader inputReader; // maakt de lezer die de data van de server krijgt
     {
         try {
-            inputReader = new InputStreamReader(socket.getInputStream()); 
+            inputReader = new InputStreamReader(socket.getInputStream());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -47,7 +47,7 @@ public class Connection extends Game {
     static PrintWriter output; // maakt de schrijver voor de commando's naar de server
     {
             try {
-                output = new PrintWriter(socket.getOutputStream(), true); 
+                output = new PrintWriter(socket.getOutputStream(), true);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -90,8 +90,8 @@ public class Connection extends Game {
             while (true) { // een while loop die de commando's naar de server stuurt
                 if ((CLIinput = stdIn.readLine()) != null) { // als de input niet leeg is
                     output.println(CLIinput); // stuur de input naar de server
-                } 
-            } 
+                }
+            }
         }
         catch (IOException e) // catch voor de input
         {
@@ -99,7 +99,7 @@ public class Connection extends Game {
         }
     }
 
-    
+
 }
 
 /**
@@ -116,7 +116,6 @@ class Recieve extends Thread { // maakt de reciever voor de input
                 if (Connection.input.ready()) { // als de input niet leeg is
                     String input = Connection.input.readLine(); // maakt de string voor de input
                     System.out.println(input); // print de input
-//                    SVR GAME MOVE {PLAYER: "frans", MOVE: "1", DETAILS: ""}
 
                     if (input.contains("SVR GAME MATCH")) { // als de input een match is
                         String[] parsed = input.split(" "); // split de input
