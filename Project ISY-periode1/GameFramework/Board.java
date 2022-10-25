@@ -234,8 +234,10 @@ public class Board extends Game{
     /**
      * Removes a move from the board.
      */
-    public void remove(){
-
+    public void remove(char teken, int position){
+        int[] coordinates = coordinate(position);
+        if(board[coordinates[0]][coordinates[1]] !=' '){board[coordinates[0]][coordinates[1]] = ' ';}
+        else {System.out.println("Deze plek is niet beschikbaar");}
     }
 
     /**

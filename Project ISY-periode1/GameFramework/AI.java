@@ -1,193 +1,67 @@
-import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  * AI for tic-tac-toe and Othello
- * @author Mart de Vries
- * @version 1.0
+ * @author Mart de Vries, Aaldert Kroes
+ * @version 1.1
  */
-public class AI{
+public class AI extends Player{
 
-    /**
-     * AI tic-tac-toe first player
-     * @param movesopponent all moves done by the opponent
-     * @param ownmoves all moves done by itself
-     * @return move AI as first player (tic-tac-toe)
-     * @author Mart de Vries
-     */
-    public static int TicTacToeAI1(ArrayList<Integer> movesopponent, ArrayList<Integer> ownmoves) {
-        int moveAI = 0;
-        if (movesopponent.size() == 0 && ownmoves.size() == 0) {
-            moveAI = 1;
-        } else {
-            if (movesopponent.size() == 1 && ownmoves.size() == 1) {
-                if (movesopponent.contains(5) && !ownmoves.contains(3)) {
-                    moveAI = 3;
-                } else {
-                    if (!movesopponent.contains(5) && !movesopponent.contains(3) && !movesopponent.contains(2) && !ownmoves.contains(3)) {
-                        moveAI = 3;
-                    } else {
-                        if (!movesopponent.contains(5) && !movesopponent.contains(7) && !movesopponent.contains(4) && !ownmoves.contains(7)) {
-                            moveAI = 7;
-                        }
-                    }
-                }
-            } else {
-                if (movesopponent.size() == 2 && ownmoves.size() == 2) {
-                    if (ownmoves.contains(3) && !movesopponent.contains(2)) {
-                        moveAI = 2;
-                    } else {
-                        if (ownmoves.contains(7) && !movesopponent.contains(4)) {
-                            moveAI = 4;
-                        } else {
-                            if (ownmoves.contains(3) && movesopponent.contains(2) && !movesopponent.contains(5) && !movesopponent.contains(7) && !movesopponent.contains(9)) {
-                                moveAI = 5;
-                            } else {
-                                if (ownmoves.contains(7) && movesopponent.contains(4) && !movesopponent.contains(5) && !movesopponent.contains(3) && !movesopponent.contains(9)) {
-                                    moveAI = 5;
-                                } else {
-                                    if (ownmoves.contains(3) && movesopponent.contains(2) && movesopponent.contains(5)) {
-                                        moveAI = 8;
-                                    } else {
-                                        if (ownmoves.contains(7) && movesopponent.contains(4) && movesopponent.contains(5)) {
-                                            moveAI = 6;
-                                        } else {
-                                            if (ownmoves.contains(3) && movesopponent.contains(2) && movesopponent.contains(9)) {
-                                                moveAI = 7;
-                                            } else {
-                                                if (ownmoves.contains(3) && movesopponent.contains(2) && movesopponent.contains(7)) {
-                                                    moveAI = 9;
-                                                } else {
-                                                    if (ownmoves.contains(7) && movesopponent.contains(4) && movesopponent.contains(9)) {
-                                                        moveAI = 3;
-                                                    } else {
-                                                        if (ownmoves.contains(7) && movesopponent.contains(4) && movesopponent.contains(3)) {
-                                                            moveAI = 9;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    if (movesopponent.size() == 3 && ownmoves.size() == 3) {
-                        if (ownmoves.contains(3) && ownmoves.contains(5) && !movesopponent.contains(7)) {
-                            moveAI = 7;
-                        } else {
-                            if (ownmoves.contains(3) && ownmoves.contains(5) && !movesopponent.contains(9)) {
-                                moveAI = 9;
-                            } else {
-                                if (ownmoves.contains(7) && ownmoves.contains(5) && !movesopponent.contains(3)) {
-                                    moveAI = 3;
-                                } else {
-                                    if (ownmoves.contains(7) && ownmoves.contains(5) && !movesopponent.contains(9)) {
-                                        moveAI = 9;
-                                    } else {
-                                        if (ownmoves.contains(3) && movesopponent.contains(5) && movesopponent.contains(4) && movesopponent.contains(2)) {
-                                            moveAI = 6;
-                                        } else {
-                                            if (ownmoves.contains(3) && movesopponent.contains(5) && movesopponent.contains(6) && movesopponent.contains(2)) {
-                                                moveAI = 4;
-                                            } else {
-                                                if (ownmoves.contains(3) && movesopponent.contains(5) && movesopponent.contains(7) && !ownmoves.contains(9)) {
-                                                    moveAI = 9;
-                                                } else {
-                                                    if (ownmoves.contains(3) && movesopponent.contains(5) && movesopponent.contains(9) && !ownmoves.contains(7)) {
-                                                        moveAI = 7;
-                                                    } else {
-                                                        if (ownmoves.contains(7) && movesopponent.contains(5) && movesopponent.contains(8) && movesopponent.contains(4)) {
-                                                            moveAI = 2;
-                                                        } else {
-                                                            if (ownmoves.contains(7) && movesopponent.contains(5) && movesopponent.contains(2) && movesopponent.contains(4)) {
-                                                                moveAI = 8;
-                                                            } else {
-                                                                if (ownmoves.contains(7) && movesopponent.contains(5) && movesopponent.contains(9) && !ownmoves.contains(3)) {
-                                                                    moveAI = 3;
-                                                                } else {
-                                                                    if (ownmoves.contains(7) && movesopponent.contains(5) && movesopponent.contains(3) && !ownmoves.contains(9)) {
-                                                                        moveAI = 9;
-                                                                    } else {
-                                                                        if (ownmoves.contains(3) && !movesopponent.contains(5) && !ownmoves.contains(5)) {
-                                                                            moveAI = 5;
-                                                                        } else {
-                                                                            if (ownmoves.contains(7) && !movesopponent.contains(5) && !ownmoves.contains(5)) {
-                                                                                moveAI = 5;
-                                                                            } else {
-                                                                                if (ownmoves.contains(7) && movesopponent.contains(5) && ownmoves.contains(3) && !movesopponent.contains(4)) {
-                                                                                    moveAI = 4;
-                                                                                } else {
-                                                                                    if (ownmoves.contains(7) && movesopponent.contains(5) && ownmoves.contains(3) && !movesopponent.contains(2)) {
-                                                                                        moveAI = 2;
-                                                                                    } else {
-                                                                                        if (ownmoves.contains(3) && movesopponent.contains(5) && ownmoves.contains(9) && !movesopponent.contains(6)) {
-                                                                                            moveAI = 6;
-                                                                                        } else {
-                                                                                            if (ownmoves.contains(7) && movesopponent.contains(5) && ownmoves.contains(9) && !movesopponent.contains(8)) {
-                                                                                                moveAI = 8;
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        if (movesopponent.size() == 4 && ownmoves.size() == 4) {
-                            for (int i = 1; i < 10; i++) {
-                                if (!movesopponent.contains(i) && !ownmoves.contains(i)) {
-                                    moveAI = i;
-                                }
-                            }
-                        }
-                    }
-                }
+
+    public AI(int playernumber, char piece){
+        super(playernumber, piece);
+    }
+
+    public static int moveSelect(Board AIBoard, char piece){
+        /**
+         * If a move can win, gives board position to prevent or win
+         * Else chooses random legal position
+         * @author Aaldert Kroes, Mart de Vries
+         * @return move position
+         */
+        boolean check = false;
+        int move = 0;
+        int[] values = counterPlayer(AIBoard, piece);
+
+        for (int i = 0; i < 9; i++) {
+            if(values[i] == 1 || values[i] == -1){
+                move = i+1;
+                check = true;
             }
         }
-        return moveAI;
-    }
 
-    /**
-     * AI tic-tac-toe second player
-     * @param movesopponent all moves done by the opponent
-     * @param ownmoves all moves done by itself
-     * @return move AI as second player (tic-tac-toe)
-     * @author Mart de Vries
-     */
-    public static int TicTacToeAI2(ArrayList<Integer> movesopponent, ArrayList<Integer> ownmoves) {
-        int moveAI = 0;
-        if (movesopponent.get(0) != 1) {
-            moveAI = 1;
+        while(!check){
+            move = (int)(Math.random() * 8)+1;
+            if(AIBoard.allowMove(move)){
+                check = true;
+            }
         }
-        return moveAI;
+        return move;
     }
 
     /**
-     * AI Othello first player
-     * @return move AI as first player (Othello)
+     * Creates an int array with 1s, 0s and -1s based on win, lose or nothing happening
+     * @param AIBoard
+     * @return 1, 0, -1 based on wincondition.
      */
-    public static int OthelloAI1() {
-        return 0;
-    }
+    public static int[] counterPlayer(Board AIBoard, char piece){
+        int[] results = new int[9];
+        char myPiece = piece;
+        char opPiece = ' ';
+        if(myPiece == 'X'){opPiece = 'O';} else {opPiece = 'X';}
 
-    /**
-     * AI Othello second player
-     * @return move AI as second player (Othello)
-     */
-    public static int OthelloAI2() {
-        return 0;
+        for (int i = 1; i < 10; i++) {
+            if(AIBoard.allowMove((i))){
+                // Add own piece and check if win
+                AIBoard.add(myPiece, i);
+                if(AIBoard.win(myPiece)){results[i-1] = 1;}
+                AIBoard.remove(myPiece, i);
+                // Add opponent piece and check if win
+                AIBoard.add(opPiece, i);
+                if(AIBoard.win(opPiece)){results[i-1] = -1;}
+                AIBoard.remove(opPiece, i);
+            }
+        }
+        return results;
     }
 }

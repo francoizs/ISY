@@ -12,13 +12,11 @@ public class Player
     /**
      * Constructor voor het player object
      * @param playernumber nummer van speler om spelers apart te kunnen houden van elkaar
-     * @param isAI geeft aan of de speler een AI is inplaats van een mens
      * @param piece het spel stuk behorende bij de speler
      * @author Anton Bijker
      */
-    public Player(int playernumber, boolean isAI, char piece) {
+    public Player(int playernumber, char piece) {
         this.playernumber = playernumber;
-        this.isAI=isAI;
         this.piece=piece;
     }
 

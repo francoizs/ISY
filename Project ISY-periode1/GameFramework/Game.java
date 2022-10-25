@@ -36,20 +36,20 @@ public class Game extends Main{
             System.out.println("Is de eerste speler een AI? y/n");
             isAI= in.nextLine();}
         if (isAI.equals("n")){
-            player1 = new Player(1,false,'X');
+            player1 = new Player(1,'X');
         }
         if (isAI.equals("y")){
-            player1 = new Player(1,true,'X');
+            player1 = new AI(1, 'X');
         }
         String isAI2="";
         while (!isAI2.equals("n") && !isAI2.equals("y")){      // Voor nu alleen implementatie voor non-AI dus y is hier geen goed antwoord
             System.out.println("Is de tweede speler een AI? y/n");
             isAI2= in.nextLine();}
         if (isAI2.equals("n")){
-            player2 = new Player(2,false,'O');
+            player2 = new Player(2,'O');
         }
         if (isAI2.equals("y")){
-            player2 = new Player(2,true,'O');
+            player2 = new AI(2,'O');
         }
         System.out.println("De setup is klaar, uw spel zal nu starten");
         movemenu(player1,player2);
@@ -66,16 +66,13 @@ public class Game extends Main{
     public static void movemenu(Player player1, Player player2){
         Board newboard = new Board(3,3);
         System.out.println(newboard);
-        ArrayList<Integer> movesPlayer1 = new ArrayList<Integer>();
-        ArrayList<Integer> movesPlayer2 = new ArrayList<Integer>();
         int move=0;
         int move2=0;
         Scanner in = new Scanner(System.in);
         while (!newboard.isFull()){
-            if (player1.isAI) {
-                move = AI.TicTacToeAI1(movesPlayer2, movesPlayer1);
+            if (player1 instanceof AI) {
+                move = AI.moveSelect(newboard, player1.piece);
                 newboard.add(player1.piece, move);
-                movesPlayer1.add(move);
             } else {
                 System.out.println("Speler 1 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
                 move = in.nextInt();
@@ -84,15 +81,13 @@ public class Game extends Main{
                     move = in.nextInt();
                 }
                 newboard.add(player1.piece, move);
-                movesPlayer1.add(move);
             }
             System.out.println(newboard);
             if (newboard.win(player1.piece)) {System.out.println("Speler 1 is de winnaar!");break;}
             if (newboard.isFull()) break;
-            if (player2.isAI) {
-                move2 = AI.TicTacToeAI2(movesPlayer1, movesPlayer2);
+            if (player2 instanceof AI) {
+                move2 = AI.moveSelect(newboard, player2.piece);
                 newboard.add(player2.piece, move2);
-                movesPlayer2.add(move2);
             } else {
                 System.out.println("Speler 2 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
                 move2 = in.nextInt();
@@ -101,7 +96,6 @@ public class Game extends Main{
                     move2 = in.nextInt();
                 }
                 newboard.add(player2.piece, move2);
-                movesPlayer2.add(move2);
             }
             System.out.println(newboard);
             if (newboard.win(player2.piece)){
