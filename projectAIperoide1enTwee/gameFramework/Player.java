@@ -7,9 +7,9 @@ package gameFramework;
  */
 public class Player
 {
-    public boolean isAI;
-    public int playernumber;
-    public char piece;
+    private boolean isAI;
+    private int playernumber;
+    private char piece;
 
     /**
      *

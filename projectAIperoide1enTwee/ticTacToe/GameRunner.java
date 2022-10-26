@@ -73,8 +73,8 @@ public class GameRunner{
         Scanner in = new Scanner(System.in);
         while (!newboard.isFull()){
             if (player1 instanceof AiForTicTacToe) {
-                move = AiForTicTacToe.moveSelect(newboard, player1.piece);
-                newboard.add(player1.piece, move);
+                move = AiForTicTacToe.moveSelect(newboard, player1.getPiece());
+                newboard.add(player1.getPiece(), move);
             } else {
                 System.out.println("Speler 1 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
                 move = in.nextInt();
@@ -82,14 +82,14 @@ public class GameRunner{
                     System.out.println("plek is bezet probeer opnieuw");
                     move = in.nextInt();
                 }
-                newboard.add(player1.piece, move);
+                newboard.add(player1.getPiece(), move);
             }
             System.out.println(newboard);
-            if (newboard.win(player1.piece)) {System.out.println("Speler 1 is de winnaar!");break;}
+            if (newboard.win(player1.getPiece())) {System.out.println("Speler 1 is de winnaar!");break;}
             if (newboard.isFull()) break;
             if (player2 instanceof AiForTicTacToe) {
-                move2 = AiForTicTacToe.moveSelect(newboard, player2.piece);
-                newboard.add(player2.piece, move2);
+                move2 = AiForTicTacToe.moveSelect(newboard, player2.getPiece());
+                newboard.add(player2.getPiece(), move2);
             } else {
                 System.out.println("Speler 2 kies een positie om een steen te plaatsen, kies van 1 tot 9: ");
                 move2 = in.nextInt();
@@ -97,13 +97,13 @@ public class GameRunner{
                     System.out.println("plek is bezet probeer opnieuw");
                     move2 = in.nextInt();
                 }
-                newboard.add(player2.piece, move2);
+                newboard.add(player2.getPiece(), move2);
             }
             System.out.println(newboard);
-            if (newboard.win(player2.piece)){
+            if (newboard.win(player2.getPiece())){
                 System.out.println("Speler 2 is de winnaar!"); break; }
         }
-        if (newboard.isFull() && !newboard.win(player1.piece) && !newboard.win(player2.piece)) System.out.println("het bord is vol, gelijkspel!");;
+        if (newboard.isFull() && !newboard.win(player1.getPiece()) && !newboard.win(player2.getPiece())) System.out.println("het bord is vol, gelijkspel!");;
 
     }
     /**
