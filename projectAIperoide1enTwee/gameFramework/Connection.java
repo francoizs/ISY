@@ -1,9 +1,4 @@
 package gameFramework;
-/**
- * Het onderdeel dat zich bezighoud met de server verbinding
- * java -jar newgameserver-1.0.jar
- * 145.33.225.170
- */
 
 import ticTacToe.GameRunner;
 import ticTacToe.TicTacToe;
@@ -20,12 +15,13 @@ import java.util.Objects;
 */
 public class Connection extends GameRunner {
 
-    public static final int PORT = 7789; // de poort waarop de server luistert
-    public static final String HOST = "game.bier.dev"; // het IP-adres van de server
-
     static Socket socket; // maakt de socket voor de verbinding
     {
             try {
+                // de poort waarop de server luistert
+                int PORT = 7789;
+                // het IP-adres van de server
+                String HOST = "game.bier.dev";
                 socket = new Socket(HOST, PORT);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -44,7 +40,7 @@ public class Connection extends GameRunner {
     static InputStreamReader inputReader; // maakt de lezer die de data van de server krijgt
     {
         try {
-            inputReader = new InputStreamReader(socket.getInputStream()); 
+            inputReader = new InputStreamReader(socket.getInputStream());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -85,7 +81,6 @@ public class Connection extends GameRunner {
 
     public void run(){ // de run methode die de commando's naar de server stuurt
         // try catch voor de input
-        String CLIinput; // maakt de string voor de input
         Recieve reciever = new Recieve(); // maakt de reciever voor de input
         reciever.start(); // start de reciever
 
@@ -138,7 +133,6 @@ class Recieve extends Thread { // maakt de reciever voor de input
                     if (input.contains("SVR GAME MOVE")) { // als de input een move is
                         int moves = Board.movesCounter++; // maakt de int voor de moves
                         String[] parsed = input.split(" "); // split de input
-                        String player = parsed[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler
                         int move = Integer.parseInt(parsed[6].replace("\"", "").replace(",", "")); // maakt de int voor de move
                         firstPlayer = playerToMove; // maakt de string voor de eerste speler
 
