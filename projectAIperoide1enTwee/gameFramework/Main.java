@@ -1,7 +1,5 @@
 package gameFramework;
 
-import ticTacToe.GameRunner;
-
 /**
  * Project intelligente Systemen
  * @version 0.2
@@ -11,8 +9,7 @@ public class Main{
 
 
     public static void main(String[] args) {
-        GameRunner.gamestartmenu();
-
+        Gui gui = new Gui();
     }
 
 }
