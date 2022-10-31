@@ -1,12 +1,18 @@
 package gameFramework;
 /**
  * Het onderdeel dat zich bezighoud met de server verbinding
- * java -jar newgameserver-*VERSION*.jar
+ * java -jar newgameserver-1.0.jar
+ * 145.33.225.170
  */
+
 import ticTacToe.GameRunner;
 import ticTacToe.TicTacToe;
-import java.net.*;
+
 import java.io.*;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
 * de class die de connectie legt met de server
 * @version 0.2
@@ -15,9 +21,7 @@ import java.io.*;
 public class Connection extends GameRunner {
 
     public static final int PORT = 7789; // de poort waarop de server luistert
-    public static final String HOST = "localhost"; // het IP-adres van de server
-
-    public static String userName;
+    public static final String HOST = "game.bier.dev"; // het IP-adres van de server
 
     static Socket socket; // maakt de socket voor de verbinding
     {
@@ -80,27 +84,18 @@ public class Connection extends GameRunner {
      */
 
     public void run(){ // de run methode die de commando's naar de server stuurt
-        try
-        { // try catch voor de input
-            System.out.println("Welkom! Voer je naam in:"); // vraagt de naam van de speler
-            userName = stdIn.readLine(); // leest de naam van de speler
-            String CLIinput; // maakt de string voor de input
-            Recieve reciever = new Recieve(); // maakt de reciever voor de input
-            reciever.start(); // start de reciever
-            output.println("login " + userName); // stuurt de naam naar de server
+        // try catch voor de input
+        String CLIinput; // maakt de string voor de input
+        Recieve reciever = new Recieve(); // maakt de reciever voor de input
+        reciever.start(); // start de reciever
 
-            while (true) { // een while loop die de commando's naar de server stuurt
-                if ((CLIinput = stdIn.readLine()) != null) { // als de input niet leeg is
-                    output.println(CLIinput); // stuur de input naar de server
-                } 
-            } 
-        }
-        catch (IOException e) // catch voor de input
-        {
-            System.out.println("IO error in client thread");
-        }
     }
-
+    public static void login(String userName) throws IOException {
+        output.println("login " + userName);
+    }
+    public static void send(String command) throws IOException {
+        output.println(command);
+    }
     
 }
 
@@ -110,6 +105,13 @@ public class Connection extends GameRunner {
 * @author Francois Dieleman
 */
 class Recieve extends Thread { // maakt de reciever voor de input
+
+    String playerToMove;
+    String firstPlayer;
+    String secondPlayer;
+
+    String opponentName;
+    static ArrayList<String> answers = new ArrayList<>();
     public void run() { // de run methode die de input van de server leest
         try { // try catch voor de input
             TicTacToe board = null; // maakt het bord
@@ -117,33 +119,59 @@ class Recieve extends Thread { // maakt de reciever voor de input
 
                 if (Connection.input.ready()) { // als de input niet leeg is
                     String input = Connection.input.readLine(); // maakt de string voor de input
+                    keepTrack(input); // geeft de input door aan de keepTrack methode
                     System.out.println(input); // print de input
-//                    SVR GAME MOVE {PLAYER: "frans", MOVE: "1", DETAILS: ""}
 
                     if (input.contains("SVR GAME MATCH")) { // als de input een match is
                         String[] parsed = input.split(" "); // split de input
                         String gametype = parsed[6].replace("\"", "").replace(",", ""); // maakt de string voor het speltype
+                        playerToMove = parsed[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler die aan de beurt is
+                        opponentName = parsed[8].replace("\"", "").replace("}", ""); // maakt de string voor de tegenstander
                         if (gametype.equals("Tic-tac-toe")) { // als het speltype tic-tac-toe is
-                            board = new TicTacToe(3, 3); // maakt het bord
+                            Gui.gameScreen(3, 3);
                         }
+                        Gui.putOnTitle("Tic Tac Toe - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
                     }
-
+                    if (input.contains("SVR GAME YOURTURN")) {
+                        Gui.enableAllButtons();
+                    }
                     if (input.contains("SVR GAME MOVE")) { // als de input een move is
+                        int moves = Board.movesCounter++; // maakt de int voor de moves
                         String[] parsed = input.split(" "); // split de input
                         String player = parsed[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler
                         int move = Integer.parseInt(parsed[6].replace("\"", "").replace(",", "")); // maakt de int voor de move
-                        assert board != null; // zorgt dat het bord niet leeg is
-                        if (player.equals(Connection.userName)) { // als de speler de speler is
-                            board.add('X', move); // voegt de X toe aan het bord
-                        } else { // als de speler de tegenstander is
-                            board.add('O', move); // voegt de O toe aan het bord
+                        firstPlayer = playerToMove; // maakt de string voor de eerste speler
+
+                        if (Objects.equals(firstPlayer, Gui.userNamePub)) {
+                            secondPlayer = opponentName;
+                        } else {
+                            secondPlayer = Gui.userNamePub;
                         }
-                        System.out.println(board); // print het bord
+                        if (moves % 2 == 1) { // als de moves even zijn
+                            Gui.putOnTitle("Tic Tac Toe - " + firstPlayer + " is aan de beurt"); // zet de titel op de tweede speler
+                            Gui.serverAdd(move, 'X'); // zet de X op het bord
+                        } else { // als de speler O is
+                            Gui.putOnTitle("Tic Tac Toe - " + secondPlayer + " is aan de beurt");
+                            Gui.serverAdd(move, 'O'); // zet de O op het bord
+                        }
+
+                    }
+                    if (input.contains("DRAW") || input.contains("WIN") || input.contains("LOSS")) { // als de input een winnaar of gelijkspel is
+                        Board.movesCounter = 0; // zet de movesCounter op 0
+                        Gui.putOnTitle("Tic Tac Toe - Game over");
+
+                        Gui.displayOnScreen(input); // zet de game over
+                        Gui.gameOver(); // pauzeer het scherm
+
                     }
                 }
             }
         } catch (IOException e) { // catch voor de input
             System.out.println("Error: " + e);
         }
+    }
+    public static void keepTrack(String answer) {
+
+        answers.add(answer);
     }
 }
