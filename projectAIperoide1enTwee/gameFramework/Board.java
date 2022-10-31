@@ -111,4 +111,18 @@ public class Board{
         }
         return true;
     }
+
+    /**
+     * Checks whether the board is completely empty or not.
+     * @return true or false
+     * @author Aaldert Kroes
+     */
+    public boolean isEmpty(){
+        for (int row = 0; row < board.length; row++){
+            for (int col = 0; col < board[row].length; col++){
+                if(board[row][col] != ' ') {return false;}
+            }
+        }
+        return true;
+    }
 }
