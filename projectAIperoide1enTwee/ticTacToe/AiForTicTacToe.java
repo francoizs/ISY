@@ -2,6 +2,7 @@ package ticTacToe;
 
 import gameFramework.Player;
 import gameFramework.Board;
+import javax.swing.*;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class AiForTicTacToe extends Player{
         super(playernumber, piece);
     }
 
-    public static int moveSelect(TicTacToe AIBoard, char piece){
+    public int moveSelect(TicTacToe AIBoard, char piece){
         /**
          * First move will be placed in the corner, if opponent moves first its placed in the center.
          * If a move can win, gives board position to prevent or win
@@ -61,7 +62,7 @@ public class AiForTicTacToe extends Player{
      * @param AIBoard
      * @return 1, 0, -1 based on wincondition.
      */
-    public static int[] counterPlayer(TicTacToe AIBoard, char piece){
+    private int[] counterPlayer(TicTacToe AIBoard, char piece){
         int[] results = new int[9];
         char myPiece = piece;
         char opPiece = ' ';
@@ -89,7 +90,7 @@ public class AiForTicTacToe extends Player{
      * @param AIBoard
      * @return position integer ranging 1-9
      */
-    public static int firstMove(TicTacToe AIBoard){
+    private int firstMove(TicTacToe AIBoard){
         int move = 0;
 
         if(AIBoard.isEmpty()){
@@ -112,7 +113,7 @@ public class AiForTicTacToe extends Player{
      * @param AIBoard
      * @return true or false
      */
-    public static boolean cornerCheck(TicTacToe AIBoard){
+    private boolean cornerCheck(TicTacToe AIBoard){
         int counter = 0;
         if(AIBoard.allowMove(1)){counter++;}
         if(AIBoard.allowMove(3)){counter++;}
@@ -120,6 +121,10 @@ public class AiForTicTacToe extends Player{
         if(AIBoard.allowMove(9)){counter++;}
 
         return counter == 3;
+    }
+
+    private boolean guiBoardToTicTacToeBoard(JPanel board){
+        return true;
     }
 }
 
