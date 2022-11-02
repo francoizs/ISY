@@ -1,5 +1,6 @@
 package gameFramework;
 
+import gameFramework.Gui;
 /**
  * Het spelbord en alles wat daarmee gebeurt
  * @version 0.2
@@ -11,6 +12,22 @@ public class Board{
     protected int height; // height van het board.
 
     public static int movesCounter = 0; // counter voor het aantal zetten dat gedaan is.
+
+    /**
+     *
+     * @param size
+     * @author Aaldert Kroes
+     */
+    public Board(int size){
+        this.width = size;
+        this.height = size;
+        board = new char[height][width];
+        for( int row = 0; row< height; row++) {
+            for (int col = 0; col < width; col++) {
+                board[row][col] = ' ';
+            }
+        }
+    }
 
     /**
      *
@@ -124,5 +141,10 @@ public class Board{
             }
         }
         return true;
+    }
+
+    public Board guiToBoardConverter(Gui GUIBoard){
+        Board returnBoard = new Board(3);
+        return returnBoard;
     }
 }
