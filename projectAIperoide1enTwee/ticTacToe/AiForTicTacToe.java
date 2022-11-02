@@ -2,7 +2,6 @@ package ticTacToe;
 
 import gameFramework.Player;
 import gameFramework.Board;
-import javax.swing.*;
 
 import java.util.ArrayList;
 
@@ -121,10 +120,6 @@ public class AiForTicTacToe extends Player{
         if(AIBoard.allowMove(9)){counter++;}
 
         return counter == 3;
-    }
-
-    private boolean guiBoardToTicTacToeBoard(JPanel board){
-        return true;
     }
 }
 
