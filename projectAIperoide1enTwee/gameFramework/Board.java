@@ -117,12 +117,13 @@ public class Board{
      * @return true or false
      * @author Aaldert Kroes
      */
-    public boolean isEmpty(){
+    public int isEmpty(){
+        int empty = 0;
         for (int row = 0; row < board.length; row++){
             for (int col = 0; col < board[row].length; col++){
-                if(board[row][col] != ' ') {return false;}
+                if(board[row][col] != ' ') {empty += 1;}
             }
         }
-        return true;
+        return empty;
     }
 }
