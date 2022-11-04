@@ -109,7 +109,6 @@ class Recieve extends Thread { // maakt de reciever voor de input
     static ArrayList<String> answers = new ArrayList<>();
     public void run() { // de run methode die de input van de server leest
         try { // try catch voor de input
-            TicTacToe board = null; // maakt het bord
             while (true) { // een while loop die de input van de server leest
 
                 if (Connection.input.ready()) { // als de input niet leeg is

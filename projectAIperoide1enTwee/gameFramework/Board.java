@@ -9,6 +9,7 @@ import gameFramework.Gui;
  */
 public class Board{
 
+    public static int movesCounter;
     protected char board[][] ; // char datatype gebruikt omdat de speler zal  alleen maar 1 char gebruiken, namelijk 'X' of 'O'
     protected int width; // width van het board.
     protected int height; // height van het board.
