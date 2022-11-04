@@ -1,5 +1,8 @@
 package gameFramework;
 
+import ticTacToe.AiForTicTacToe;
+import ticTacToe.TicTacToe;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -14,13 +17,16 @@ public class Gui {
     private static JFrame frame; // maakt het frame
     private static JPanel panel; // maakt het panel
 
-    private static Boolean isAI; // maakt een boolean die aangeeft of de speler tegen de AI speelt
+    public static Boolean isAI; // maakt een boolean die aangeeft of de speler tegen de AI speelt
 
     private static JButton[] JButtons; // maakt een array van JButtons
 
     private static JPanel board; // maakt het board
 
     public static String userNamePub; // maakt een string die de gebruikersnaam opslaat
+
+    private static int width; // maakt een int die de breedte van het board opslaat
+    private static int height; // maakt een int die de hoogte van het board opslaat
 
 
 
@@ -29,7 +35,7 @@ public class Gui {
 
     }
 
-    public static void create() { // maakt de create methode
+    private void create() { // maakt de create methode
         frame = new JFrame("Tic Tac Toe"); // maakt het frame
         panel = new JPanel(); // maakt het panel
 
@@ -48,7 +54,7 @@ public class Gui {
         frame.setVisible(true); // maakt het frame zichtbaar
     }
 
-    public static void startScreen() { // maakt de startScreen methode
+    private void startScreen() { // maakt de startScreen methode
         reset(); // roept de reset methode aan
         JLabel userName = new JLabel("Gebruikersnaam"); // maakt een label met de tekst Gebruikersnaam
         userName.setBounds(10, 20, 80, 25); // zet de positie en grootte van de label
@@ -100,7 +106,7 @@ public class Gui {
 
     }
 
-    public static void playerScreen() throws InterruptedException { // maakt de playerScreen methode
+    private void playerScreen() throws InterruptedException { // maakt de playerScreen methode
         reset(); // roept de reset methode aan
 
         JLabel player = new JLabel("Is de speler een AI?"); // maakt een label met de tekst Is de speler een AI?
@@ -130,7 +136,7 @@ public class Gui {
         panel.add(no); // voegt de button toe aan het panel
     }
 
-    public static void pauseScreen() { // maakt de pauseScreen methode
+    private void pauseScreen() { // maakt de pauseScreen methode
         reset(); // roept de reset methode aan
         JLabel game = new JLabel("Kies een spel:"); // maakt een label met de tekst Kies een spel:
         game.setBounds(10, 20, 100, 40); // zet de positie en grootte van de label
@@ -203,33 +209,40 @@ public class Gui {
     }
 
     public static void gameScreen(int width, int height) { // maakt de gameScreen methode
+        Gui.width = width; // zet de width van de Gui op de width van de methode
+        Gui.height = height; // zet de height van de Gui op de height van de methode
         board = new JPanel(); // maakt een nieuw panel
-        GridLayout gridLayout = new GridLayout(height, width); // maakt een gridlayout met de breedte en hoogte van het bord
-        JButtons = new JButton[height * width]; // maakt een array met de grootte van het bord
+        GridLayout gridLayout = new GridLayout(Gui.height, Gui.width); // maakt een gridlayout met de breedte en hoogte van het bord
+        JButtons = new JButton[Gui.height * Gui.width]; // maakt een array met de grootte van het bord
         frame.remove(panel); // verwijderd het huidige panel
         board.setLayout(gridLayout); // zet de layout van het panel op de gridlayout
         frame.add(board); // voegt het panel toe aan het frame
-        for (int i = 0; i < width * height; i++) { // loopt door de array
+        for (int i = 0; i < Gui.width * Gui.height; i++) { // loopt door de array
             JButtons[i] = new JButton(); // maakt een nieuwe button
             JButtons[i].setEnabled(false);  // zet de button op disabled
             JButtons[i].setText(""); // zet de tekst van de button op leeg
             JButtons[i].setFont(new Font("Arial", Font.BOLD, 50)); // zet het font van de button
             int finalI = i; // maakt een int met de waarde van i
-            JButtons[i].addActionListener(e -> { // voegt een actionlistener toe aan de button
-                if (JButtons[finalI].isEnabled()) { // kijkt of de button enabled is
-                    try {
-                        Connection.send("move " + finalI); // stuurt move + de waarde van i naar de server
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex); // print de error naar de console
-                    } finally {
-                        disableAllButtons(); // roept de disableAllButtons methode aan
+            if (!isAI) {
+                JButtons[i].addActionListener(e -> { // voegt een actionlistener toe aan de button
+                    if (JButtons[finalI].isEnabled()) { // kijkt of de button enabled is
+                        try {
+                            Connection.send("move " + finalI); // stuurt move + de waarde van i naar de server
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex); // print de error naar de console
+                        } finally {
+                            disableAllButtons(); // roept de disableAllButtons methode aan
+                        }
                     }
-                }
-            });
+                });
+
+
+            }
             board.add(JButtons[i]); // voegt de button toe aan het panel
             board.revalidate(); // herlaad het panel
             board.repaint(); // herlaad het panel
         }
+
 
     }
 
@@ -240,7 +253,7 @@ public class Gui {
             }
         }
     }
-    public static void disableAllButtons() {
+    private static void disableAllButtons() {
         for (JButton button : JButtons) {
             button.setEnabled(false);
         }
@@ -268,10 +281,33 @@ public class Gui {
         JOptionPane.showMessageDialog(frame, message);
     }
 
-    public static void reset() {
+    private void reset() {
         panel.removeAll();
         panel.revalidate();
         panel.repaint();
+    }
+    public static void moveAI(int number, char piece) {
+
+        TicTacToe board = convertBoard(Gui.width, Gui.height);
+        AiForTicTacToe AI = new AiForTicTacToe(number, piece);
+        int move = AI.moveSelect(board, piece);
+        try {
+            Connection.send("move " + move);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private static TicTacToe convertBoard(int width, int height) {
+        TicTacToe board = new TicTacToe(width, height);
+        for (int i = 0; i < width * height; i++) {
+            if (JButtons[i].getText().equals("X")) {
+                board.add('X', i);
+            }
+            else if (JButtons[i].getText().equals("O")) {
+                board.add('O', i);
+            }
+        }
+        return board;
     }
 }
 
