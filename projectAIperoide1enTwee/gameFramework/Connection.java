@@ -1,19 +1,19 @@
 package gameFramework;
 
-import ticTacToe.GameRunner;
 import ticTacToe.TicTacToe;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
 * de class die de connectie legt met de server
 * @version 0.2
 * @author Francois Dieleman
 */
-public class Connection extends GameRunner {
+public class Connection {
 
     static Socket socket; // maakt de socket voor de verbinding
     {
@@ -129,6 +129,15 @@ class Recieve extends Thread { // maakt de reciever voor de input
                     }
                     if (input.contains("SVR GAME YOURTURN")) {
                         Gui.enableAllButtons();
+                        if (Gui.isAI) {
+                            TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
+                            if (playerToMove.equals(Gui.userNamePub)) {
+                                Gui.moveAI(1, 'X');
+                            }
+                            else {
+                                Gui.moveAI(2, 'O');
+                            }
+                        }
                     }
                     if (input.contains("SVR GAME MOVE")) { // als de input een move is
                         int moves = Board.movesCounter++; // maakt de int voor de moves
@@ -141,12 +150,13 @@ class Recieve extends Thread { // maakt de reciever voor de input
                         } else {
                             secondPlayer = Gui.userNamePub;
                         }
-                        if (moves % 2 == 1) { // als de moves even zijn
-                            Gui.putOnTitle("Tic Tac Toe - " + firstPlayer + " is aan de beurt"); // zet de titel op de tweede speler
-                            Gui.serverAdd(move, 'X'); // zet de X op het bord
-                        } else { // als de speler O is
+                        if (moves % 2 == 0) { // als de moves even zijn
                             Gui.putOnTitle("Tic Tac Toe - " + secondPlayer + " is aan de beurt");
-                            Gui.serverAdd(move, 'O'); // zet de O op het bord
+                            Gui.serverAdd(move, 'X'); // zet de O op het bord
+
+                        } else { // oneven
+                            Gui.putOnTitle("Tic Tac Toe - " + firstPlayer + " is aan de beurt"); // zet de titel op de tweede speler
+                            Gui.serverAdd(move, 'O'); // zet de X op het bord
                         }
 
                     }
@@ -162,6 +172,8 @@ class Recieve extends Thread { // maakt de reciever voor de input
             }
         } catch (IOException e) { // catch voor de input
             System.out.println("Error: " + e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
     public static void keepTrack(String answer) {
