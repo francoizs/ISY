@@ -135,18 +135,28 @@ public class Board{
      * @return true or false
      * @author Aaldert Kroes
      */
-    public int isEmpty(){
+    public boolean isEmpty(){
         int empty = 0;
         for (int row = 0; row < board.length; row++){
             for (int col = 0; col < board[row].length; col++){
-                if(board[row][col] != ' ') {empty += 1;}
+                if(board[row][col] != ' ') {return false;}
             }
         }
-        return empty;
+        return true;
     }
 
-    public Board guiToBoardConverter(Gui GUIBoard){
-        Board returnBoard = new Board(3);
-        return returnBoard;
+    /**
+     * Counts the spaces filled in on the board
+     * @return integer of filled in spaces
+     * @author Aaldert Kroes
+     */
+    public int filledSpaces(){
+        int counter = 0;
+        for (int row = 0; row < board.length; row++){
+            for (int col = 0; col < board[row].length; col++){
+                if(board[row][col] != ' ') {counter += 1;}
+            }
+        }
+        return counter;
     }
 }

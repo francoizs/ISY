@@ -9,7 +9,7 @@ import gameFramework.Player;
  */
 public class AiForTicTacToe extends Player{
 
-    private static final int Max_depth_1 = 8;
+    private final int Max_depth_1 = 8;
     // max search depth
 
     public AiForTicTacToe(int playernumber, char piece){
@@ -21,11 +21,11 @@ public class AiForTicTacToe extends Player{
      * @author Aaldert Kroes, Mart de Vries
      * @return move position integer ranging 1-9
      */
-    public static int moveSelect(TicTacToe AIBoard, char piece){
+    public int moveSelect(TicTacToe AIBoard, char piece){
         int move = 0;
         int bestValue = Integer.MIN_VALUE;
 
-        if (AIBoard.isEmpty() == 0 || AIBoard.isEmpty() == 1) {
+        if (AIBoard.filledSpaces() == 0 || AIBoard.filledSpaces() == 1) {
             // if it's the first move for player 1 or player 2, use method firstMove
             move = firstMove(AIBoard);
             return move;
@@ -53,7 +53,7 @@ public class AiForTicTacToe extends Player{
      * @param AIBoard
      * @return 1, 0, -1 based on wincondition.
      */
-    private static int counterPlayer(TicTacToe AIBoard, char piece, int depth){
+    private int counterPlayer(TicTacToe AIBoard, char piece, int depth){
         char myPiece = piece;
         char opPiece = ' ';
         if(myPiece == 'X'){
@@ -85,10 +85,10 @@ public class AiForTicTacToe extends Player{
      * @param AIBoard
      * @return position integer ranging 1-9
      */
-    private static int firstMove(TicTacToe AIBoard){
+    private int firstMove(TicTacToe AIBoard){
         int move = 0;
 
-        if(AIBoard.isEmpty() == 0){
+        if(AIBoard.isEmpty()){
             // If AI moves first, place a piece in the top left corner.
             move = 1;
         } else if(cornerCheck(AIBoard)){
@@ -112,7 +112,7 @@ public class AiForTicTacToe extends Player{
      * @return true or false
      * @author Aaldert Kroes
      */
-    private static boolean cornerCheck(TicTacToe AIBoard){
+    private boolean cornerCheck(TicTacToe AIBoard){
         int counter = 0;
         if(AIBoard.allowMove(1)){counter++;}
         if(AIBoard.allowMove(3)){counter++;}
@@ -128,7 +128,7 @@ public class AiForTicTacToe extends Player{
      * @return true or false
      * @author Mart de Vries
      */
-    private static boolean edgeCheck(TicTacToe AIBoard){
+    private boolean edgeCheck(TicTacToe AIBoard){
         int counter = 0;
         if(AIBoard.allowMove(2)){counter++;}
         if(AIBoard.allowMove(4)){counter++;}
@@ -149,7 +149,7 @@ public class AiForTicTacToe extends Player{
      * @return Highest or Lowest value for a certain position
      * @author Mart de Vries
      */
-    private static int minimax(TicTacToe AIBoard, int depth, char piece, boolean maximisingPlayer, int alpha, int beta) {
+    private int minimax(TicTacToe AIBoard, int depth, char piece, boolean maximisingPlayer, int alpha, int beta) {
         char myPiece = piece;
         char opPiece = ' ';
         if(myPiece == 'X'){
