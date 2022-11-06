@@ -1,4 +1,6 @@
 package gameFramework;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import gameFramework.Gui;
 /**
@@ -7,11 +9,10 @@ import gameFramework.Gui;
  */
 public class Board{
 
+    public static int movesCounter;
     protected char board[][] ; // char datatype gebruikt omdat de speler zal  alleen maar 1 char gebruiken, namelijk 'X' of 'O'
     protected int width; // width van het board.
     protected int height; // height van het board.
-
-    public static int movesCounter = 0; // counter voor het aantal zetten dat gedaan is.
 
     /**
      *
