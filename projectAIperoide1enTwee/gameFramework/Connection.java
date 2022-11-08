@@ -127,6 +127,7 @@ class Recieve extends Thread { // maakt de reciever voor de input
                         Gui.putOnTitle("Tic Tac Toe - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
                     }
                     if (input.contains("SVR GAME YOURTURN")) {
+                        Gui.enableAllButtons();
                         if (Gui.isAI) {
                             TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
                             if (playerToMove.equals(Gui.userNamePub)) {
