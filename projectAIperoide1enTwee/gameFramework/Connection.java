@@ -1,6 +1,6 @@
 package gameFramework;
 
-import ticTacToe.TicTacToe;
+//145.33.225.170
 
 import java.io.*;
 import java.net.Socket;
@@ -21,7 +21,7 @@ public class Connection {
                 // de poort waarop de server luistert
                 int PORT = 7789;
                 // het IP-adres van de server
-                String HOST = "game.bier.dev";
+                String HOST = "145.33.225.170";
                 socket = new Socket(HOST, PORT);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -127,14 +127,13 @@ class Recieve extends Thread { // maakt de reciever voor de input
                         Gui.putOnTitle("Tic Tac Toe - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
                     }
                     if (input.contains("SVR GAME YOURTURN")) {
-                        Gui.enableAllButtons();
                         if (Gui.isAI) {
                             TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
                             if (playerToMove.equals(Gui.userNamePub)) {
-                                Gui.moveAI(1, 'X');
+                                Gui.moveAI('X');
                             }
                             else {
-                                Gui.moveAI(2, 'O');
+                                Gui.moveAI('O');
                             }
                         }
                     }

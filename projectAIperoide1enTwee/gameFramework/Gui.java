@@ -286,11 +286,10 @@ public class Gui {
         panel.revalidate();
         panel.repaint();
     }
-    public static void moveAI(int number, char piece) {
+    public static void moveAI(char piece) {
 
-        TicTacToe board = convertBoard(Gui.width, Gui.height);
-        AiForTicTacToe AI = new AiForTicTacToe(number, piece);
-        int move = AI.moveSelect(board, piece);
+        TicTacToe convertedboard = convertBoard(Gui.width, Gui.height);
+        int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1;
         try {
             Connection.send("move " + move);
         } catch (IOException e) {
@@ -301,11 +300,12 @@ public class Gui {
         TicTacToe board = new TicTacToe(width, height);
         for (int i = 0; i < width * height; i++) {
             if (JButtons[i].getText().equals("X")) {
-                board.add('X', i);
+                board.add('X', i + 1);
             }
             else if (JButtons[i].getText().equals("O")) {
-                board.add('O', i);
+                board.add('O', i + 1);
             }
+
         }
         return board;
     }
