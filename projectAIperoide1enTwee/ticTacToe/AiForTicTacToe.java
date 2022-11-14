@@ -48,10 +48,10 @@ public class AiForTicTacToe extends Player{
     }
 
     /**
-     * Creates an int array with 1s, 0s and -1s based on win, lose or nothing happening
+     * Returns an integer, high integers mean an early win, low integers mean an early loss
      * @author Aaldert Kroes, Mart de Vries
      * @param AIBoard
-     * @return 1, 0, -1 based on wincondition.
+     * @return integer
      */
     private static int counterPlayer(TicTacToe AIBoard, char piece, int depth){
         char myPiece = piece;
@@ -147,7 +147,7 @@ public class AiForTicTacToe extends Player{
      * @param alpha the best option for the maximising player
      * @param beta the best option for the minimising player
      * @return Highest or Lowest value for a certain position
-     * @author Mart de Vries
+     * @author Mart de Vries, Aaldert Kroes
      */
     private static int minimax(TicTacToe AIBoard, int depth, char piece, boolean maximisingPlayer, int alpha, int beta) {
         char myPiece = piece;
