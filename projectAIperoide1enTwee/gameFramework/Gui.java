@@ -12,6 +12,12 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * de class die de connectie legt met de server
+ * @version 0.1
+ * @author Francois Dieleman
+ */
 public class Gui {
 
     private static JFrame frame; // maakt het frame
@@ -246,68 +252,68 @@ public class Gui {
 
     }
 
-    public static void enableAllButtons() {
-        for (JButton button : JButtons) {
-            if (button.getText().equals("")) {
-                button.setEnabled(true);
+    public static void enableAllButtons() { // maakt de enableAllButtons methode
+        for (JButton button : JButtons) { // loopt door de array
+            if (button.getText().equals("")) { // kijkt of de tekst van de button leeg is
+                button.setEnabled(true); // zet de button op enabled
             }
         }
     }
-    private static void disableAllButtons() {
-        for (JButton button : JButtons) {
-            button.setEnabled(false);
+    private static void disableAllButtons() { // maakt de disableAllButtons methode
+        for (JButton button : JButtons) { // loopt door de array
+            button.setEnabled(false); // zet de button op disabled
         }
     }
 
-    public static void gameOver() {
-        frame.remove(board);
-        frame.add(panel);
-        frame.setTitle("Tic Tac Toe");
-        frame.revalidate();
-        frame.repaint();
+    public static void gameOver() { // maakt de gameOver methode
+        frame.remove(board); // verwijderd het huidige board
+        frame.add(panel); // voegt het panel toe aan het frame
+        frame.setTitle("Tic Tac Toe"); //zet de titel van het frame op Tic Tac Toe
+        frame.revalidate(); // herlaad het frame
+        frame.repaint(); // herlaad het frame
     }
 
-    public static void serverAdd(int position, char piece) {
-        JButtons[position].setText(String.valueOf(piece));
-        JButtons[position].setEnabled(false);
+    public static void serverAdd(int position, char piece) { // maakt de serverAdd methode
+        JButtons[position].setText(String.valueOf(piece)); // zet de tekst van de button op de waarde van piece
+        JButtons[position].setEnabled(false); // zet de button op disabled
     }
 
 
     public static void putOnTitle(String message) {
         frame.setTitle(message);
-    }
+    } // zet de titel van het frame op de message
 
     public static void displayOnScreen(String message) {
         JOptionPane.showMessageDialog(frame, message);
-    }
+    } // maakt een popup met de message
 
-    private void reset() {
-        panel.removeAll();
-        panel.revalidate();
-        panel.repaint();
+    private void reset() { // maakt de reset methode
+        panel.removeAll(); // verwijderd alle componenten van het panel
+        panel.revalidate(); // herlaad het panel
+        panel.repaint(); // herlaad het panel
     }
-    public static void moveAI(char piece) {
+    public static void moveAI(char piece) { // maakt de moveAI methode
 
-        TicTacToe convertedboard = convertBoard(Gui.width, Gui.height);
-        int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1;
-        try {
-            Connection.send("move " + move);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        TicTacToe convertedboard = convertBoard(Gui.width, Gui.height); // maakt een nieuw bord met de breedte en hoogte van het bord
+        int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1; // maakt een int met de waarde van de move van de AiForTicTacToe
+        try { // probeert
+            Connection.send("move " + move); // stuurt move + de waarde van move naar de server
+        } catch (IOException e) { // als er een error is
+            throw new RuntimeException(e); // print de error naar de console
         }
     }
-    private static TicTacToe convertBoard(int width, int height) {
-        TicTacToe board = new TicTacToe(width, height);
-        for (int i = 0; i < width * height; i++) {
-            if (JButtons[i].getText().equals("X")) {
-                board.add('X', i + 1);
+    private static TicTacToe convertBoard(int width, int height) { // maakt de convertBoard methode
+        TicTacToe board = new TicTacToe(width, height); // maakt een nieuw bord met de breedte en hoogte van het bord
+        for (int i = 0; i < width * height; i++) { // loopt door het bord
+            if (JButtons[i].getText().equals("X")) { // kijkt of de tekst van de button X is
+                board.add('X', i + 1); // voegt X toe aan het bord op de positie van i + 1
             }
-            else if (JButtons[i].getText().equals("O")) {
-                board.add('O', i + 1);
+            else if (JButtons[i].getText().equals("O")) {   // kijkt of de tekst van de button O is
+                board.add('O', i + 1); // voegt O toe aan het bord op de positie van i + 1
             }
 
         }
-        return board;
+        return board; // geeft het bord terug
     }
 }
 
