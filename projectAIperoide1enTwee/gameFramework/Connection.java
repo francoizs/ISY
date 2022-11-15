@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 */
 public class Connection {
 
-    static Socket socket; // maakt de socket voor de verbinding
+    private Socket socket; // maakt de socket voor de verbinding
     {
             try {
                 // de poort waarop de server luistert
@@ -28,7 +28,7 @@ public class Connection {
                 e.printStackTrace();
             }
     }
-    static BufferedReader input; // maakt de lezer voor inputReader
+    public static BufferedReader input; // maakt de lezer voor inputReader
     {
         try {
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -37,43 +37,16 @@ public class Connection {
             e.printStackTrace();
         }
     }
-    static InputStreamReader inputReader; // maakt de lezer die de data van de server krijgt
+    private static PrintWriter output; // maakt de schrijver voor de commando's naar de server
+
     {
         try {
-            inputReader = new InputStreamReader(socket.getInputStream());
+            output = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    static PrintWriter output; // maakt de schrijver voor de commando's naar de server
-    {
-            try {
-                output = new PrintWriter(socket.getOutputStream(), true); 
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-    }
-
-    static OutputStreamWriter outputWriter; // maakt de verbinding tussen de commando's naar de server
-    {
-            try {
-                outputWriter = new OutputStreamWriter(socket.getOutputStream());
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-    }
-    static BufferedReader stdIn; // maakt de lezer de stdInReader
-    {
-        stdIn = new BufferedReader(new InputStreamReader(System.in));
-    }
-    static InputStreamReader stdInReader; // maakt de lezer voor de CLI
-    {
-        stdInReader = new InputStreamReader(System.in);
-    }
-
     /**
      * geeft de commando's aan de server
      * @author Francois Dieleman
@@ -101,12 +74,12 @@ public class Connection {
 */
 class Recieve extends Thread { // maakt de reciever voor de input
 
-    String playerToMove; // maakt de string voor de speler die aan de beurt is
-    String firstPlayer; // maakt de string voor de eerste speler
-    String secondPlayer; // maakt de string voor de tweede speler
+    private String playerToMove; // maakt de string voor de speler die aan de beurt is
+    private String firstPlayer; // maakt de string voor de eerste speler
+    private String secondPlayer; // maakt de string voor de tweede speler
 
-    String opponentName; // maakt de string voor de tegenstander
-    static ArrayList<String> answers = new ArrayList<>();
+    private String opponentName; // maakt de string voor de tegenstander
+    public static ArrayList<String> answers = new ArrayList<>();
     public void run() { // de run methode die de input van de server leest
         try { // try catch voor de input
             while (true) { // een while loop die de input van de server leest
@@ -175,7 +148,7 @@ class Recieve extends Thread { // maakt de reciever voor de input
             throw new RuntimeException(e);
         }
     }
-    public static void keepTrack(String answer) { // de methode die de input opslaat
+    private void keepTrack(String answer) { // de methode die de input opslaat
         answers.add(answer); // voegt de input toe aan de arraylist
     }
 }
