@@ -37,8 +37,21 @@ public class Game extends Board{
         return true;
     }
 
+    /**
+     * Checks whether the move is allowed with the Othello rules, meaning:
+     * Space must be empty, this position will enclose at least one opposing piece and the position isn't out of bounds.
+     * @param position
+     * @return boolean if move is allowed
+     * @author Aaldert Kroes
+     */
     public boolean allowMoveOthello(int position) {
-        return true;
+        int[] coordinateMove = coordinate(position);
+        boolean freeSpace = getBoard()[coordinateMove[0]][coordinateMove[1]] != ' ';    // filled space
+        boolean inBounds = position > 0 && position < 65;                               // in bounds
+        // check for 8 adjacent tiles if filled
+        // check for if it captures at least one opposing tile
+
+        return freeSpace && inBounds; // add additional booleans
     }
 
     public boolean winOthello(char piece) {

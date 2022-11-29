@@ -46,20 +46,6 @@ public class TicTacToe extends Game {
         return true;
     }
 
-
-
-
-    /**
-     *
-     * @param piecs
-     * @return
-     * @authur Ihab Al-Safadi
-     */
-
-    public Boolean win(char piecs){
-        return winHorizontal(piecs) || winvertical(piecs) || winDiagonalLeft(piecs) || winDiagonalRight(piecs);
-    }
-
     /**
      *
      * @param piecs // Dit wordt toegevoergd vanuit de game class bv X en O.
@@ -77,6 +63,17 @@ public class TicTacToe extends Game {
             }
         }
         return false;
+    }
+
+    /**
+     *
+     * @param piecs
+     * @return
+     * @authur Ihab Al-Safadi
+     */
+
+    public boolean win(char piecs){
+        return winHorizontal(piecs) || winvertical(piecs) || winDiagonalLeft(piecs) || winDiagonalRight(piecs);
     }
 
     /***
