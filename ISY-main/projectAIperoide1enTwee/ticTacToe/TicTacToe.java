@@ -48,11 +48,21 @@ public class TicTacToe extends Game {
 
     /**
      *
-     * @param piecs // Dit wordt toegevoergd vanuit de game class bv X en O.
+     * @param piecs
      * @return
      * @authur Ihab Al-Safadi
      */
 
+    public boolean win(char piecs){
+        return winHorizontal(piecs) || winvertical(piecs) || winDiagonalLeft(piecs) || winDiagonalRight(piecs);
+    }
+
+    /**
+     *
+     * @param piecs // Dit wordt toegevoergd vanuit de game class bv X en O.
+     * @return
+     * @authur Ihab Al-Safadi
+     */
     public Boolean winvertical(char piecs){
 
         for(int row = 0; row < getHeight()-2; row++){
@@ -66,17 +76,6 @@ public class TicTacToe extends Game {
     }
 
     /**
-     *
-     * @param piecs
-     * @return
-     * @authur Ihab Al-Safadi
-     */
-
-    public boolean win(char piecs){
-        return winHorizontal(piecs) || winvertical(piecs) || winDiagonalLeft(piecs) || winDiagonalRight(piecs);
-    }
-
-    /***
      *
      * @param piecs
      * @return
@@ -129,29 +128,5 @@ public class TicTacToe extends Game {
             }
         }
         return false;
-    }
-
-    /**
-     *
-     * @param teken
-     * @param position
-     * @author Ihab Al-Safadi
-     */
-    public void add(char teken, int position){
-        /**
-         * voeg een zet toe aan het baord
-         */
-        int[] coordinates = coordinate(position);
-        if(getBoard()[coordinates[0]][coordinates[1]] ==' '){getBoard()[coordinates[0]][coordinates[1]] = teken;}
-        else {System.out.println("Deze plek is niet beschikbaar");}
-    }
-
-    /**
-     * Removes a move from the board.
-     */
-    public void remove(char teken, int position){
-        int[] coordinates = coordinate(position);
-        if(getBoard()[coordinates[0]][coordinates[1]] !=' '){getBoard()[coordinates[0]][coordinates[1]] = ' ';}
-        else {System.out.println("Deze plek is niet beschikbaar");}
     }
 }
