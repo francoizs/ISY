@@ -7,6 +7,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+
+
+
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
@@ -25,7 +28,7 @@ public class Gui {
 
     public static Boolean isAI; // maakt een boolean die aangeeft of de speler tegen de AI speelt
 
-    private static JButton[] JButtons; // maakt een array van JButtons
+    public static JButton[] JButtons; // maakt een array van JButtons
 
     private static JPanel board; // maakt het board
 
@@ -84,7 +87,7 @@ public class Gui {
                         Connection connection = new Connection(); // maakt een nieuwe connectie
                         connection.run(); // roept de run methode aan
                         Connection.login(userNamePub); // roept de login methode aan met de gebruikersnaam
-                        TimeUnit.MILLISECONDS.sleep(100); // wacht 100 milliseconden
+                        TimeUnit.MILLISECONDS.sleep(200); // wacht 100 milliseconden
                         if (Recieve.answers.get(Recieve.answers.size() -1).equals("OK")) { // als de laatste antwoord van de server OK is
                             displayOnScreen("Verbonden met de server"); // roept de displayOnScreen methode aan met de tekst Verbonden met de server
                             playerScreen(); // roept de playerScreen methode aan
@@ -163,6 +166,14 @@ public class Gui {
         JButton Othello = new JButton("Othello"); // maakt een button met de tekst Othello
         Othello.setBounds(10, 110, 200, 25); // zet de positie en grootte van de button
         Othello.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
+        Othello.addActionListener(e -> {
+            displayOnScreen("De server is er mee bezig..."); // roept de displayOnScreen methode aan met de tekst De server is er mee bezig...
+            try {
+                Connection.send("subscribe reversi"); // stuurt subscribe othello naar de server
+            } catch (IOException ex) {
+                throw new RuntimeException(ex); // print de error naar de console
+            }
+        });
 
         JLabel command = new JLabel("Of stuur een ander command naar de server:"); // maakt een label met de tekst Of stuur een ander command naar de server:
         command.setBounds(10, 140, 300, 100); // zet de positie en grootte van de label
@@ -225,7 +236,7 @@ public class Gui {
         frame.add(board); // voegt het panel toe aan het frame
         for (int i = 0; i < Gui.width * Gui.height; i++) { // loopt door de array
             JButtons[i] = new JButton(); // maakt een nieuwe button
-            JButtons[i].setEnabled(false);  // zet de button op disabled
+            JButtons[i].setEnabled(false); // zet de button op disabled
             JButtons[i].setText(""); // zet de tekst van de button op leeg
             JButtons[i].setFont(new Font("Arial", Font.BOLD, 50)); // zet het font van de button
             int finalI = i; // maakt een int met de waarde van i
@@ -252,13 +263,7 @@ public class Gui {
 
     }
 
-    public static void enableAllButtons() { // maakt de enableAllButtons methode
-        for (JButton button : JButtons) { // loopt door de array
-            if (button.getText().equals("")) { // kijkt of de tekst van de button leeg is
-                button.setEnabled(true); // zet de button op enabled
-            }
-        }
-    }
+    
     private static void disableAllButtons() { // maakt de disableAllButtons methode
         for (JButton button : JButtons) { // loopt door de array
             button.setEnabled(false); // zet de button op disabled
@@ -273,10 +278,7 @@ public class Gui {
         frame.repaint(); // herlaad het frame
     }
 
-    public static void serverAdd(int position, char piece) { // maakt de serverAdd methode
-        JButtons[position].setText(String.valueOf(piece)); // zet de tekst van de button op de waarde van piece
-        JButtons[position].setEnabled(false); // zet de button op disabled
-    }
+    
 
 
     public static void putOnTitle(String message) {
@@ -292,28 +294,6 @@ public class Gui {
         panel.revalidate(); // herlaad het panel
         panel.repaint(); // herlaad het panel
     }
-    public static void moveAI(char piece) { // maakt de moveAI methode
-
-        TicTacToe convertedboard = convertBoard(Gui.width, Gui.height); // maakt een nieuw bord met de breedte en hoogte van het bord
-        int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1; // maakt een int met de waarde van de move van de AiForTicTacToe
-        try { // probeert
-            Connection.send("move " + move); // stuurt move + de waarde van move naar de server
-        } catch (IOException e) { // als er een error is
-            throw new RuntimeException(e); // print de error naar de console
-        }
-    }
-    private static TicTacToe convertBoard(int width, int height) { // maakt de convertBoard methode
-        TicTacToe board = new TicTacToe(width, height); // maakt een nieuw bord met de breedte en hoogte van het bord
-        for (int i = 0; i < width * height; i++) { // loopt door het bord
-            if (JButtons[i].getText().equals("X")) { // kijkt of de tekst van de button X is
-                board.add('X', i + 1); // voegt X toe aan het bord op de positie van i + 1
-            }
-            else if (JButtons[i].getText().equals("O")) {   // kijkt of de tekst van de button O is
-                board.add('O', i + 1); // voegt O toe aan het bord op de positie van i + 1
-            }
-
-        }
-        return board; // geeft het bord terug
-    }
+    
 }
 

@@ -1,12 +1,16 @@
 package gameFramework;
 
 //145.33.225.170
+// java -jar newgameserver-1.0.jar
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import othello.Othello;
+import ticTacToe.TicTacToe;
 
 /**
 * de class die de connectie legt met de server
@@ -21,7 +25,7 @@ public class Connection {
                 // de poort waarop de server luistert
                 int PORT = 7789;
                 // het IP-adres van de server
-                String HOST = "game.bier.dev";
+                String HOST = "localhost";
                 socket = new Socket(HOST, PORT);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -77,6 +81,7 @@ class Recieve extends Thread { // maakt de reciever voor de input
     private String playerToMove; // maakt de string voor de speler die aan de beurt is
     private String firstPlayer; // maakt de string voor de eerste speler
     private String secondPlayer; // maakt de string voor de tweede speler
+    private Game game; // maakt het spel
 
     private String opponentName; // maakt de string voor de tegenstander
     public static ArrayList<String> answers = new ArrayList<>();
@@ -95,19 +100,40 @@ class Recieve extends Thread { // maakt de reciever voor de input
                         playerToMove = parsed[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler die aan de beurt is
                         opponentName = parsed[8].replace("\"", "").replace("}", ""); // maakt de string voor de tegenstander
                         if (gametype.equals("Tic-tac-toe")) { // als het speltype tic-tac-toe is
-                            Gui.gameScreen(3, 3);
+                            game = new TicTacToe(3, 3); // maakt het spel
+                            Gui.putOnTitle("Tic Tac Toe - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
                         }
-                        Gui.putOnTitle("Tic Tac Toe - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
+                        else if (gametype.equals("Reversi")) {
+                            game = new Othello(8, 8);
+                            Gui.putOnTitle("Othello - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
+                        }
                     }
                     if (input.contains("SVR GAME YOURTURN")) { // als de input je beurt is
-                        Gui.enableAllButtons(); // zet alle knoppen aan
-                        if (Gui.isAI) { // als de tegenstander een AI is
-                            TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
-                            if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
-                                Gui.moveAI('X'); // laat de AI een zet doen
+                        if (Game.gameName.equals("TicTacToe")) {
+                            game.enableButtons('X'); // zet alle knoppen aan
+                            if (Gui.isAI) { // als de tegenstander een AI is
+                                TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
+                                if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
+                                    game.moveAI('X'); // laat de AI een zet doen
+                                } else { // als de tegenstander aan de beurt is
+                                    game.moveAI('O'); // laat de AI een zet doen
+                                }
                             }
-                            else { // als de tegenstander aan de beurt is
-                                Gui.moveAI('O'); // laat de AI een zet doen
+                        }
+                        else if (Game.gameName.equals("Othello")) {
+                            if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
+                                game.enableButtons('•'); // zet de knoppen aan
+
+                            } else { // als de tegenstander aan de beurt is
+                                game.enableButtons('○'); // zet de knoppen aan
+                            }
+                            if (Gui.isAI) { // als de tegenstander een AI is
+                                TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
+                                // if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
+                                //     Othello.moveAI('X'); // laat de AI een zet doen
+                                // } else { // als de tegenstander aan de beurt is
+                                //     Othello.moveAI('O'); // laat de AI een zet doen
+                                // }
                             }
                         }
                     }
@@ -123,12 +149,24 @@ class Recieve extends Thread { // maakt de reciever voor de input
                             firstPlayer = Gui.userNamePub; // maakt de string voor de tweede speler
                         }
                         if (moves % 2 == 0) { // als de moves even zijn
-                            Gui.putOnTitle("Tic Tac Toe - " + firstPlayer + " is aan de beurt"); // zet de titel op de eerste speler
-                            Gui.serverAdd(move, 'X'); // zet de O op het bord
+                            if (Game.gameName.equals("TicTacToe")) {
+
+                                Gui.putOnTitle(firstPlayer + " is aan de beurt"); // zet de titel op de eerste speler
+                                game.serverAdd(move, 'X'); // zet de  op het bord
+                            }
+                            else if (Game.gameName.equals("Othello")) {
+                                game.serverAdd(move, '•'); // zet de • op het bord
+                            }
+                            
 
                         } else { // oneven
-                            Gui.putOnTitle("Tic Tac Toe - " + secondPlayer + " is aan de beurt"); // zet de titel op de tweede speler
-                            Gui.serverAdd(move, 'O'); // zet de X op het bord
+                            if (Game.gameName.equals("TicTacToe")) {
+                                Gui.putOnTitle(secondPlayer + " is aan de beurt"); // zet de titel op de tweede speler
+                                game.serverAdd(move, 'O'); // zet de O op het bord
+                            }
+                            else if (Game.gameName.equals("Othello")) {
+                                game.serverAdd(move, '○'); // zet de ○ op het bord
+                            }
                         }
 
                     }

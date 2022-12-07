@@ -1,11 +1,17 @@
 package ticTacToe;
-import gameFramework.Board;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.text.Position;
+
+import gameFramework.Connection;
 import gameFramework.Game;
+import gameFramework.Gui;
 
 public class TicTacToe extends Game {
 
     public TicTacToe(int width, int height){
-        super(width, height);
+        super(width, height, "TicTacToe");
 
     }
 
@@ -118,15 +124,56 @@ public class TicTacToe extends Game {
      * @return
      */
 
-    public Boolean winDiagonalRight(char piecs){
+    public Boolean winDiagonalRight(char piecs) {
 
-        for(int row = 0; row < getHeight()-2; row++){
-            for(int col = 0; col < getWidth()-2; col++){
-                if(getBoard()[row][getWidth()-1] == piecs &&
-                        getBoard()[row+1][getWidth() -2] == piecs &&
-                        getBoard()[row+2][getWidth() -3] == piecs){return true;}
+        for (int row = 0; row < getHeight() - 2; row++) {
+            for (int col = 0; col < getWidth() - 2; col++) {
+                if (getBoard()[row][getWidth() - 1] == piecs &&
+                        getBoard()[row + 1][getWidth() - 2] == piecs &&
+                        getBoard()[row + 2][getWidth() - 3] == piecs) {
+                    return true;
+                }
             }
         }
         return false;
+    }
+    
+    public void moveAI(char piece) { // maakt de moveAI methode
+
+        TicTacToe convertedboard = convertTicTacToeBoard(Game.width, Game.height); // maakt een nieuw bord met de breedte en hoogte van het bord
+        int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1; // maakt een int met de waarde van de move van de AiForTicTacToe
+        try { // probeert
+            Connection.send("move " + move); // stuurt move + de waarde van move naar de server
+        } catch (IOException e) { // als er een error is
+            throw new RuntimeException(e); // print de error naar de console
+        }
+    }
+
+    private static TicTacToe convertTicTacToeBoard(int width, int height) { // maakt de convertBoard methode
+        TicTacToe board = new TicTacToe(width, height); // maakt een nieuw bord met de breedte en hoogte van het bord
+        for (int i = 0; i < width * height; i++) { // loopt door het bord
+            if (Gui.JButtons[i].getText().equals("X")) { // kijkt of de tekst van de button X is
+                board.add('X', i + 1); // voegt X toe aan het bord op de positie van i + 1
+            } else if (Gui.JButtons[i].getText().equals("O")) { // kijkt of de tekst van de button O is
+                board.add('O', i + 1); // voegt O toe aan het bord op de positie van i + 1
+            }
+
+        }
+        return board; // geeft het bord terug
+    }
+
+    @Override
+    public void enableButtons(char piece) { // maakt de enableAllButtons methode
+        for (JButton button : Gui.JButtons) { // loopt door de array
+            if (button.getText().equals("")) { // kijkt of de tekst van de button leeg is
+                button.setEnabled(true); // zet de button op enabled
+            }
+        }
+    }
+    
+    @Override
+    public void serverAdd(int position, char piece) {
+        Gui.JButtons[position].setText(String.valueOf(piece)); // zet de tekst van de button op de waarde van piece
+        Gui.JButtons[position].setEnabled(false); // zet de button op disabled
     }
 }

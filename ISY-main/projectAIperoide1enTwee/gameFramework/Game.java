@@ -1,16 +1,25 @@
 package gameFramework;
 
+
 /**
  * @author Ihab Al-Safadi
  */
 
-public class Game extends Board{
+abstract public class Game extends Board{
     public Game(int size) {
         super(size);
     }
+    
+    public static String gameName;
+    public static int width;
+    public static int height;
 
-    public Game(int width, int height) {
+    public Game(int width, int height, String gameName) {
         super(width, height);
+        Game.gameName = gameName;
+        Game.width = width;
+        Game.height = height;
+        Gui.gameScreen(width, height);
     }
 
     public int[] coordinate(int position){
@@ -48,9 +57,18 @@ public class Game extends Board{
     /**
      * Removes a move from the board.
      */
-    public void remove(char teken, int position){
+    public void remove(char teken, int position) {
         int[] coordinates = coordinate(position);
-        if(getBoard()[coordinates[0]][coordinates[1]] !=' '){getBoard()[coordinates[0]][coordinates[1]] = ' ';}
-        else {System.out.println("Deze plek is niet beschikbaar");}
+        if (getBoard()[coordinates[0]][coordinates[1]] != ' ') {
+            getBoard()[coordinates[0]][coordinates[1]] = ' ';
+        } else {
+            System.out.println("Deze plek is niet beschikbaar");
+        }
     }
+    
+    abstract public void enableButtons(char piece);
+
+    abstract public void moveAI(char piece);
+    
+    abstract public void serverAdd(int position, char piece);
 }

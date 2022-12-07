@@ -1,6 +1,9 @@
 package othello;
 
 import gameFramework.Game;
+import gameFramework.Gui;
+
+import java.io.Console;
 import java.lang.Math;
 
 /**
@@ -10,10 +13,22 @@ public class Othello extends Game {
 
     public Othello(int size) {
         super(size);
+        startPositions();
     }
 
     public Othello(int width, int height) {
-        super(width, height);
+        super(width, height, "Othello");
+        startPositions();
+        convertToJButtons();
+    }
+
+    private void startPositions() {
+        getBoard()[3][3] = '•';
+        getBoard()[3][4] = '○';
+        getBoard()[4][3] = '○';
+        getBoard()[4][4] = '•';
+
+
     }
 
     /**
@@ -43,7 +58,7 @@ public class Othello extends Game {
     private boolean adjacentTiles(int position, char piece){
         char myPiece = piece;
         char oppPiece = ' ';
-        if(piece == 'b'){oppPiece = 'w';} else {oppPiece = 'b';}
+        if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
         int[] coordsMove = coordinate(position);
         char[][] board = getBoard();
         boolean legalMove = false;
@@ -108,10 +123,9 @@ public class Othello extends Game {
     public void flipPiece(int position, char piece){
         char myPiece = piece;
         char oppPiece = ' ';
-        if(piece == 'b'){oppPiece = 'w';} else {oppPiece = 'b';}
+        if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
         int[] coordsMove = coordinate(position);
         char[][] board = getBoard();
-        boolean legalMove = false;
 
         // right
         if(coordsMove[0]+1 < 8 && board[coordsMove[0]+1][coordsMove[1]] == oppPiece){
@@ -184,9 +198,47 @@ public class Othello extends Game {
         int oppPieceCount = 0;
         for (int row = 0; row < getHeight(); row++) {
             for (int col = 0; col < getWidth(); col++) {
-                if(getBoard()[row][col] == piece){pieceCount++;} else {oppPieceCount++;}
+                if (getBoard()[row][col] == piece) {
+                    pieceCount++;
+                } else {
+                    oppPieceCount++;
+                }
             }
         }
         return pieceCount > oppPieceCount;
+    }
+    
+    public void convertToJButtons() {
+        int counter = 0;
+        for (int i = 0; i < Game.height; i++) {
+            for (int j = 0; j < Game.width; j++) {
+                if ((getBoard()[i][j] != ' ')) {
+                    Gui.JButtons[counter].setText(String.valueOf(getBoard()[i][j]));
+                }
+                counter++;
+            }
+        }
+    }
+    @Override
+    public void enableButtons(char piece) {
+        for (int i = 0; i < Game.width * Game.height; i++) {
+            boolean allow = allowMoveOthello(i, piece);
+            System.out.println(allow);
+            if (allow) {
+                Gui.JButtons[i].setEnabled(true);
+            } else {
+                Gui.JButtons[i].setEnabled(false);
+            }
+        }
+    }
+
+    @Override
+    public void moveAI(char piece) {
+
+    }
+    @Override
+    public void serverAdd(int position, char piece) { // maakt de serverAdd method
+            add(piece, position); // roept de add methode aan van Othello
+            convertToJButtons();
     }
 }
