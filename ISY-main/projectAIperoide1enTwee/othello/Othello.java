@@ -39,68 +39,45 @@ public class Othello extends Game {
      * @return true if any adjacent tiles are an opponent's tile
      * @author Aaldert Kroes
      */
-    // negeer dit, ben aan het kutten geweest en het lukt niet :P
     private boolean adjacentTiles(int position, char piece){
         char myPiece = piece;
         char oppPiece = ' ';
         if(piece == 'b'){oppPiece = 'w';} else {oppPiece = 'b';}
         int[] coordsMove = coordinate(position);
         char[][] board = getBoard();
-        int[][] adjacentCoords = new int[8][2];
+        boolean legalMove = false;
 
-        // general
-        if(coordsMove[0] >= 0 && coordsMove[0] <= 7 && coordsMove[1] >= 0 && coordsMove[1] >= 7){
-            adjacentCoords[0][0] = coordsMove[0]-1; // top left
-            adjacentCoords[0][1] = coordsMove[1]-1;
-            adjacentCoords[1][0] = coordsMove[0]-1; // left middle
-            adjacentCoords[1][1] = coordsMove[0];
-            adjacentCoords[2][0] = coordsMove[0]-1; // bottom left
-            adjacentCoords[2][1] = coordsMove[0]+1;
-            adjacentCoords[3][0] = coordsMove[0]+1; // top right
-            adjacentCoords[3][1] = coordsMove[0]-1;
-            adjacentCoords[4][0] = coordsMove[0]+1; // right middle
-            adjacentCoords[4][1] = coordsMove[0];
-            adjacentCoords[5][0] = coordsMove[0]+1; // bottom right
-            adjacentCoords[5][1] = coordsMove[0]+1;
-            adjacentCoords[6][0] = coordsMove[0];   // top middle
-            adjacentCoords[6][1] = coordsMove[0]-1;
-            adjacentCoords[7][0] = coordsMove[0];   // bottom middle
-            adjacentCoords[7][1] = coordsMove[0]+1;
-        }
-
-        // top-left corner
-        if(coordsMove[0] == 0 && coordsMove[1] == 0){
-            adjacentCoords[4][0] = coordsMove[0]+1; // right middle
-            adjacentCoords[4][1] = coordsMove[0];
-            adjacentCoords[5][0] = coordsMove[0]+1; // bottom right
-            adjacentCoords[5][1] = coordsMove[0]+1;
-            adjacentCoords[7][0] = coordsMove[0];   // bottom middle
-            adjacentCoords[7][1] = coordsMove[0]+1;
-            for (int j = 3; j < adjacentCoords.length; j++) {
-                
+        // right
+        if(coordsMove[0]+1 < 8 && board[coordsMove[0]+1][coordsMove[1]] == oppPiece){
+            for (int i = coordsMove[0]+1; i < 8; i++) {
+                if(board[i][coordsMove[1]] == myPiece){legalMove = true; break;}
             }
         }
-
-        // top-right corner
-        if(coordsMove[0] == 7 && coordsMove[1] == 0){
-
-        }
-        // bottom-left corner
-        if(coordsMove[0] == 0 && coordsMove[1] == 7){
-
-        }
-        // bottom-right corner
-        if(coordsMove[0] == 7 && coordsMove[1] == 7){
-
-        }
-
-        // final loop
-        for (int i = 0; i < adjacentCoords.length; i++) {
-            if(adjacentCoords[i][0]!= 10 && board[i][0] == oppPiece){
-                return true;
+        // left
+        if(coordsMove[0]-1 >= 0 && board[coordsMove[0]-1][coordsMove[1]] == oppPiece){
+            for (int i = coordsMove[0]-1; i >=0; i--) {
+                if(board[i][coordsMove[1]] == myPiece){legalMove = true; break;}
             }
         }
-        return false;
+        // up
+        if(coordsMove[1]-1 >= 0 && board[coordsMove[0]][coordsMove[1]-1] == oppPiece){
+            for (int i = coordsMove[1]-1; i >= 0; i--) {
+                if(board[coordsMove[0]][i] == myPiece){ legalMove = true; break;}
+            }
+        }
+        // down
+        if(coordsMove[1]+1 < 8 && board[coordsMove[0]][coordsMove[1]+1] == oppPiece){
+            for (int i = coordsMove[1]+1; i < 8; i++) {
+                if(board[coordsMove[0]][i] == myPiece){legalMove = true; break;}
+            }
+        }
+        // left-diagonal up
+        if(coordsMove[1]-1 >= 0 && coordsMove[0]-1 >= 0 && board[coordsMove[0]-1][coordsMove[1]-1] == oppPiece){
+            for (int i = 0; i < ; i++) {
+
+            }
+        }
+        return legalMove;
     }
 
     /**
