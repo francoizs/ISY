@@ -98,6 +98,80 @@ public class Othello extends Game {
         }
         return legalMove;
     }
+    
+    /**
+     * @author Ihab Al-Safadi
+     * @param position
+     * @param piece
+     */
+
+    public void flipPiece(int position, char piece){
+        char myPiece = piece;
+        char oppPiece = ' ';
+        if(piece == 'b'){oppPiece = 'w';} else {oppPiece = 'b';}
+        int[] coordsMove = coordinate(position);
+        char[][] board = getBoard();
+        boolean legalMove = false;
+
+        // right
+        if(coordsMove[0]+1 < 8 && board[coordsMove[0]+1][coordsMove[1]] == oppPiece){
+            for (int i = coordsMove[0]+1; i < 8; i++) {
+                if(board[i][coordsMove[1]] == oppPiece){board[i][coordsMove[1]] = piece;}
+                if(board[i][coordsMove[1]] == myPiece){break;}
+            }
+        }
+        // left
+        if(coordsMove[0]-1 >= 0 && board[coordsMove[0]-1][coordsMove[1]] == oppPiece){
+            for (int i = coordsMove[0]-1; i >=0; i--) {
+                if(board[i][coordsMove[1]] == oppPiece){board[i][coordsMove[1]] = piece;}
+                if(board[i][coordsMove[1]] == myPiece){break;}
+            }
+        }
+        // up
+        if(coordsMove[1]-1 >= 0 && board[coordsMove[0]][coordsMove[1]-1] == oppPiece){
+            for (int i = coordsMove[1]-1; i >= 0; i--) {
+                if(board[coordsMove[0]][i] == oppPiece){ board[coordsMove[0]][i] = piece;}
+                if(board[coordsMove[0]][i]== myPiece){break;}
+            }
+        }
+        // down
+        if(coordsMove[1]+1 < 8 && board[coordsMove[0]][coordsMove[1]+1] == oppPiece){
+            for (int i = coordsMove[1]+1; i < 8; i++) {
+                if(board[coordsMove[0]][i] == oppPiece){board[coordsMove[0]][i] = piece;}
+                if(board[coordsMove[0]][i]== myPiece){break;}
+            }
+        }
+        // left-diagonal up
+        if(coordsMove[1]-1 >= 0 && coordsMove[0]-1 >= 0 && board[coordsMove[0]-1][coordsMove[1]-1] == oppPiece){
+            for (int i = 1; i < Math.min(coordsMove[0], coordsMove[1]); i++) {
+                if(board[coordsMove[0]-i][coordsMove[1]-i] == oppPiece){board[coordsMove[0]-i][coordsMove[1]-i] = piece;}
+                if(board[coordsMove[0]-i][coordsMove[1]-i]== myPiece){break;}
+            }
+        }
+        // left-diagonal down
+        if(coordsMove[1]-1 < 8 && coordsMove[0]+1 < 8 && board[coordsMove[0]-1][coordsMove[1]+1] == oppPiece){
+            for (int i = 1; i < Math.min(coordsMove[0], 8-coordsMove[1]); i++) {
+                if(board[coordsMove[0]-i][coordsMove[1]+i] == oppPiece){board[coordsMove[0]-i][coordsMove[1]+i] = piece;}
+                if(board[coordsMove[0]-i][coordsMove[1]+i]== myPiece){break;}
+            }
+        }
+        // right-diagonal up
+        if(coordsMove[1]+1 < 8 && coordsMove[0]-1 < 8 && board[coordsMove[0]+1][coordsMove[1]-1] == oppPiece){
+            for (int i = 1; i < Math.min(8-coordsMove[0], coordsMove[1]); i++) {
+                if(board[coordsMove[0]+i][coordsMove[1]-i] == oppPiece){board[coordsMove[0]+i][coordsMove[1]-i] = piece;}
+                if(board[coordsMove[0]+i][coordsMove[1]-i] == myPiece){break;}
+            }
+        }
+        // right-diagonal down
+        if(coordsMove[1]+1 < 8 && coordsMove[0]+1 < 8 && board[coordsMove[0]+1][coordsMove[1]+1] == oppPiece){
+            for (int i = 1; i < 8-Math.max(coordsMove[0], coordsMove[1]); i++) {
+                if(board[coordsMove[0]+i][coordsMove[1]+i] == oppPiece){board[coordsMove[0]+i][coordsMove[1]+i] = piece;}
+                if(board[coordsMove[0]+i][coordsMove[1]+i]== myPiece){break;}
+            }
+        }
+
+
+    }
 
     /**
      * Checks whether player or opponent wins
