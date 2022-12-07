@@ -1,6 +1,7 @@
 package othello;
 
 import gameFramework.Game;
+import java.lang.Math;
 
 /**
  * @author Ihab Al-Safadi
@@ -73,8 +74,26 @@ public class Othello extends Game {
         }
         // left-diagonal up
         if(coordsMove[1]-1 >= 0 && coordsMove[0]-1 >= 0 && board[coordsMove[0]-1][coordsMove[1]-1] == oppPiece){
-            for (int i = 0; i < ; i++) {
-
+            for (int i = 1; i < Math.min(coordsMove[0], coordsMove[1]); i++) {
+                if(board[coordsMove[0]-i][coordsMove[1]-i] == myPiece){legalMove = true; break;}
+            }
+        }
+        // left-diagonal down
+        if(coordsMove[1]-1 < 8 && coordsMove[0]+1 < 8 && board[coordsMove[0]-1][coordsMove[1]+1] == oppPiece){
+            for (int i = 1; i < Math.min(coordsMove[0], 8-coordsMove[1]); i++) {
+                if(board[coordsMove[0]-i][coordsMove[1]+i] == myPiece){legalMove = true; break;}
+            }
+        }
+        // right-diagonal up
+        if(coordsMove[1]+1 < 8 && coordsMove[0]-1 < 8 && board[coordsMove[0]+1][coordsMove[1]-1] == oppPiece){
+            for (int i = 1; i < Math.min(8-coordsMove[0], coordsMove[1]); i++) {
+                if(board[coordsMove[0]+i][coordsMove[1]-i] == myPiece){legalMove = true; break;}
+            }
+        }
+        // right-diagonal down
+        if(coordsMove[1]+1 < 8 && coordsMove[0]+1 < 8 && board[coordsMove[0]+1][coordsMove[1]+1] == oppPiece){
+            for (int i = 1; i < 8-Math.max(coordsMove[0], coordsMove[1]); i++) {
+                if(board[coordsMove[0]+i][coordsMove[1]+i] == myPiece){legalMove = true; break;}
             }
         }
         return legalMove;
