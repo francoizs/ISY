@@ -244,7 +244,8 @@ public class Gui {
                 JButtons[i].addActionListener(e -> { // voegt een actionlistener toe aan de button
                     if (JButtons[finalI].isEnabled()) { // kijkt of de button enabled is
                         try {
-                            Connection.send("move " + finalI); // stuurt move + de waarde van i naar de server
+                            System.out.println("move " + finalI); // print move + de waarde van i naar de console
+                            Connection.send("move " + (finalI)); // stuurt move + de waarde van i naar de server
                         } catch (IOException ex) {
                             throw new RuntimeException(ex); // print de error naar de console
                         } finally {

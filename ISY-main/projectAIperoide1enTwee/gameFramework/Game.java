@@ -27,7 +27,7 @@ abstract public class Game extends Board{
          * // Deze methode neemt de position die de speler wil doen, en geeft de coordinates op het board terug.
          * Vervolgens  worden de coordinates gestuurd naar de add methode om een zet te doen op het board
          */
-        int counter =  0;
+        int counter =  -1;
         int[] coordinate= {0,0};
         for (int row=0; row< getHeight(); row++){
             for (int col = 0; col< getWidth(); col++){

@@ -25,7 +25,7 @@ public class Connection {
                 // de poort waarop de server luistert
                 int PORT = 7789;
                 // het IP-adres van de server
-                String HOST = "localhost";
+                String HOST = "145.33.225.170";
                 socket = new Socket(HOST, PORT);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -122,10 +122,10 @@ class Recieve extends Thread { // maakt de reciever voor de input
                         }
                         else if (Game.gameName.equals("Othello")) {
                             if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
-                                game.enableButtons('•'); // zet de knoppen aan
+                                game.enableButtons('◦'); // zet de knoppen aan
 
                             } else { // als de tegenstander aan de beurt is
-                                game.enableButtons('○'); // zet de knoppen aan
+                                game.enableButtons('•'); // zet de knoppen aan
                             }
                             if (Gui.isAI) { // als de tegenstander een AI is
                                 TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
@@ -155,7 +155,7 @@ class Recieve extends Thread { // maakt de reciever voor de input
                                 game.serverAdd(move, 'X'); // zet de  op het bord
                             }
                             else if (Game.gameName.equals("Othello")) {
-                                game.serverAdd(move, '•'); // zet de • op het bord
+                                game.serverAdd(move, '◦'); // zet de • op het bord
                             }
                             
 
@@ -165,7 +165,7 @@ class Recieve extends Thread { // maakt de reciever voor de input
                                 game.serverAdd(move, 'O'); // zet de O op het bord
                             }
                             else if (Game.gameName.equals("Othello")) {
-                                game.serverAdd(move, '○'); // zet de ○ op het bord
+                                game.serverAdd(move, '•'); // zet de ○ op het bord
                             }
                         }
 
