@@ -66,9 +66,9 @@ abstract public class Game extends Board{
         }
     }
     
-    abstract public void enableButtons(char piece);
+    abstract public void enableButtons(char piece); // enable buttons for the player
 
-    abstract public void moveAI(char piece);
+    abstract public void moveAI(char piece); // move the AI
     
-    abstract public void serverAdd(int position, char piece);
+    abstract public void serverAdd(int position, char piece); // add a move to the server
 }

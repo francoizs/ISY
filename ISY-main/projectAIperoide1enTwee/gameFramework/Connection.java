@@ -152,7 +152,7 @@ class Recieve extends Thread { // maakt de reciever voor de input
                             if (Game.gameName.equals("TicTacToe")) {
 
                                 Gui.putOnTitle(firstPlayer + " is aan de beurt"); // zet de titel op de eerste speler
-                                game.serverAdd(move, 'X'); // zet de  op het bord
+                                game.serverAdd(move, 'X'); // zet de X op het bord
                             }
                             else if (Game.gameName.equals("Othello")) {
                                 game.serverAdd(move, '◦'); // zet de • op het bord

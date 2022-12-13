@@ -300,37 +300,37 @@ public class Othello extends Game {
         return pieceCount > oppPieceCount;
     }
     
-    public void convertToJButtons() {
-        int counter = 0;
-        for (int i = 0; i < Game.height; i++) {
-            for (int j = 0; j < Game.width; j++) {
-                if ((getBoard()[i][j] != ' ')) {
-                    Gui.JButtons[counter].setText(String.valueOf(getBoard()[i][j]));
+    public void convertToJButtons() { // converts the board to JButtons
+        int counter = 0; // counter for the JButtons
+        for (int i = 0; i < Game.height; i++) { // loops through the board
+            for (int j = 0; j < Game.width; j++) { // loops through the board
+                if ((getBoard()[i][j] != ' ')) { // checks if the board is not empty
+                    Gui.JButtons[counter].setText(String.valueOf(getBoard()[i][j])); // sets the text of the JButtons to the board
                 }
-                counter++;
+                counter++; // adds 1 to the counter
             }
         }
     }
     @Override
-    public void enableButtons(char piece) {
-        for (int i = 0; i < Game.width * Game.height; i++) {
-            boolean allow = allowMoveOthello(i, piece);
-            if (allow) {
-                Gui.JButtons[i].setEnabled(true);
-            } else {
-                Gui.JButtons[i].setEnabled(false);
+    public void enableButtons(char piece) { // enables the buttons
+        for (int i = 0; i < Game.width * Game.height; i++) { // loops through the JButtons
+            boolean allow = allowMoveOthello(i, piece); // checks if the move is allowed
+            if (allow) { // checks if the move is allowed
+                Gui.JButtons[i].setEnabled(true); // enables the button
+            } else { // if the move is not allowed
+                Gui.JButtons[i].setEnabled(false); // disables the button
             }
         }
     }
 
     @Override
-    public void moveAI(char piece) {
+    public void moveAI(char piece) { 
 
     }
     @Override
     public void serverAdd(int position, char piece) { // maakt de serverAdd method
         add(piece, position); // roept de add methode aan van Othello
-        flipPiece(position, piece);
-        convertToJButtons();
+        flipPiece(position, piece); // roept de flipPiece methode aan van Othello
+        convertToJButtons(); // roept de convertToJButtons methode aan van Othello
     }
 }
