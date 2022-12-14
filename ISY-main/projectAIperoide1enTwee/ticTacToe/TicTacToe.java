@@ -176,4 +176,15 @@ public class TicTacToe extends Game {
         Gui.JButtons[position].setText(String.valueOf(piece)); // zet de tekst van de button op de waarde van piece
         Gui.JButtons[position].setEnabled(false); // zet de button op disabled
     }
+
+    @Override
+    public char oppPiece(char piece) {
+        char oppPiece = ' '; // maakt een char met de waarde van een spatie
+        if (piece == 'X') { // kijkt of de waarde van piece X is
+            oppPiece = 'O'; // zet de waarde van oppPiece op O
+        } else if (piece == 'O') { // kijkt of de waarde van piece O is
+            oppPiece = 'X'; // zet de waarde van oppPiece op X
+        }
+        return oppPiece; // geeft de waarde van oppPiece terug
+    }
 }

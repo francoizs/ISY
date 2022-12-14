@@ -71,4 +71,6 @@ abstract public class Game extends Board{
     abstract public void moveAI(char piece); // move the AI
     
     abstract public void serverAdd(int position, char piece); // add a move to the server
+
+    abstract public char oppPiece(char piece); // get the opponent piece
 }

@@ -14,7 +14,7 @@ import ticTacToe.TicTacToe;
 * @author Francois Dieleman
 */
 class Recieve extends Thread { // maakt de reciever voor de input
-
+    private char piece; // maakt het stukje voor de speler
     private String playerToMove; // maakt de string voor de speler die aan de beurt is
     private String firstPlayer; // maakt de string voor de eerste speler
     private String secondPlayer; // maakt de string voor de tweede speler
@@ -61,36 +61,31 @@ class Recieve extends Thread { // maakt de reciever voor de input
         playerToMove = parsedInput[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler die aan de beurt is
         opponentName = parsedInput[8].replace("\"", "").replace("}", ""); // maakt de string voor de tegenstander
         if (gametype.equals("Tic-tac-toe")) { // als het speltype tic-tac-toe is
-            game = new TicTacToe(3, 3); // maakt het spel
+            piece = 'X'; // zet het stukje op X
+            game = new TicTacToe(3, 3, piece); // maakt het spel
             Gui.putOnTitle("Tic Tac Toe - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
         } else if (gametype.equals("Reversi")) {
-            game = new Othello(8, 8);
+            piece = '◦';
+            game = new Othello(8, 8, piece);
             Gui.putOnTitle("Othello - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
         }
     }
     
     private void yourTurn() throws InterruptedException {
-        if (Game.gameName.equals("TicTacToe")) {
-            game.enableButtons('X'); // zet alle knoppen aan
+            if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
+                game.enableButtons(piece); // zet de knoppen aan
+
+            } else { // als de tegenstander aan de beurt is
+                game.enableButtons(game.oppPiece(piece)); // zet de knoppen aan
+            }
             if (Gui.isAI) { // als de tegenstander een AI is
                 TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
                 if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
-                    game.moveAI('X'); // laat de AI een zet doen
+                    game.moveAI(piece); // laat de AI een zet doen
                 } else { // als de tegenstander aan de beurt is
-                    game.moveAI('O'); // laat de AI een zet doen
+                    game.moveAI(game.oppPiece(piece)); // laat de AI een zet doen
                 }
             }
-        } else if (Game.gameName.equals("Othello")) {
-            if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
-                game.enableButtons('◦'); // zet de knoppen aan
-
-            } else { // als de tegenstander aan de beurt is
-                game.enableButtons('•'); // zet de knoppen aan
-            }
-            if (Gui.isAI) { // als de tegenstander een AI is
-                TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
-            }
-        }
     }
     
     private void move(String[] parsedInput) {
@@ -104,21 +99,12 @@ class Recieve extends Thread { // maakt de reciever voor de input
             firstPlayer = Gui.userNamePub; // maakt de string voor de tweede speler
         }
         if (moves % 2 == 0) { // als de moves even zijn
-            if (Game.gameName.equals("TicTacToe")) {
-
                 Gui.putOnTitle(firstPlayer + " is aan de beurt"); // zet de titel op de eerste speler
-                game.serverAdd(move, 'X'); // zet de X op het bord
-            } else if (Game.gameName.equals("Othello")) {
-                game.serverAdd(move, '◦'); // zet de • op het bord
-            }
+                game.serverAdd(move, piece); // zet de X op het bord
 
         } else { // oneven
-            if (Game.gameName.equals("TicTacToe")) {
                 Gui.putOnTitle(secondPlayer + " is aan de beurt"); // zet de titel op de tweede speler
-                game.serverAdd(move, 'O'); // zet de O op het bord
-            } else if (Game.gameName.equals("Othello")) {
-                game.serverAdd(move, '•'); // zet de ○ op het bord
-            }
+                game.serverAdd(move, game.oppPiece(piece)); // zet de O op het bord
         }
     }
     
