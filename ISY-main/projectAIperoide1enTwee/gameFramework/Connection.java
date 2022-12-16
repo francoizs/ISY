@@ -19,7 +19,7 @@ public class Connection {
                 // de poort waarop de server luistert
                 int PORT = 7789;
                 // het IP-adres van de server
-                String HOST = "game.bier.dev";
+                String HOST = "localhost";
                 socket = new Socket(HOST, PORT);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
