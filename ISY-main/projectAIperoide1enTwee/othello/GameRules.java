@@ -20,7 +20,6 @@ public class GameRules {
         }
         return false;
     }
-
     public static boolean rightTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
         if(xCoord + 1 < 8){
             if (board[xCoord+1][yCoord] == oppPiece){
@@ -32,7 +31,6 @@ public class GameRules {
         }
         return false;
     }
-
     public static boolean upTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
         if(yCoord-1 >= 0){
             if(board[xCoord][yCoord-1] == oppPiece){
@@ -44,7 +42,6 @@ public class GameRules {
         }
         return false;
     }
-
     public static boolean downTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
         if(yCoord+1 < 8){
             if(board[xCoord][yCoord+1] == oppPiece){
@@ -56,7 +53,6 @@ public class GameRules {
         }
         return false;
     }
-
     public static boolean diagLeftUpTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
         if(xCoord-1 >= 0 && yCoord-1 >= 0){
             if(board[xCoord-1][yCoord-1] == oppPiece){
@@ -68,7 +64,6 @@ public class GameRules {
         }
         return false;
     }
-
     public static boolean diagLeftDownTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
         if(yCoord+1 < 8 && xCoord-1 >= 0){
             if(board[xCoord-1][yCoord+1] == oppPiece){
@@ -80,7 +75,6 @@ public class GameRules {
         }
         return false;
     }
-
     public static boolean diagRightUpTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
         if(yCoord-1 >= 0 && xCoord+1 < 8){
             if(board[xCoord+1][yCoord-1] == oppPiece){
@@ -92,7 +86,6 @@ public class GameRules {
         }
         return false;
     }
-
     public static boolean diagRightDownTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
         if(yCoord+1 < 8 && xCoord+1 < 8){
             if(board[xCoord+1][yCoord+1] == oppPiece){

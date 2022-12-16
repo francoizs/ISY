@@ -128,17 +128,8 @@ public class Othello extends Game {
      * @author Aaldert Kroes
      */
     public boolean winOthello(char piece) {
-        int pieceCount = 0;
-        int oppPieceCount = 0;
-        for (int row = 0; row < getHeight(); row++) {
-            for (int col = 0; col < getWidth(); col++) {
-                if (getBoard()[row][col] == piece) {
-                    pieceCount++;
-                } else {
-                    oppPieceCount++;
-                }
-            }
-        }
+        int pieceCount = pieceCounter(piece);
+        int oppPieceCount = pieceCounter(oppPiece(piece));
         return pieceCount > oppPieceCount;
     }
 
