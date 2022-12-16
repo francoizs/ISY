@@ -175,6 +175,23 @@ public class Gui {
             }
         });
 
+        JLabel player = new JLabel("Wil je toch veranderen van speler?"); // maakt een label met de tekst Is de speler een AI?
+        player.setBounds(10, 20, 100, 40); // zet de positie en grootte van de label
+        player.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
+
+        JButton yes = new JButton("AI"); // maakt een button met de tekst Ja
+        yes.setBounds(10, 80, 100, 25); // zet de positie en grootte van de button
+        yes.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
+        yes.addActionListener(e -> { // voegt een actionlistener toe aan de button
+            isAI = true; // zet isAI op true
+        });
+        JButton no = new JButton("Human"); // maakt een button met de tekst Nee
+        no.setBounds(120, 80, 100, 25); // zet de positie en grootte van de button
+        no.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
+        no.addActionListener(e -> { // voegt een actionlistener toe aan de button
+            isAI = false; // zet isAI op false
+        });
+
         JLabel command = new JLabel("Of stuur een ander command naar de server:"); // maakt een label met de tekst Of stuur een ander command naar de server:
         command.setBounds(10, 140, 300, 100); // zet de positie en grootte van de label
         command.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
@@ -218,6 +235,9 @@ public class Gui {
         panel.add(game); // voegt de label toe aan het panel
         panel.add(TicTacToe); // voegt de button toe aan het panel
         panel.add(Othello); // voegt de button toe aan het panel
+        panel.add(player); // voegt de label toe aan het panel
+        panel.add(yes); // voegt de button toe aan het panel
+        panel.add(no); // voegt de button toe aan het panel
         panel.add(command); // voegt de label toe aan het panel
         panel.add(commandText); // voegt de textfield toe aan het panel
         panel.add(send); // voegt de button toe aan het panel
@@ -265,7 +285,7 @@ public class Gui {
     }
 
     
-    private static void disableAllButtons() { // maakt de disableAllButtons methode
+    public static void disableAllButtons() { // maakt de disableAllButtons methode
         for (JButton button : JButtons) { // loopt door de array
             button.setEnabled(false); // zet de button op disabled
         }

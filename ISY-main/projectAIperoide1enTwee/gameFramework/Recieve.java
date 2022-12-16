@@ -72,20 +72,23 @@ class Recieve extends Thread { // maakt de reciever voor de input
     }
     
     private void yourTurn() throws InterruptedException {
+        if (!Gui.isAI) {
             if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
                 game.enableButtons(piece); // zet de knoppen aan
 
             } else { // als de tegenstander aan de beurt is
                 game.enableButtons(game.oppPiece(piece)); // zet de knoppen aan
             }
-            if (Gui.isAI) { // als de tegenstander een AI is
-                TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
-                if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
-                    game.moveAI(piece, 1); // laat de AI een zet doen
-                } else { // als de tegenstander aan de beurt is
-                    game.moveAI(game.oppPiece(piece), 2); // laat de AI een zet doen
-                }
+        }
+        else if (Gui.isAI) { // als de tegenstander een AI is
+            Gui.disableAllButtons(); // zet de knoppen uit
+            TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
+            if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
+                game.moveAI(piece, 1); // laat de AI een zet doen
+            } else { // als de tegenstander aan de beurt is
+                game.moveAI(game.oppPiece(piece), 2); // laat de AI een zet doen
             }
+        }
     }
     
     private void move(String[] parsedInput) {
