@@ -18,7 +18,9 @@ public class FlipPiece {
         }
 
     }
-    public static void leftTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
+
+    public static void leftTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board) {
+        System.out.println("Trying");
         int index= 0;
         if(xCoord - 1 >= 0){
             if(board[xCoord-1][yCoord] == oppPiece){
@@ -30,17 +32,23 @@ public class FlipPiece {
         }
 
     }
-    public static void rightTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
-        if(xCoord + 1 < 8){
+
+    public static void rightTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board) {
+        System.out.println("inside");
+        if (xCoord + 1 < 8) {
+            System.out.println("binnen");
             if (board[xCoord+1][yCoord] == oppPiece){
                 for (int i = xCoord + 1; i < 8; i++) {
+                    System.out.println("i: " + i);
                     if (board[i][yCoord] == ' ' || board[i][yCoord] == myPiece){break;}
                     if (board[i][yCoord] != myPiece) {board[i][yCoord] = myPiece;}
                 }
             }
         }
     }
-    public static void downTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
+
+    public static void downTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board) {
+        
         if(yCoord+1 < 8){
             if(board[xCoord][yCoord+1] == oppPiece){
                 for (int i = xCoord + 1; i < 8; i++) {

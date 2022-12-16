@@ -138,7 +138,8 @@ public class TicTacToe extends Game {
         return false;
     }
     
-    public void moveAI(char piece) { // maakt de moveAI methode
+    @Override
+    public void moveAI(char piece, int playernumber) { // maakt de moveAI methode
 
         TicTacToe convertedboard = convertTicTacToeBoard(Game.width, Game.height); // maakt een nieuw bord met de breedte en hoogte van het bord
         int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1; // maakt een int met de waarde van de move van de AiForTicTacToe

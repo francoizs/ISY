@@ -2,10 +2,12 @@
 package othello;
 
 import gameFramework.Gui;
+import ticTacToe.AiForTicTacToe;
 import gameFramework.*;
 
 
 import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -177,8 +179,14 @@ public class Othello extends Game {
     }
 
     @Override
-    public void moveAI(char piece) {
-
+    public void moveAI(char piece, int playernumber) {
+        AiForOthello ai = new AiForOthello(playernumber, piece); // maakt een AiForOthello object\
+        int move = ai.moveselectOthello(this, piece); // roept de moveselectOthello methode aan van AiForOthello
+        try { // probeert
+            Connection.send("move " + move); // stuurt move + de waarde van move naar de server
+        } catch (IOException e) { // als er een error is
+            throw new RuntimeException(e); // print de error naar de console
+        }
     }
 
     @Override

@@ -81,9 +81,9 @@ class Recieve extends Thread { // maakt de reciever voor de input
             if (Gui.isAI) { // als de tegenstander een AI is
                 TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
                 if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
-                    game.moveAI(piece); // laat de AI een zet doen
+                    game.moveAI(piece, 1); // laat de AI een zet doen
                 } else { // als de tegenstander aan de beurt is
-                    game.moveAI(game.oppPiece(piece)); // laat de AI een zet doen
+                    game.moveAI(game.oppPiece(piece), 2); // laat de AI een zet doen
                 }
             }
     }
