@@ -1,9 +1,12 @@
+
 package othello;
 
-import gameFramework.Game;
 import gameFramework.Gui;
+import gameFramework.*;
+
 
 import java.io.Console;
+import java.util.ArrayList;
 
 /**
  * @author Ihab Al-Safadi
@@ -15,8 +18,8 @@ public class Othello extends Game {
         startPositions();
     }
 
-    public Othello(int width, int height) {
-        super(width, height, "Othello");
+    public Othello(int width, int height, char piece) {
+        super(width, height, piece);
         startPositions();
         convertToJButtons();
     }
@@ -31,6 +34,7 @@ public class Othello extends Game {
     /**
      * Checks whether the move is allowed with the Othello rules, meaning:
      * Space must be empty, this position will enclose at least one opposing piece and the position isn't out of bounds.
+     *
      * @param position
      * @return boolean if move is allowed
      * @author Aaldert Kroes
@@ -46,31 +50,39 @@ public class Othello extends Game {
 
     /**
      * Returns a boolean based on whether any opponent's tiles surround the position
+     *
      * @param position
      * @param piece
      * @return true if any adjacent tiles are an opponent's tile
      * @author Aaldert Kroes
      */
-    private boolean adjacentTiles(int position, char piece){
+    private boolean adjacentTiles(int position, char piece) {
         char myPiece = piece;
-        char oppPiece = ' ';
-        if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
+        char oppPiece = oppPiece(piece);
+
         int[] coordsMove = coordinate(position);
         char[][] board = getBoard();
+        int[] myAllowPositions = new int[2];
 
-        boolean right = GameRules.rightTraverse(piece, coordsMove[0], coordsMove[1], board);                    // right
-        boolean left = GameRules.leftTraverse(piece, coordsMove[0], coordsMove[1], board);                      // left
-        boolean up = GameRules.upTraverse(piece, coordsMove[0], coordsMove[1], board);                          // up
-        boolean down = GameRules.downTraverse(piece, coordsMove[0], coordsMove[1], board);                      // down
+        boolean right = GameRules.rightTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);  // right
 
-        boolean diagLeftUp = GameRules.diagLeftUpTraverse(piece, coordsMove[0], coordsMove[1], board);          // diagonal left up
-        boolean diagLeftDown = GameRules.diagLeftDownTraverse(piece, coordsMove[0], coordsMove[1], board);      // diagonal left down
-        boolean diagRightUp = GameRules.diagRightUpTraverse(piece, coordsMove[0], coordsMove[1], board);        // diagonal right up
-        boolean diagRightDown = GameRules.diagRightDownTraverse(piece, coordsMove[0], coordsMove[1], board);    // diagonal right down
+        boolean left = GameRules.leftTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);    // left
+
+        boolean up = GameRules.upTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);        // up
+
+        boolean down = GameRules.downTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);    // down
+
+        boolean diagLeftUp = GameRules.diagLeftUpTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);    // diagLeftUp
+
+        boolean diagLeftDown = GameRules.diagLeftDownTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+
+        boolean diagRightUp = GameRules.diagRightUpTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+
+        boolean diagRightDown = GameRules.diagRightDownTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);    // diagonal right down
 
         return right || left || up || down || diagLeftUp || diagLeftDown || diagRightUp || diagRightDown;
     }
-    
+
     /**
      * @author Ihab Al-Safadi, Aaldert Kroes
      * @param position
@@ -78,141 +90,35 @@ public class Othello extends Game {
      */
     public void flipPiece(int position, char piece){
         char myPiece = piece;
-        char oppPiece = ' ';
-        if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
+        char oppPiece = oppPiece(piece);
         int[] coordsMove = coordinate(position);
         char[][] board = getBoard();
-        boolean flipCheck = false;
 
         // right
-        if(coordsMove[0]+1 < 8) {
-            if (board[coordsMove[0] + 1][coordsMove[1]] == oppPiece) {
-                for (int i = coordsMove[0] + 1; i < 8; i++) {
-                    if (board[i][coordsMove[1]] == ' '){break;}
-                    if (board[i][coordsMove[1]] == myPiece) {flipCheck = true; break;}
-                }
-                if (flipCheck){
-                    for (int i = coordsMove[0] + 1; i < 8; i++) {
-                        if (board[i][coordsMove[1]] == oppPiece) {board[i][coordsMove[1]] = piece;}
-                        if (board[i][coordsMove[1]] == myPiece) {break;}
-                    }
-                    flipCheck = false;
-                }
-            }
-        }
+        boolean right = GameRules.rightTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+        if(right){ FlipPiece.rightTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);}
         // left
-        if(coordsMove[0]-1 >= 0) {
-            if (board[coordsMove[0] - 1][coordsMove[1]] == oppPiece) {
-                for (int i = coordsMove[0] - 1; i >= 0; i--) {
-                    if (board[i][coordsMove[1]] == ' '){break;}
-                    if (board[i][coordsMove[1]] == myPiece) {flipCheck = true; break;}
-                }
-                if (flipCheck){
-                    for (int i = coordsMove[0] - 1; i >= 0; i--) {
-                        if (board[i][coordsMove[1]] == oppPiece) {board[i][coordsMove[1]] = piece;}
-                        if (board[i][coordsMove[1]] == myPiece) {break;}
-                    }
-                    flipCheck = false;
-                }
-            }
-        }
+        boolean left = GameRules.leftTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+        if(left){ FlipPiece.leftTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board); }
         // up
-        if(coordsMove[1]-1 >= 0) {
-            if (board[coordsMove[0]][coordsMove[1] - 1] == oppPiece) {
-                for (int i = coordsMove[1] - 1; i >= 0; i--) {
-                    if (board[coordsMove[0]][i] == ' '){break;}
-                    if (board[coordsMove[0]][i] == myPiece) {flipCheck = true; break;}
-                }
-                if (flipCheck){
-                    for (int i = coordsMove[1] - 1; i >= 0; i--) {
-                        if (board[coordsMove[0]][i] == oppPiece) {board[coordsMove[0]][i] = piece;}
-                        if (board[coordsMove[0]][i] == myPiece) {break;}
-                    }
-                    flipCheck = false;
-                }
-            }
-        }
+        boolean up = GameRules.upTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+        if(up){ FlipPiece.upTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);  }
         // down
-        if(coordsMove[1]+1 < 8) {
-            if (board[coordsMove[0]][coordsMove[1] + 1] == oppPiece) {
-                for (int i = coordsMove[1] + 1; i < 8; i++) {
-                    if (board[coordsMove[0]][i] == ' '){break;}
-                    if (board[coordsMove[0]][i] == myPiece) {flipCheck = true; break;}
-                }
-                if (flipCheck){
-                    for (int i = coordsMove[1] + 1; i < 8; i++) {
-                        if (board[coordsMove[0]][i] == oppPiece) {board[coordsMove[0]][i] = piece;}
-                        if (board[coordsMove[0]][i] == myPiece) {break;}
-                    }
-                    flipCheck = false;
-                }
-            }
-        }
+        boolean down = GameRules.downTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+        if(down){ FlipPiece.downTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);}
         // left-diagonal up
-        if(coordsMove[0]-1 >= 0 && coordsMove[1]-1 >= 0) {
-            if (board[coordsMove[0] - 1][coordsMove[1] - 1] == oppPiece) {
-                for (int i = 1; i < Math.min(coordsMove[0], coordsMove[1]); i++) {
-                    if (board[coordsMove[0] - i][coordsMove[1] - i] == ' '){break;}
-                    if (board[coordsMove[0] - i][coordsMove[1] - i] == myPiece) {flipCheck = true; break;}
-                }
-                if (flipCheck){
-                    for (int i = 0; i < Math.min(coordsMove[0], coordsMove[1]); i++) {
-                        if (board[coordsMove[0] - i][coordsMove[1] - i] == oppPiece) {board[coordsMove[0] - i][coordsMove[1] - i] = piece;}
-                        if (board[coordsMove[0] - i][coordsMove[1] - i] == myPiece) {break;}
-                    }
-                    flipCheck = false;
-                }
-            }
-        }
+        boolean diagLeftUp = GameRules.diagLeftUpTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+        if(diagLeftUp){FlipPiece.diagLeftUpTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);}
+
         // left-diagonal down
-        if(coordsMove[1]+1 < 8 && coordsMove[0]-1 >= 0) {
-            if (board[coordsMove[0] - 1][coordsMove[1] + 1] == oppPiece) {
-                for (int i = 1; i < Math.min(coordsMove[0], 8 - coordsMove[1]); i++) {
-                    if(board[coordsMove[0] - i][coordsMove[1] + i] == ' '){break;}
-                    if (board[coordsMove[0] - i][coordsMove[1] + i] == myPiece) {flipCheck = true; break;}
-                }
-                if (flipCheck){
-                    for (int i = 0; i < Math.min(coordsMove[0], 8 - coordsMove[1]); i++) {
-                        if (board[coordsMove[0] - i][coordsMove[1] + i] == oppPiece) {board[coordsMove[0] - i][coordsMove[1] + i] = piece;}
-                        if (board[coordsMove[0] - i][coordsMove[1] + i] == myPiece) {break;}
-                    }
-                    flipCheck = false;
-                }
-            }
-        }
+        boolean diagLeftDown = GameRules.diagLeftDownTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+        if(diagLeftDown){FlipPiece.diagLeftDownTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);}
         // right-diagonal up
-        if(coordsMove[1]-1 >= 0 && coordsMove[0]+1 < 8) {
-            if (board[coordsMove[0] + 1][coordsMove[1] - 1] == oppPiece) {
-                for (int i = 1; i < Math.min(8 - coordsMove[0], coordsMove[1]); i++) {
-                    if (board[coordsMove[0] + i][coordsMove[1] - i] == ' '){break;}
-                    if (board[coordsMove[0] + i][coordsMove[1] - i] == myPiece) {flipCheck = true; break;}
-                }
-                if (flipCheck){
-                    for (int i = 0; i < Math.min(8 - coordsMove[0], coordsMove[1]); i++) {
-                        if (board[coordsMove[0] + i][coordsMove[1] - i] == oppPiece) {board[coordsMove[0] + i][coordsMove[1] - i] = piece;}
-                        if (board[coordsMove[0] + i][coordsMove[1] - i] == myPiece) {break;}
-                    }
-                    flipCheck = false;
-                }
-            }
-        }
+        boolean diagRightUp = GameRules.diagRightUpTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+        if(diagRightUp){FlipPiece.diagRightUpTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);}
         // right-diagonal down
-        if(coordsMove[1]+1 < 8 && coordsMove[0]+1 < 8) {
-            if (board[coordsMove[0] + 1][coordsMove[1] + 1] == oppPiece) {
-                for (int i = 1; i < 8 - Math.max(coordsMove[0], coordsMove[1]); i++) {
-                    if (board[coordsMove[0] + i][coordsMove[1] + i] == ' '){break;}
-                    if (board[coordsMove[0] + i][coordsMove[1] + i] == myPiece) {flipCheck = true; break;}
-                }
-                if (flipCheck){
-                    for (int i = 0; i < 8 - Math.max(coordsMove[0], coordsMove[1]); i++) {
-                        if (board[coordsMove[0] + i][coordsMove[1] + i] == oppPiece) {board[coordsMove[0] + i][coordsMove[1] + i] = piece;}
-                        if (board[coordsMove[0] + i][coordsMove[1] + i] == myPiece){break;}
-                    }
-                }
-            }
-        }
-
-
+        boolean diagRightDown = GameRules.diagRightDownTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);
+        if(diagRightDown){FlipPiece.diagRightDownTraverse(piece, oppPiece, coordsMove[0], coordsMove[1], board);}
     }
 
     /**
@@ -235,7 +141,26 @@ public class Othello extends Game {
         }
         return pieceCount > oppPieceCount;
     }
-    
+
+    /**
+     * Kijkt naar hoeveel stenen je pakt.
+     * Wordt gebruikt in minimax algoritme.
+     * @param piece
+     * @return aantal van je eigen stenen
+     * @author Aaldert Kroes
+     */
+    public int pieceCounter(char piece){
+        int pieceCount = 0;
+        for (int row = 0; row < getHeight(); row++) {
+            for (int col = 0; col < getWidth(); col++) {
+                if(getBoard()[row][col] == piece){
+                    pieceCount++;
+                }
+            }
+        }
+        return pieceCount;
+    }
+
     public void convertToJButtons() { // converts the board to JButtons
         int counter = 0; // counter for the JButtons
         for (int i = 0; i < Game.height; i++) { // loops through the board
@@ -247,6 +172,7 @@ public class Othello extends Game {
             }
         }
     }
+
     @Override
     public void enableButtons(char piece) { // enables the buttons
         for (int i = 0; i < Game.width * Game.height; i++) { // loops through the JButtons
@@ -260,13 +186,20 @@ public class Othello extends Game {
     }
 
     @Override
-    public void moveAI(char piece) { 
+    public void moveAI(char piece) {
 
     }
+
     @Override
     public void serverAdd(int position, char piece) { // maakt de serverAdd method
         add(piece, position); // roept de add methode aan van Othello
         flipPiece(position, piece); // roept de flipPiece methode aan van Othello
         convertToJButtons(); // roept de convertToJButtons methode aan van Othello
+    }
+
+    @Override
+    public char oppPiece(char piece){
+        if(piece == '•'){return '◦';}
+        return '•';
     }
 }

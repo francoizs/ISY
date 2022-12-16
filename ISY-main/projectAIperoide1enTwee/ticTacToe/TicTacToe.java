@@ -10,8 +10,8 @@ import gameFramework.Gui;
 
 public class TicTacToe extends Game {
 
-    public TicTacToe(int width, int height){
-        super(width, height, "TicTacToe");
+    public TicTacToe(int width, int height, char piece){
+        super(width, height, piece);
 
     }
 
@@ -150,7 +150,7 @@ public class TicTacToe extends Game {
     }
 
     private static TicTacToe convertTicTacToeBoard(int width, int height) { // maakt de convertBoard methode
-        TicTacToe board = new TicTacToe(width, height); // maakt een nieuw bord met de breedte en hoogte van het bord
+        TicTacToe board = new TicTacToe(width, height, piece); // maakt een nieuw bord met de breedte en hoogte van het bord
         for (int i = 0; i < width * height; i++) { // loopt door het bord
             if (Gui.JButtons[i].getText().equals("X")) { // kijkt of de tekst van de button X is
                 board.add('X', i + 1); // voegt X toe aan het bord op de positie van i + 1

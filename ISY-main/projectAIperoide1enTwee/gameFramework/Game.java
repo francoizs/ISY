@@ -13,10 +13,11 @@ abstract public class Game extends Board{
     public static String gameName;
     public static int width;
     public static int height;
+    public static char piece;
 
-    public Game(int width, int height, String gameName) {
+    public Game(int width, int height, char piece) {
         super(width, height);
-        Game.gameName = gameName;
+        Game.piece = piece;
         Game.width = width;
         Game.height = height;
         Gui.gameScreen(width, height);
