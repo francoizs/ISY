@@ -10,7 +10,7 @@ package othello;
 public class GameRules {
 
     public static boolean leftTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board) {
-        System.out.println("Motherfuckerleft");
+
         if(xCoord - 1 >= 0){
             if(board[xCoord-1][yCoord] == oppPiece){
                 for (int i = xCoord - 1; i >= 0; i--) {
@@ -23,7 +23,7 @@ public class GameRules {
     }
 
     public static boolean rightTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board) {
-        System.out.println("Motherfuckerright");
+
         if(xCoord + 1 < 8){
             if (board[xCoord+1][yCoord] == oppPiece){
                 for (int i = xCoord + 1; i < 8; i++) {
