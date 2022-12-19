@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class AiForOthello extends Player {
 
-    private final int Max_depth_1 = 3;
+    private final int Max_depth_1 = 4;
 
     /**
      * @param playernumber
@@ -23,6 +23,7 @@ public class AiForOthello extends Player {
      * @return move position integer ranging 1-64
      */
     public int moveselectOthello(Othello AIBoard, char piece) {
+        ArrayList<Integer> validmoves = new ArrayList<>();
         final char[][] previousboard = new char[8][8];
         for (int row=0; row < 8; row++){
             for (int col = 0; col < 8; col++) {
@@ -47,10 +48,14 @@ public class AiForOthello extends Player {
                 int positionValue = minimax(AIBoard, Max_depth_1, oppPiece, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 AiRemove(AIBoard, position, piece, flippedmoveselect);
                 System.out.println("Value: " + positionValue + " positie: " + position);
+                validmoves.add(position);
                 if (positionValue > bestValue) {
                     // checks if the value for the new position is better than the old best value, sets the current position to move when true
                     bestValue = positionValue;
                     move = position;
+                }
+                if (bestValue == Integer.MIN_VALUE) {
+                    move = validmoves.get(0);
                 }
             }
         }
@@ -160,7 +165,7 @@ public class AiForOthello extends Player {
                     // checks every position and places a piece when a position is free, removes this piece again when current value is the highest value
                     AiAdd(AIBoard, position, piece);
                     flippedminimax = CheckFlipped(AIBoard.getBoard(), position, previousboard);
-                    System.out.println(position + "max");
+//                    System.out.println(position + "max");
                     highestValue = Math.max(highestValue, minimax(AIBoard, depth - 1, oppPiece, false, alpha, beta));
                     AiRemove(AIBoard, position, piece, flippedminimax);
                     // highest value between current position and the next position of the opposite player
@@ -181,7 +186,7 @@ public class AiForOthello extends Player {
                     // checks every position and places a piece when a position is free, removes this piece again when current value is the lowest value
                     AiAdd(AIBoard, position, piece);
                     flippedminimax = CheckFlipped(AIBoard.getBoard(), position, previousboard);
-                    System.out.println(position + "min");
+//                    System.out.println(position + "min");
                     lowestValue = Math.min(lowestValue, minimax(AIBoard, depth - 1, oppPiece, true, alpha, beta));
                     AiRemove(AIBoard, position, piece, flippedminimax);
                     // lowest value between current position and the next position of the opposite player

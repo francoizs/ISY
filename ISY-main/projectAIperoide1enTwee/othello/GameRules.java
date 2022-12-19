@@ -48,7 +48,7 @@ public class GameRules {
     public static boolean downTraverse(char myPiece, char oppPiece, int xCoord, int yCoord, char[][] board){
         if(yCoord+1 < 8){
             if(board[xCoord][yCoord+1] == oppPiece){
-                for (int i = xCoord + 1; i < 8; i++) {
+                for (int i = yCoord + 1; i < 8; i++) {
                     if (board[xCoord][i] == ' '){break;}
                     if (board[xCoord][i] == myPiece) {return true;}
                 }

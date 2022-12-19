@@ -47,7 +47,7 @@ public class FlipPiece {
         
         if(yCoord+1 < 8){
             if(board[xCoord][yCoord+1] == oppPiece){
-                for (int i = xCoord + 1; i < 8; i++) {
+                for (int i = yCoord + 1; i < 8; i++) {
                     if (board[xCoord][i] == ' ' || board[xCoord][i] == myPiece){break;}
                     if (board[xCoord][i] != myPiece) {board[xCoord][i] = myPiece;}
                 }

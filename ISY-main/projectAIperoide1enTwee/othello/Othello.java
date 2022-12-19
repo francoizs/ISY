@@ -44,7 +44,7 @@ public class Othello extends Game {
     public boolean allowMoveOthello(int position, char piece) {
         int[] coordsMove = coordinate(position);
         boolean freeSpace = getBoard()[coordsMove[0]][coordsMove[1]] == ' ';    // filled space
-        boolean inBounds = position > 0 && position < 65;                       // in bounds
+        boolean inBounds = position >= 0 && position < 64;                       // in bounds
         boolean surround = adjacentTiles(position, piece);                      // surrounding tiles opponent
 
         return freeSpace && inBounds && surround;
