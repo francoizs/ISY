@@ -1,5 +1,6 @@
 package gameFramework;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -16,11 +17,8 @@ import ticTacToe.TicTacToe;
 class Recieve extends Thread { // maakt de reciever voor de input
     private char piece; // maakt het stukje voor de speler
     private String playerToMove; // maakt de string voor de speler die aan de beurt is
-    private String firstPlayer; // maakt de string voor de eerste speler
-    private String secondPlayer; // maakt de string voor de tweede speler
+    Player player; // maakt de speler
     private Game game; // maakt het spel
-
-    private String opponentName; // maakt de string voor de tegenstander
     public static ArrayList<String> answers = new ArrayList<>();
     public void run() { // de run methode die de input van de server leest
         try { // try catch voor de input
@@ -59,61 +57,54 @@ class Recieve extends Thread { // maakt de reciever voor de input
     private void match(String[] parsedInput) {
         String gametype = parsedInput[6].replace("\"", "").replace(",", ""); // maakt de string voor het speltype
         playerToMove = parsedInput[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler die aan de beurt is
-        opponentName = parsedInput[8].replace("\"", "").replace("}", ""); // maakt de string voor de tegenstander
         if (gametype.equals("Tic-tac-toe")) { // als het speltype tic-tac-toe is
-            piece = 'X'; // zet het stukje op X
+            if (Objects.equals(playerToMove, Gui.userNamePub)) { // als de speler aan de beurt is
+                piece = 'X'; // zet het stukje op O
+            } else { // als de tegenstander aan de beurt is
+                piece = 'O'; // zet het stukje op X
+            }
             game = new TicTacToe(3, 3, piece); // maakt het spel
             Gui.putOnTitle("Tic Tac Toe - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
         } else if (gametype.equals("Reversi")) {
-            piece = '◦';
+            if (Objects.equals(playerToMove, Gui.userNamePub)) {
+                player = new Player(1, '◦', Gui.userNamePub);
+            } else {
+                player = new Player(2, '•', Gui.userNamePub);
+            }
             game = new Othello(8, 8, piece);
             Gui.putOnTitle("Othello - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
         }
     }
     
     private void yourTurn() throws InterruptedException {
+        Gui.putOnTitle("U bent aan de beurt");
         if (!Gui.isAI) {
-            if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
-                game.enableButtons(piece); // zet de knoppen aan
-
-            } else { // als de tegenstander aan de beurt is
-                game.enableButtons(game.oppPiece(piece)); // zet de knoppen aan
-            }
+            game.enableButtons(player.getPiece());
         }
         else if (Gui.isAI) { // als de tegenstander een AI is
             Gui.disableAllButtons(); // zet de knoppen uit
-            TimeUnit.MILLISECONDS.sleep(100); // wacht 1000 milliseconden
-            if (playerToMove.equals(Gui.userNamePub)) { // als de speler aan de beurt is
-                game.moveAI(piece, 1); // laat de AI een zet doen
-            } else { // als de tegenstander aan de beurt is
-                game.moveAI(game.oppPiece(piece), 2); // laat de AI een zet doen
-            }
+            TimeUnit.MILLISECONDS.sleep(100); // wacht 100 milliseconden
+            game.moveAI(player.getPiece(), player.getPlayernumber()); // laat de AI een zet doen
         }
+        Gui.putOnTitle("Tegenstander is aan de beurt");
     }
     
     private void move(String[] parsedInput) {
         int moves = Board.movesCounter++; // maakt de int voor de moves
         int move = Integer.parseInt(parsedInput[6].replace("\"", "").replace(",", "")); // maakt de int voor de move
-        secondPlayer = playerToMove; // maakt de string voor de eerste speler
-
-        if (Objects.equals(firstPlayer, Gui.userNamePub)) { // als de eerste speler de gebruiker is
-            firstPlayer = opponentName; // maakt de string voor de tweede speler
-        } else { // als de eerste speler de tegenstander is
-            firstPlayer = Gui.userNamePub; // maakt de string voor de tweede speler
+        String serverPlayer = parsedInput[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler
+        
+        if (serverPlayer.equals(player.getName())) { // als de speler de move heeft gedaan
+            game.serverAdd(move, player.getPiece());
+        } else { // als de tegenstander de move heeft gedaan
+            game.serverAdd(move, game.oppPiece(player.getPiece()));
         }
-        if (moves % 2 == 0) { // als de moves even zijn
-                Gui.putOnTitle(firstPlayer + " is aan de beurt"); // zet de titel op de eerste speler
-                game.serverAdd(move, piece); // zet de X op het bord
 
-        } else { // oneven
-                Gui.putOnTitle(secondPlayer + " is aan de beurt"); // zet de titel op de tweede speler
-                game.serverAdd(move, game.oppPiece(piece)); // zet de O op het bord
-        }
     }
     
     public void gameOver(String input) {
         Board.movesCounter = 0; // zet de movesCounter op 0
-        Gui.putOnTitle("Tic Tac Toe - Game over");
+        Gui.putOnTitle("Game over");
 
         Gui.displayOnScreen(input); // zet de game over
         Gui.gameOver(); // pauzeer het scherm

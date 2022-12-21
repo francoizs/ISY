@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class AiForOthello extends Player {
 
-    private final int Max_depth_1 = 4;
+    private final int Max_depth_1 = 7;
 
     /**
      * @param playernumber
@@ -14,7 +14,7 @@ public class AiForOthello extends Player {
      * @author Mart de Vries
      */
     public AiForOthello(int playernumber, char piece) {
-        super(playernumber, piece);
+        super(playernumber, piece, "AI");
     }
 
     /**

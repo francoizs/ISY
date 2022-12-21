@@ -7,9 +7,9 @@ package gameFramework;
  */
 public class Player
 {
-    private boolean isAI;
     private int playernumber;
     private char piece;
+    private String name;
 
     /**
      *
@@ -17,10 +17,10 @@ public class Player
      * @param piece
      * @author Anton Bijker
      */
-    public Player(int playernumber, char piece) {
+    public Player(int playernumber, char piece, String name) {
         this.playernumber = playernumber;
-        this.isAI=isAI;
-        this.piece=piece;
+        this.piece = piece;
+        this.name = name;
     }
 
     /**
@@ -37,7 +37,16 @@ public class Player
      * @return piece
      * @author Aaldert Kroes
      */
-    public char getPiece(){
+    public char getPiece() {
         return this.piece;
+    }
+    
+    /**
+     * Setter voor piece
+     * @param piece
+     * @author Aaldert Kroes
+     */
+    public String getName() {
+        return this.name;
     }
 }

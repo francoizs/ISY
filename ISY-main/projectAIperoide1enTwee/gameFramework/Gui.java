@@ -45,7 +45,7 @@ public class Gui {
     }
 
     private void create() { // maakt de create methode
-        frame = new JFrame("Tic Tac Toe"); // maakt het frame
+        frame = new JFrame("Game"); // maakt het frame
         panel = new JPanel(); // maakt het panel
 
         frame.setSize(600, 600); // zet de grootte van het frame

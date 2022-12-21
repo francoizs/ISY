@@ -13,7 +13,7 @@ public class AiForTicTacToe extends Player{
     // max search depth
 
     public AiForTicTacToe(int playernumber, char piece){
-        super(playernumber, piece);
+        super(playernumber, piece, "AI");
     }
 
     /**

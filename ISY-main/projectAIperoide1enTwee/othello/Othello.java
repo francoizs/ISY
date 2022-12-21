@@ -166,15 +166,22 @@ public class Othello extends Game {
         }
     }
 
+    public ArrayList<Integer> allowedMoves(char piece) {
+        ArrayList<Integer> allowedMoves = new ArrayList<Integer>();
+        for (int i = 0; i < Game.width * Game.height; i++) {
+            if (allowMoveOthello(i, piece)) {
+                allowedMoves.add(i);
+            }
+        }
+        return allowedMoves;
+        
+    }
+
     @Override
     public void enableButtons(char piece) { // enables the buttons
-        for (int i = 0; i < Game.width * Game.height; i++) { // loops through the JButtons
-            boolean allow = allowMoveOthello(i, piece); // checks if the move is allowed
-            if (allow) { // checks if the move is allowed
-                Gui.JButtons[i].setEnabled(true); // enables the button
-            } else { // if the move is not allowed
-                Gui.JButtons[i].setEnabled(false); // disables the button
-            }
+        ArrayList<Integer> allowedMoves = allowedMoves(piece);
+        for (int i = 0; i < allowedMoves.size(); i++) { // loops through the JButtons
+            Gui.JButtons[allowedMoves.get(i)].setEnabled(true); // enables the JButtons
         }
     }
 
