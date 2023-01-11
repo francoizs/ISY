@@ -1,8 +1,4 @@
 package gameFramework;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import gameFramework.Gui;
 /**
  * Het spelbord en alles wat daarmee gebeurt
  * @version 0.2
@@ -152,7 +148,6 @@ public class Board{
      * @author Aaldert Kroes
      */
     public boolean isEmpty(){
-        int empty = 0;
         for (int row = 0; row < board.length; row++){
             for (int col = 0; col < board[row].length; col++){
                 if(board[row][col] != ' ') {return false;}

@@ -2,7 +2,6 @@ package ticTacToe;
 import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.text.Position;
 
 import gameFramework.Connection;
 import gameFramework.Game;
