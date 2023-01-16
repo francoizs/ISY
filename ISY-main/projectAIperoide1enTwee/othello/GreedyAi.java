@@ -1,20 +1,16 @@
 package othello;
 
-import gameFramework.Player;
-
 import java.util.ArrayList;
 
-public class AiForOthello extends Player {
-
-    private final int Max_depth_1 = 4;
+public class GreedyAi extends AiOthello {
 
     /**
      * @param playernumber
      * @param piece
      * @author Mart de Vries
      */
-    public AiForOthello(int playernumber, char piece) {
-        super(playernumber, piece, "AI");
+    public GreedyAi(int playernumber, char piece) {
+        super(playernumber, piece);
     }
 
     /**
@@ -45,7 +41,7 @@ public class AiForOthello extends Player {
                 // checks every position and places a piece when a position is free, removes this piece again after minimax is done
                 AiAdd(AIBoard, position, piece);
                 flippedmoveselect = CheckFlipped(AIBoard.getBoard(), position, previousboard);
-                int positionValue = minimax(AIBoard, Max_depth_1, oppPiece, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                int positionValue = minimax(AIBoard, getMax_depth(), oppPiece, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 AiRemove(AIBoard, position, piece, flippedmoveselect);
                 System.out.println("Value: " + positionValue + " positie: " + position);
                 validmoves.add(position);
@@ -61,69 +57,6 @@ public class AiForOthello extends Player {
         }
         System.out.println("Ai move: " + move);
         return move;
-    }
-
-    /**
-     * Adds a move to the board
-     * @author Mart de Vries
-     * @param AIBoard
-     * @param position
-     * @param piece
-     */
-    public void AiAdd(Othello AIBoard, int position, char piece) {
-        AIBoard.add(piece, position);
-        AIBoard.flipPiece(position, piece);
-    }
-
-    /**
-     * Flips all the discs that have previously been flipped
-     * @author Mart de Vries
-     * @param flipped
-     * @param piece
-     * @param AIBoard
-     */
-    public void ReverseFlip(ArrayList<Integer> flipped, char piece, Othello AIBoard) {
-        char oppPiece = ' ';
-        if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
-        for (int flippedpiece : flipped) {
-            AIBoard.remove(piece, flippedpiece);
-            AIBoard.add(oppPiece, flippedpiece);
-        }
-    }
-
-    /**
-     * Checks which discs have been flipped
-     * @author Mart de Vries
-     * @param board
-     * @param position
-     * @param previousboard
-     * @return returns all the flipped discs in an ArrayList
-     */
-    public ArrayList<Integer> CheckFlipped(char[][] board, int position, char[][] previousboard) {
-        int counter = -1;
-        ArrayList<Integer> flipped = new ArrayList<>();
-        for (int row=0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
-                counter++;
-                if (previousboard[row][col] != board[row][col] && position != counter) {
-                    flipped.add(counter);
-                }
-            }
-        }
-        return flipped;
-    }
-
-    /**
-     * Removes a move from the board
-     * @author Mart de Vries
-     * @param AIBoard
-     * @param position
-     * @param piece
-     * @param flipped
-     */
-    public void AiRemove(Othello AIBoard, int position, char piece, ArrayList<Integer> flipped) {
-        AIBoard.remove(piece, position);
-        ReverseFlip(flipped, piece, AIBoard);
     }
 
     /**
@@ -149,7 +82,6 @@ public class AiForOthello extends Player {
         if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
 
         int positionValue = AIBoard.pieceCounter(piece);
-        // checks for win/loss/draw for current position using counterplayer
 
         if (depth == 0 || AIBoard.isFull()) {
             // returns the value for the current position when max depth is reached, a win or loss is reached or when the board is full

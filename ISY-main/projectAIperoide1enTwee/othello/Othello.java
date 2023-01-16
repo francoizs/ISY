@@ -153,12 +153,49 @@ public class Othello extends Game {
         return pieceCount;
     }
 
+    /**
+     * Counts the amount of points gathered from
+     * all the tiles with char piece on it
+     * @param AiBoard
+     * @param piece
+     * @return total amount of points gathered
+     * @author Mart de Vries
+     */
+    public int TileCounter(Othello AiBoard, char piece){
+        Board tilepoints = TilePoints(new Board(8, 8));
+        int counter = 0;
+        for (int row = 0; row < getHeight(); row++) {
+            for (int col = 0; col < getWidth(); col++) {
+                if (AiBoard.getBoard()[row][col] == piece) {
+                    counter += tilepoints.getBoard()[row][col];
+                }
+            }
+        }
+        return counter;
+    }
 
+    /**
+     * Assigns the dedicated number to every tile on the board
+     * @param board
+     * @return board with points per tile
+     * @author Mart de Vries
+     */
+    public Board TilePoints(Board board){
+        for (int row = 0; row < getHeight(); row++) {
+            for (int col = 0; col < getWidth(); col++) {
+                if ((row == 0 || row == 7) && (col == 0 || col == 7)) {board.getBoard()[row][col] = 5;}
+                else if (((row == 0 || row == 7) && (col > 1 && col < 6)) || ((col == 0 || col == 7) && (row > 1 && row < 6))) {board.getBoard()[row][col] = 4;}
+                else if (((row == 1 || row == 6) && (col > 1 && col < 6)) || ((col == 1 || col == 6) && (row > 1 && row < 6))) {board.getBoard()[row][col] = 2;}
+                else if (row > 1 && row < 6) {board.getBoard()[row][col] = 3;}
+                else {board.getBoard()[row][col] = 1;}
+            }
+        }
+        return board;
+    }
 
     /**
      * @author Francois Dieleman
      */
-
     public void convertToJButtons() { // converts the board to JButtons
         int counter = 0; // counter for the JButtons
         for (int i = 0; i < Game.height; i++) { // loops through the board
@@ -199,8 +236,8 @@ public class Othello extends Game {
 
     @Override
     public void moveAI(char piece, int playernumber) {
-        AiForOthello ai = new AiForOthello(playernumber, piece); // maakt een AiForOthello object\
-        int move = ai.moveselectOthello(this, piece); // roept de moveselectOthello methode aan van AiForOthello
+        AiOthello ai = new AiOthello(playernumber, piece); // maakt een AiForOthello object\
+        int move = ai.AiMove(this, piece, 3); // roept de moveselectOthello methode aan van AiForOthello
         try { // probeert
             Connection.send("move " + move); // stuurt move + de waarde van move naar de server
         } catch (IOException e) { // als er een error is
