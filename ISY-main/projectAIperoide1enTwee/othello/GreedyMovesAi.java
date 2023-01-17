@@ -2,14 +2,14 @@ package othello;
 
 import java.util.ArrayList;
 
-public class TilePointsAi extends AiOthello {
+public class GreedyMovesAi extends AiOthello {
 
     /**
      * @param playernumber
      * @param piece
      * @author Mart de Vries
      */
-    public TilePointsAi(int playernumber, char piece) {
+    public GreedyMovesAi(int playernumber, char piece) {
         super(playernumber, piece);
     }
 
@@ -18,7 +18,7 @@ public class TilePointsAi extends AiOthello {
      * @author Mart de Vries
      * @return move position integer ranging 1-64
      */
-    public int moveselectOthello7(Othello AIBoard, char piece) {
+    public int moveselectOthello5(Othello AIBoard, char piece) {
         ArrayList<Integer> validmoves = new ArrayList<>();
         final char[][] previousboard = new char[8][8];
         for (int row=0; row < 8; row++){
@@ -65,8 +65,6 @@ public class TilePointsAi extends AiOthello {
      * @param depth the search depth
      * @param piece
      * @param maximisingPlayer maximising or minimising player
-     * @param alpha the best option for the maximising player
-     * @param beta the best option for the minimising player
      * @return Highest or Lowest value for a certain position
      * @author Mart de Vries
      */
@@ -83,9 +81,9 @@ public class TilePointsAi extends AiOthello {
         if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
 
         if (piece == getPiece()) {
-            positionValue = AIBoard.TileCounter(AIBoard, piece);
+            positionValue = AIBoard.MovesCounter(AIBoard, piece);
         } else {
-            positionValue = -AIBoard.TileCounter(AIBoard, piece);
+            positionValue = -AIBoard.MovesCounter(AIBoard, piece);
         }
 
         if (depth == 0 || AIBoard.isFull()) {

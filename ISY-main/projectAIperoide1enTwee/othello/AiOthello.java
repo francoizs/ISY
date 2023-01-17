@@ -15,17 +15,30 @@ public class AiOthello extends Player {
     public int AiMove(Othello AiBoard, char piece, int number) {
         switch (number) {
             case 1:
-                AiWithoutPruning aiwithoutpruning = new AiWithoutPruning(getPlayernumber(), piece);
-                return aiwithoutpruning.moveselectOthello(AiBoard, piece);
-            case 2:
-                GenerousAi generousai = new GenerousAi(getPlayernumber(), piece);
-                return generousai.moveselectOthello(AiBoard, piece);
-            case 3:
                 GreedyAi greedyai = new GreedyAi(getPlayernumber(), piece);
-                return greedyai.moveselectOthello(AiBoard, piece);
+                return greedyai.moveselectOthello1(AiBoard, piece);
+            case 2:
+                GreedyAiWP greedyaiwp = new GreedyAiWP(getPlayernumber(), piece);
+                return greedyaiwp.moveselectOthello2(AiBoard, piece);
+            case 3:
+                GenerousAi generousai = new GenerousAi(getPlayernumber(), piece);
+                return generousai.moveselectOthello3(AiBoard, piece);
             case 4:
+                GenerousAiWP generousaiwp = new GenerousAiWP(getPlayernumber(), piece);
+                return generousaiwp.moveselectOthello4(AiBoard, piece);
+            case 5:
+                GreedyMovesAi greedymovesai = new GreedyMovesAi(getPlayernumber(), piece);
+                return greedymovesai.moveselectOthello5(AiBoard, piece);
+            case 6:
+                GreedyMovesAiWP greedymovesaiwp = new GreedyMovesAiWP(getPlayernumber(), piece);
+                return greedymovesaiwp.moveselectOthello6(AiBoard, piece);
+            case 7:
                 TilePointsAi tilepointsai = new TilePointsAi(getPlayernumber(), piece);
-                return tilepointsai.moveselectOthello(AiBoard, piece);
+                return tilepointsai.moveselectOthello7(AiBoard, piece);
+
+            case 8:
+                TilePointsAiWP tilepointsaiwp = new TilePointsAiWP(getPlayernumber(), piece);
+                return tilepointsaiwp.moveselectOthello8(AiBoard, piece);
         }
         return 0;
     }

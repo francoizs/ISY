@@ -18,7 +18,7 @@ public class GenerousAi extends AiOthello {
      * @author Mart de Vries
      * @return move position integer ranging 1-64
      */
-    public int moveselectOthello(Othello AIBoard, char piece) {
+    public int moveselectOthello3(Othello AIBoard, char piece) {
         ArrayList<Integer> validmoves = new ArrayList<>();
         final char[][] previousboard = new char[8][8];
         for (int row=0; row < 8; row++){
@@ -71,6 +71,7 @@ public class GenerousAi extends AiOthello {
      * @author Mart de Vries
      */
     private int minimax(Othello AIBoard, int depth, char piece, boolean maximisingPlayer, int alpha, int beta) {
+        int positionValue = 0;
         final char[][] previousboard = new char[8][8];
         for (int row=0; row < 8; row++){
             for (int col = 0; col < 8; col++) {
@@ -81,7 +82,11 @@ public class GenerousAi extends AiOthello {
         char oppPiece = ' ';
         if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
 
-        int positionValue = AIBoard.pieceCounter(piece);
+        if (piece == getPiece()) {
+            positionValue = AIBoard.pieceCounter(piece);
+        } else {
+            positionValue = -AIBoard.pieceCounter(piece);
+        }
 
         if (depth == 0 || AIBoard.isFull()) {
             // returns the value for the current position when max depth is reached, a win or loss is reached or when the board is full

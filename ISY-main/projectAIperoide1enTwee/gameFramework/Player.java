@@ -43,7 +43,6 @@ public class Player
     
     /**
      * Setter voor piece
-     * @param piece
      * @author Aaldert Kroes
      */
     public String getName() {

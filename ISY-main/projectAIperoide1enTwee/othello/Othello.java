@@ -193,6 +193,16 @@ public class Othello extends Game {
         return board;
     }
 
+    public int MovesCounter(Othello AiBoard, char piece) {
+        int possiblemoves = 0;
+        for (int position = 0; position < 64; position++) {
+            if (AiBoard.allowMoveOthello(position, piece)) {
+                possiblemoves++;
+            }
+        }
+        return possiblemoves;
+    }
+
     /**
      * @author Francois Dieleman
      */

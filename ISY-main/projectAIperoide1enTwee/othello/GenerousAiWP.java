@@ -2,14 +2,14 @@ package othello;
 
 import java.util.ArrayList;
 
-public class AiWithoutPruning extends AiOthello {
+public class GenerousAiWP extends AiOthello {
 
     /**
      * @param playernumber
      * @param piece
      * @author Mart de Vries
      */
-    public AiWithoutPruning(int playernumber, char piece) {
+    public GenerousAiWP(int playernumber, char piece) {
         super(playernumber, piece);
     }
 
@@ -18,7 +18,7 @@ public class AiWithoutPruning extends AiOthello {
      * @author Mart de Vries
      * @return move position integer ranging 1-64
      */
-    public int moveselectOthello(Othello AIBoard, char piece) {
+    public int moveselectOthello4(Othello AIBoard, char piece) {
         ArrayList<Integer> validmoves = new ArrayList<>();
         final char[][] previousboard = new char[8][8];
         for (int row=0; row < 8; row++){
@@ -28,7 +28,7 @@ public class AiWithoutPruning extends AiOthello {
         }
         ArrayList<Integer> flippedmoveselect;
         int move = 0;
-        int bestValue = Integer.MIN_VALUE;
+        int bestValue = Integer.MAX_VALUE;
         char oppPiece = ' ';
         if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
 
@@ -41,16 +41,16 @@ public class AiWithoutPruning extends AiOthello {
                 // checks every position and places a piece when a position is free, removes this piece again after minimax is done
                 AiAdd(AIBoard, position, piece);
                 flippedmoveselect = CheckFlipped(AIBoard.getBoard(), position, previousboard);
-                int positionValue = minimax(AIBoard, getMax_depth(), oppPiece, false);
+                int positionValue = minimax(AIBoard, getMax_depth(), oppPiece, true);
                 AiRemove(AIBoard, position, piece, flippedmoveselect);
                 System.out.println("Value: " + positionValue + " positie: " + position);
                 validmoves.add(position);
-                if (positionValue > bestValue) {
+                if (positionValue < bestValue) {
                     // checks if the value for the new position is better than the old best value, sets the current position to move when true
                     bestValue = positionValue;
                     move = position;
                 }
-                if (bestValue == Integer.MIN_VALUE) {
+                if (bestValue == Integer.MAX_VALUE) {
                     move = validmoves.get(0);
                 }
             }
@@ -69,6 +69,7 @@ public class AiWithoutPruning extends AiOthello {
      * @author Mart de Vries
      */
     private int minimax(Othello AIBoard, int depth, char piece, boolean maximisingPlayer) {
+        int positionValue = 0;
         final char[][] previousboard = new char[8][8];
         for (int row=0; row < 8; row++){
             for (int col = 0; col < 8; col++) {
@@ -79,7 +80,11 @@ public class AiWithoutPruning extends AiOthello {
         char oppPiece = ' ';
         if(piece == '•'){oppPiece = '◦';} else {oppPiece = '•';}
 
-        int positionValue = AIBoard.pieceCounter(piece);
+        if (piece == getPiece()) {
+            positionValue = AIBoard.pieceCounter(piece);
+        } else {
+            positionValue = -AIBoard.pieceCounter(piece);
+        }
 
         if (depth == 0 || AIBoard.isFull()) {
             // returns the value for the current position when max depth is reached, a win or loss is reached or when the board is full
@@ -119,3 +124,4 @@ public class AiWithoutPruning extends AiOthello {
         }
     }
 }
+
