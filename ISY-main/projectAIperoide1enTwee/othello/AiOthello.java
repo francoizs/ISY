@@ -39,6 +39,9 @@ public class AiOthello extends Player {
             case 8:
                 TilePointsAiWP tilepointsaiwp = new TilePointsAiWP(getPlayernumber(), piece);
                 return tilepointsaiwp.moveselectOthello8(AiBoard, piece);
+            case 9:
+                TestAi testai = new TestAi(getPlayernumber(), piece);
+                return testai.moveselectOthello9(AiBoard, piece);
         }
         return 0;
     }
