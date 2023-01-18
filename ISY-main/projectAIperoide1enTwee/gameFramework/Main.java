@@ -29,6 +29,8 @@ public class Main{
             while (!othello.isFull()) {
 
                 //Player1
+                // check if player 1 has thought of a move in 10 seconds
+                long startTime = System.currentTimeMillis();
                 AiOthello ai = new AiOthello(player1.getPlayernumber(), player1.getPiece());
                 int move1 = ai.AiMove(othello, player1.getPiece(), 1);
                 if (move1 != 0) {
@@ -37,11 +39,18 @@ public class Main{
                         move1 = ai.AiMove(othello, player1.getPiece(), 1);
                     }
                 }
+                long endTime = System.currentTimeMillis();
+                long duration = (endTime - startTime);
+                if (duration > 10000) {
+                    System.out.println("Player 1 took too long to think of a move");
+                    break;
+                }
                 othello.add(player1.getPiece(), move1);
                 othello.flipPiece(move1, player1.getPiece());
                 System.out.println(othello.toString());
 
                 // player2
+                long startTime2 = System.currentTimeMillis();
                 AiOthello ai2 = new AiOthello(player2.getPlayernumber(), player2.getPiece());
                 int move2 = ai2.AiMove(othello, player2.getPiece(), 1);
                 if (move2 != 0) {
@@ -49,6 +58,12 @@ public class Main{
 
                         move2 = ai2.AiMove(othello, player2.getPiece(), 1);
                     }
+                }
+                long endTime2 = System.currentTimeMillis();
+                long duration2 = (endTime2 - startTime2);
+                if (duration2 > 10000) {
+                    System.out.println("Player 2 took too long to think of a move");
+                    break;
                 }
                 othello.add(player2.getPiece(), move2);
                 othello.flipPiece(move2, player2.getPiece());
