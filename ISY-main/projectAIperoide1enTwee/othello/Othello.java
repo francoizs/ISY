@@ -14,7 +14,7 @@ public class Othello extends Game {
     public Othello(int width, int height, char piece) {
         super(width, height, piece);
         startPositions();
-        convertToJButtons();
+//        convertToJButtons();
     }
 
 
@@ -22,7 +22,7 @@ public class Othello extends Game {
     /**
      * Hier wordt de eerste 4 pieces in het middel van de board gezetten
      */
-    private void startPositions() {
+    public void startPositions() {
         getBoard()[3][3] = '•';
         getBoard()[3][4] = '◦';
         getBoard()[4][3] = '◦';

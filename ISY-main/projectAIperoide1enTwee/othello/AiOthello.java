@@ -42,6 +42,9 @@ public class AiOthello extends Player {
             case 9:
                 TestAi testai = new TestAi(getPlayernumber(), piece);
                 return testai.moveselectOthello9(AiBoard, piece);
+            case 10:
+                OpponentAi opponentai = new OpponentAi(getPlayernumber(), piece);
+                return opponentai.moveselectOthello10(AiBoard, piece);
         }
         return 0;
     }
