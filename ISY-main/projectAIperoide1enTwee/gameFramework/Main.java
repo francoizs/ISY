@@ -140,17 +140,20 @@ public class Main{
             }
         } else {
             ArrayList<String> ai4 = new ArrayList<>();
-            Collections.addAll(ai4, "GreedyAi", "GenerousAi", "GreedyMovesAi", "TilePointsAi");
+            Collections.addAll(ai4, "Gen+Gre", "Til+Gre", "Gen+Til", "Gre+Til", "GrM+Gre", "GrM+Til", "Til+Gre(mid)", "Gre+Til(mid)", "GrM+Til(mid)", "GrM+Gre(mid)",
+                                    "Gen+GrM+Til", "Gen+Gre+Til", "GrM+Til+Gre", "Gen+Til+Gre", "Gen+GrM+Gre");
             for (String q : ai4) {
                 for (int s = 0; s < 2; s++) {
                     int player1win = 0;
                     int draw = 0;
                     int player2win = 0;
+                    double winpercentage = 0.0;
                     int potjes = 0;
                     int legalpotjes = 0;
                     int potjes1 = 0;
                     int depth = 0;
-                    int p = 2;
+                    int filled = 0;
+                    int p = 10;
 
                     while (potjes < p) {
                         Othello othello = new Othello(8, 8, '•');
@@ -167,7 +170,7 @@ public class Main{
                                     //Player1
                                     if (s == 0) {
                                         AiOthello ai = new AiOthello(player1.getPlayernumber(), player1.getPiece());
-                                        int move1 = ai.AiMove(othello, player1.getPiece(), 9);
+                                        int move1 = ai.AiMove(othello, player1.getPiece(), 5);
                                         othello.add(player1.getPiece(), move1);
                                         othello.flipPiece(move1, player1.getPiece());
                                         System.out.println(othello.toString());
@@ -176,15 +179,16 @@ public class Main{
                                         AiOthello ai = new AiOthello(player1.getPlayernumber(), player1.getPiece());
                                         depth = ai.getMax_depth();
                                         long strartTime = System.currentTimeMillis();
-                                        int move1 = ai.AiMove(othello, player1.getPiece(), ai4.indexOf(q) + 1);
+                                        int move1 = ai.AiMove(othello, player1.getPiece(), ai4.indexOf(q) + 7);
                                         long endTime = System.currentTimeMillis();
                                         long duration = (endTime - strartTime);
-                                        if (duration > 3000) {
+                                        if (duration > 9500) {
                                             if (legalpotjes == 0) {
                                                 potjes1 = 1;
                                             }
                                             potjes = p;
                                             timeout = true;
+                                            filled = othello.filledSpaces();
                                             break outer;
                                         }
                                         othello.add(player1.getPiece(), move1);
@@ -202,15 +206,16 @@ public class Main{
                                         AiOthello ai2 = new AiOthello(player2.getPlayernumber(), player2.getPiece());
                                         depth = ai2.getMax_depth();
                                         long strartTime = System.currentTimeMillis();
-                                        int move2 = ai2.AiMove(othello, player2.getPiece(), ai4.indexOf(q) + 1);
+                                        int move2 = ai2.AiMove(othello, player2.getPiece(), ai4.indexOf(q) + 7);
                                         long endTime = System.currentTimeMillis();
                                         long duration = (endTime - strartTime);
-                                        if (duration > 3000) {
+                                        if (duration > 9500) {
                                             if (legalpotjes == 0) {
                                                 potjes1 = 1;
                                             }
                                             potjes = p;
                                             timeout = true;
+                                            filled = othello.filledSpaces();
                                             break outer;
                                         }
                                         othello.add(player2.getPiece(), move2);
@@ -219,7 +224,7 @@ public class Main{
                                         break;
                                     } else {
                                         AiOthello ai2 = new AiOthello(player2.getPlayernumber(), player2.getPiece());
-                                        int move2 = ai2.AiMove(othello, player2.getPiece(), 9);
+                                        int move2 = ai2.AiMove(othello, player2.getPiece(), 5);
                                         othello.add(player2.getPiece(), move2);
                                         othello.flipPiece(move2, player2.getPiece());
                                         System.out.println(othello.toString());
@@ -238,6 +243,11 @@ public class Main{
                                 break;
                             }
                         }
+
+                        if (potjes == 1) {
+                            legalpotjes++;
+                        }
+
                         Path fileName = Path.of("/ResultsAi/TestAivs" + q + ".txt"); //path van het bestand waarin de data wordt opgeslagen.
 
                         BufferedWriter writer = new BufferedWriter(new FileWriter(fileName.toFile(), true));
@@ -256,6 +266,13 @@ public class Main{
                             player2win++;
                         }
 
+                        if (s == 0 && potjes == p) {
+                            double a = player2win;
+                            winpercentage = a / p;
+                        } else {
+                            double b = player1win;
+                            winpercentage = b /p;
+                        }
 
                         if (potjes == 1 || potjes1 == 1) {
                             writer.append("----------------------------------------------------------------");
@@ -294,6 +311,12 @@ public class Main{
                             writer.append("\n");
                             writer.append("Player 2 total wins: ").append(String.valueOf(player2win));
                             writer.append("\n");
+                            writer.append("Win percentage: ").append(String.valueOf(Math.round(winpercentage * 100))).append("%");
+                            if (filled != 0) {
+                                writer.append("\n");
+                                writer.append("Timed out at ").append(String.valueOf(filled)).append(" filled spaces.");
+                            }
+                            writer.append("\n");
                             writer.append("Total legal games: ").append(String.valueOf(legalpotjes));
                             writer.append("\n");
                             writer.append("\n");
@@ -309,7 +332,7 @@ public class Main{
                             break;
                         }
 
-                        legalpotjes += 1;
+                        legalpotjes++;
                     }
                 }
             }

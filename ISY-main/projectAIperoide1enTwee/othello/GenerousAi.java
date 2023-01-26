@@ -18,7 +18,7 @@ public class GenerousAi extends AiOthello {
      * @author Mart de Vries
      * @return move position integer ranging 1-64
      */
-    public int moveselectOthello3(Othello AIBoard, char piece) {
+    public int moveselectOthello3(Othello AIBoard, char piece, int maxdepth) {
         ArrayList<Integer> validmoves = new ArrayList<>();
         final char[][] previousboard = new char[8][8];
         for (int row=0; row < 8; row++){
@@ -41,7 +41,7 @@ public class GenerousAi extends AiOthello {
                 // checks every position and places a piece when a position is free, removes this piece again after minimax is done
                 AiAdd(AIBoard, position, piece);
                 flippedmoveselect = CheckFlipped(AIBoard.getBoard(), position, previousboard);
-                int positionValue = minimax(AIBoard, getMax_depth(), oppPiece, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                int positionValue = minimax(AIBoard, maxdepth, oppPiece, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 AiRemove(AIBoard, position, piece, flippedmoveselect);
                 System.out.println("Value: " + positionValue + " positie: " + position);
                 validmoves.add(position);
