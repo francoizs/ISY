@@ -140,8 +140,9 @@ public class Main{
             }
         } else {
             ArrayList<String> ai4 = new ArrayList<>();
-            Collections.addAll(ai4, "Gen+Gre", "Til+Gre", "Gen+Til", "Gre+Til", "GrM+Gre", "GrM+Til", "Til+Gre(mid)", "Gre+Til(mid)", "GrM+Til(mid)", "GrM+Gre(mid)",
-                                    "Gen+GrM+Til", "Gen+Gre+Til", "GrM+Til+Gre", "Gen+Til+Gre", "Gen+GrM+Gre");
+//            Collections.addAll(ai4, "Gen+Gre", "Til+Gre", "Gen+Til", "Gre+Til", "GrM+Gre", "GrM+Til", "Til+Gre(mid)", "Gre+Til(mid)", "GrM+Til(mid)", "GrM+Gre(mid)",
+//                                    "Gen+GrM+Til", "Gen+Gre+Til", "GrM+Til+Gre", "Gen+Til+Gre", "Gen+GrM+Gre");
+            Collections.addAll(ai4, "DepthTest");
             for (String q : ai4) {
                 for (int s = 0; s < 2; s++) {
                     int player1win = 0;
@@ -153,7 +154,7 @@ public class Main{
                     int potjes1 = 0;
                     int depth = 0;
                     int filled = 0;
-                    int p = 10;
+                    int p = 100;
 
                     while (potjes < p) {
                         Othello othello = new Othello(8, 8, '•');
@@ -294,7 +295,7 @@ public class Main{
                             writer.append("\n");
                             writer.append("Amount of games: ").append(String.valueOf(p));
                             writer.append("\n");
-                            writer.append("Max depth: ").append(String.valueOf(depth));
+                            writer.append("Max depth TestAi: ").append(String.valueOf(depth));
                             writer.append("\n");
                             writer.append("\n");
                         }
