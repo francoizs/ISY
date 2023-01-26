@@ -20,7 +20,7 @@ public class Main{
     public static void main(String[] args) throws IOException {
 
 //        Gui gui = new Gui();
-        int manualorauto = 0;
+        int manualorauto = 1;
 
         if (manualorauto == 0) {
             int player1win = 0;
@@ -140,49 +140,51 @@ public class Main{
             }
         } else {
             ArrayList<String> ai4 = new ArrayList<>();
-            Collections.addAll(ai4, "GreedyAi", "GreedyAiWP", "GenerousAi", "GenerousAiWP", "GreedyMovesAi", "GreedyMovesAiWP", "TilePointsAi", "TilePointsAiWP");
+            Collections.addAll(ai4, "GreedyAi", "GenerousAi", "GreedyMovesAi", "TilePointsAi");
             for (String q : ai4) {
                 for (int s = 0; s < 2; s++) {
                     int player1win = 0;
                     int draw = 0;
                     int player2win = 0;
                     int potjes = 0;
-                    while (potjes < 100) {
+                    int legalpotjes = 0;
+                    int potjes1 = 0;
+                    int depth = 0;
+                    int p = 2;
+
+                    while (potjes < p) {
                         Othello othello = new Othello(8, 8, '•');
                         othello.startPositions();
                         Player player1 = new Player(1, '◦', "AI");
                         Player player2 = new Player(2, '•', "AI");
                         String over_10 = "";
+                        boolean timeout = false;
                         
                         potjes++;
-                        outer: while (!othello.isFull()) {
+                        outer : while (!othello.isFull()) {
                             for (int i = 0; i < 64; i++) {
                                 if (othello.allowMoveOthello(i, player1.getPiece())) {
                                     //Player1
                                     if (s == 0) {
                                         AiOthello ai = new AiOthello(player1.getPlayernumber(), player1.getPiece());
-                                        long strartTime = System.currentTimeMillis();
                                         int move1 = ai.AiMove(othello, player1.getPiece(), 9);
-                                        long endTime = System.currentTimeMillis();
-                                        long duration = (endTime - strartTime);
-                                        if (duration > 10000) {
-                                            System.out.println("Player 1 took too long to think of a move");
-                                            over_10 = "P1";
-                                            break outer;
-                                        }
                                         othello.add(player1.getPiece(), move1);
                                         othello.flipPiece(move1, player1.getPiece());
                                         System.out.println(othello.toString());
                                         break;
                                     } else {
                                         AiOthello ai = new AiOthello(player1.getPlayernumber(), player1.getPiece());
+                                        depth = ai.getMax_depth();
                                         long strartTime = System.currentTimeMillis();
                                         int move1 = ai.AiMove(othello, player1.getPiece(), ai4.indexOf(q) + 1);
                                         long endTime = System.currentTimeMillis();
                                         long duration = (endTime - strartTime);
-                                        if (duration > 10000) {
-                                            System.out.println("Player 1 took too long to think of a move");
-                                            over_10 = "P1";
+                                        if (duration > 3000) {
+                                            if (legalpotjes == 0) {
+                                                potjes1 = 1;
+                                            }
+                                            potjes = p;
+                                            timeout = true;
                                             break outer;
                                         }
                                         othello.add(player1.getPiece(), move1);
@@ -198,13 +200,17 @@ public class Main{
                                     // player2
                                     if (s == 0) {
                                         AiOthello ai2 = new AiOthello(player2.getPlayernumber(), player2.getPiece());
+                                        depth = ai2.getMax_depth();
                                         long strartTime = System.currentTimeMillis();
                                         int move2 = ai2.AiMove(othello, player2.getPiece(), ai4.indexOf(q) + 1);
                                         long endTime = System.currentTimeMillis();
                                         long duration = (endTime - strartTime);
-                                        if (duration > 10000) {
-                                            System.out.println("Player 2 took too long to think of a move");
-                                            over_10 = "P2";
+                                        if (duration > 3000) {
+                                            if (legalpotjes == 0) {
+                                                potjes1 = 1;
+                                            }
+                                            potjes = p;
+                                            timeout = true;
                                             break outer;
                                         }
                                         othello.add(player2.getPiece(), move2);
@@ -213,15 +219,7 @@ public class Main{
                                         break;
                                     } else {
                                         AiOthello ai2 = new AiOthello(player2.getPlayernumber(), player2.getPiece());
-                                        long strartTime = System.currentTimeMillis();
                                         int move2 = ai2.AiMove(othello, player2.getPiece(), 9);
-                                        long endTime = System.currentTimeMillis();
-                                        long duration = (endTime - strartTime);
-                                        if (duration > 10000) {
-                                            System.out.println("Player 2 took too long to think of a move");
-                                            over_10 = "P2";
-                                            break outer;
-                                        }
                                         othello.add(player2.getPiece(), move2);
                                         othello.flipPiece(move2, player2.getPiece());
                                         System.out.println(othello.toString());
@@ -240,7 +238,6 @@ public class Main{
                                 break;
                             }
                         }
-
                         Path fileName = Path.of("/ResultsAi/TestAivs" + q + ".txt"); //path van het bestand waarin de data wordt opgeslagen.
 
                         BufferedWriter writer = new BufferedWriter(new FileWriter(fileName.toFile(), true));
@@ -248,25 +245,19 @@ public class Main{
                         String ply1 = String.valueOf("Player: " + player1.getPlayernumber() + " Score is: " + othello.pieceCounter(player1.getPiece()));
                         String ply2 = String.valueOf("Player: " + player2.getPlayernumber() + " Score is: " + othello.pieceCounter(player2.getPiece()));
                         String result = ply1 + " || " + ply2 + " || nr_potje: " + potjes;
-                        if (othello.pieceCounter(player1.getPiece()) > othello.pieceCounter(player2.getPiece()) && over_10.equals("")) {
+                        if (timeout) {
+                            result = ply1 + " || " + ply2 + " || nr_potje: " + potjes + " || Game timed out";
+                        }
+                        if (othello.pieceCounter(player1.getPiece()) > othello.pieceCounter(player2.getPiece())) {
                             player1win++;
-                        } else if (othello.pieceCounter(player1.getPiece()) == othello.pieceCounter(player2.getPiece()) && over_10.equals("")) {
+                        } else if (othello.pieceCounter(player1.getPiece()) == othello.pieceCounter(player2.getPiece())) {
                             draw++;
                         } else {
                             player2win++;
                         }
 
-                        if (over_10.equals("P1")) {
-                            result = result + " || Player 1 took too long to think of a move";
-                            player2win++;
-                        } else if (over_10.equals("P2")) {
-                            result = result + " || Player 2 took too long to think of a move";
-                            player1win++;
-                        }
 
-                        
-
-                        if (potjes == 1) {
+                        if (potjes == 1 || potjes1 == 1) {
                             writer.append("----------------------------------------------------------------");
                             writer.append("\n");
                             writer.append("Begin test");
@@ -284,9 +275,9 @@ public class Main{
                                 writer.append("Player 2: TestAi");
                             }
                             writer.append("\n");
-                            writer.append("Aantal potjes: 100");
+                            writer.append("Amount of games: ").append(String.valueOf(p));
                             writer.append("\n");
-                            writer.append("Max depth: 4");
+                            writer.append("Max depth: ").append(String.valueOf(depth));
                             writer.append("\n");
                             writer.append("\n");
                         }
@@ -294,7 +285,7 @@ public class Main{
 
                         writer.append(result);
 
-                        if (potjes == 100) {
+                        if (potjes == p) {
                             writer.append("\n");
                             writer.append("\n");
                             writer.append("Player 1 total wins: ").append(String.valueOf(player1win));
@@ -303,14 +294,22 @@ public class Main{
                             writer.append("\n");
                             writer.append("Player 2 total wins: ").append(String.valueOf(player2win));
                             writer.append("\n");
+                            writer.append("Total legal games: ").append(String.valueOf(legalpotjes));
                             writer.append("\n");
-                            writer.append("Einde test");
+                            writer.append("\n");
+                            writer.append("End test");
                             writer.append("\n");
                             writer.append("----------------------------------------------------------------");
                             writer.append("\n");
                         }
 
                         writer.close();
+
+                        if (potjes == p) {
+                            break;
+                        }
+
+                        legalpotjes += 1;
                     }
                 }
             }
