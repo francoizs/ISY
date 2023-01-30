@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class AiOthello extends Player {
 
-    private final int Max_depth = 3;
+    private final int Max_depth = 7;
     private final int Max_depth1 = 5;
     private final int Max_depth2 = 6;
     private final int Max_depth3 = 7;
@@ -39,20 +39,20 @@ public class AiOthello extends Player {
                 OpponentAi opponentai = new OpponentAi(getPlayernumber(), piece);
                 return opponentai.moveselectOthello10(AiBoard, piece);
             case 7:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GenerousAi generousai1 = new GenerousAi(getPlayernumber(), piece);
-                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth4);
+                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
-                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth2);
                 } else {
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
-                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
                 }
             case 8:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
-                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth3);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth2);
                 } else if (AiBoard.filledSpaces() < 52) {
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth2);
@@ -61,9 +61,9 @@ public class AiOthello extends Player {
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
                 }
             case 9:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GenerousAi generousai1 = new GenerousAi(getPlayernumber(), piece);
-                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth4);
+                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
                     TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth2);
@@ -72,7 +72,7 @@ public class AiOthello extends Player {
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
                 }
             case 10:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
@@ -83,7 +83,7 @@ public class AiOthello extends Player {
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
                 }
             case 11:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
                     return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth2);
                 } else if (AiBoard.filledSpaces() < 52) {
@@ -94,7 +94,7 @@ public class AiOthello extends Player {
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
                 }
             case 12:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
                     return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth2);
                 } else if (AiBoard.filledSpaces() < 52) {
@@ -105,7 +105,7 @@ public class AiOthello extends Player {
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
                 }
             case 13:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
@@ -116,9 +116,9 @@ public class AiOthello extends Player {
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
                 }
             case 14:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
-                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth3);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth2);
                 } else if (AiBoard.filledSpaces() < 52) {
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth2);
@@ -127,9 +127,9 @@ public class AiOthello extends Player {
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
                 }
             case 15:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
-                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth3);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth2);
                 } else if (AiBoard.filledSpaces() < 52) {
                     GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
                     return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth1);
@@ -138,7 +138,7 @@ public class AiOthello extends Player {
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
                 }
             case 16:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
@@ -149,9 +149,9 @@ public class AiOthello extends Player {
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
                 }
             case 17:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GenerousAi generousai1 = new GenerousAi(getPlayernumber(), piece);
-                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth4);
+                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
                     GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
                     return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth1);
@@ -160,9 +160,9 @@ public class AiOthello extends Player {
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
                 }
             case 18:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GenerousAi generousai1 = new GenerousAi(getPlayernumber(), piece);
-                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth4);
+                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth2);
@@ -171,7 +171,7 @@ public class AiOthello extends Player {
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
                 }
             case 19:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
                     return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth2);
                 } else if (AiBoard.filledSpaces() < 52) {
@@ -182,9 +182,9 @@ public class AiOthello extends Player {
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
                 }
             case 20:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GenerousAi generousai1 = new GenerousAi(getPlayernumber(), piece);
-                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth4);
+                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
                     TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
                     return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth2);
@@ -193,9 +193,9 @@ public class AiOthello extends Player {
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
                 }
             case 21:
-                if (AiBoard.filledSpaces() < 20){
+                if (AiBoard.filledSpaces() < 21){
                     GenerousAi generousai1 = new GenerousAi(getPlayernumber(), piece);
-                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth4);
+                    return generousai1.moveselectOthello3(AiBoard, piece, Max_depth3);
                 } else if (AiBoard.filledSpaces() < 52) {
                     GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
                     return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth1);
@@ -203,7 +203,84 @@ public class AiOthello extends Player {
                     GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
                     return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
                 }
-//            case 22:
+            case 22:
+                if (AiBoard.filledSpaces() < 21){
+                    GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
+                    return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth2);
+                } else if (AiBoard.filledSpaces() < 52) {
+                    GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth2);
+                } else {
+                    TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
+                }
+            case 23:
+                if (AiBoard.filledSpaces() < 21){
+                    GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth3);
+                } else if (AiBoard.filledSpaces() < 52) {
+                    GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
+                    return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth1);
+                } else {
+                    TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
+                }
+            case 24:
+                if (AiBoard.filledSpaces() < 21){
+                    TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth2);
+                } else if (AiBoard.filledSpaces() < 52) {
+                    GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
+                    return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth1);
+                } else {
+                    GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
+                }
+            case 25:
+                if (AiBoard.filledSpaces() < 21){
+                    TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth2);
+                } else if (AiBoard.filledSpaces() < 52) {
+                    TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth2);
+                } else {
+                    GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
+                }
+            case 26:
+                if (AiBoard.filledSpaces() < 21){
+                    GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth3);
+                } else if (AiBoard.filledSpaces() < 52) {
+                    GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth2);
+                } else {
+                    TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
+                }
+            case 27:
+                if (AiBoard.filledSpaces() < 21){
+                    GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
+                    return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth2);
+                } else if (AiBoard.filledSpaces() < 52) {
+                    GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
+                    return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth1);
+                } else {
+                    TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
+                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth5);
+                }
+            case 28:
+                if (AiBoard.filledSpaces() < 21){
+                    GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
+                    return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth2);
+                } else if (AiBoard.filledSpaces() < 52) {
+                    GreedyMovesAi greedymovesai1 = new GreedyMovesAi(getPlayernumber(), piece);
+                    return greedymovesai1.moveselectOthello5(AiBoard, piece, Max_depth1);
+                } else {
+                    GreedyAi greedyai1 = new GreedyAi(getPlayernumber(), piece);
+                    return greedyai1.moveselectOthello1(AiBoard, piece, Max_depth5);
+                }
+//            case 29:
 //                if (AiBoard.filledSpaces() < 20){
 //                    TilePointsAi tilepointsai1 = new TilePointsAi(getPlayernumber(), piece);
 //                    return tilepointsai1.moveselectOthello7(AiBoard, piece, Max_depth6);

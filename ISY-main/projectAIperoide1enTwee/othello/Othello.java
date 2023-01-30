@@ -14,7 +14,7 @@ public class Othello extends Game {
     public Othello(int width, int height, char piece) {
         super(width, height, piece);
         startPositions();
-//        convertToJButtons();
+        convertToJButtons();
     }
 
 
@@ -247,7 +247,7 @@ public class Othello extends Game {
     @Override
     public void moveAI(char piece, int playernumber) {
         AiOthello ai = new AiOthello(playernumber, piece); // maakt een AiForOthello object\
-        int move = ai.AiMove(this, piece, 3); // roept de moveselectOthello methode aan van AiForOthello
+        int move = ai.AiMove(this, piece, 25); // roept de moveselectOthello methode aan van AiForOthello
         try { // probeert
             Connection.send("move " + move); // stuurt move + de waarde van move naar de server
         } catch (IOException e) { // als er een error is

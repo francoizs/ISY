@@ -21,7 +21,7 @@ abstract public class Game extends Board{
         Game.piece = piece;
         Game.width = width;
         Game.height = height;
-//        Gui.gameScreen(width, height);
+        Gui.gameScreen(width, height);
     }
 
     public static int[] coordinate(int position){
