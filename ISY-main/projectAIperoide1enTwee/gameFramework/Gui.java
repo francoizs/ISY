@@ -177,17 +177,41 @@ public class Gui {
         player.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
 
         JButton yes = new JButton("AI"); // maakt een button met de tekst Ja
+        JButton no = new JButton("Human"); // maakt een button met de tekst Nee
+
         yes.setBounds(10, 80, 100, 25); // zet de positie en grootte van de button
         yes.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
         yes.addActionListener(e -> { // voegt een actionlistener toe aan de button
             isAI = true; // zet isAI op true
+            yes.setForeground(new Color(0, 255, 0)); // zet de button op enabled
+            no.setForeground(new Color(0,0,0)); // zet de button op disabled
+            panel.remove(yes); // verwijderd de button van het panel
+            panel.remove(no); // verwijderd de button van het panel
+            panel.add(no); // voegt de button toe aan het panel
+            panel.add(yes); // voegt de button toe aan het panel
+            
         });
-        JButton no = new JButton("Human"); // maakt een button met de tekst Nee
+
+        
         no.setBounds(120, 80, 100, 25); // zet de positie en grootte van de button
         no.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
         no.addActionListener(e -> { // voegt een actionlistener toe aan de button
             isAI = false; // zet isAI op false
+            yes.setForeground(new Color(0,0,0)); // zet de button op disabled
+            no.setForeground( new Color(0, 255, 0)); // zet de button op enabled
+            panel.remove(yes); // verwijderd de button van het panel
+            panel.remove(no); // verwijderd de button van het panel
+            panel.add(no); // voegt de button toe aan het panel
+            panel.add(yes); // voegt de button toe aan het panel
         });
+        if (isAI) { // als isAI true is
+            yes.setForeground(new Color(0, 255, 0)); // zet de button op enabled
+            no.setForeground(new Color(0,0,0)); // zet de button op disabled
+        } else { // als isAI false is
+            yes.setForeground(new Color(0,0,0)); // zet de button op disabled
+            no.setForeground( new Color(0, 255, 0)); // zet de button op enabled
+        }
+        
 
         JLabel command = new JLabel("Of stuur een ander command naar de server:"); // maakt een label met de tekst Of stuur een ander command naar de server:
         command.setBounds(10, 140, 300, 100); // zet de positie en grootte van de label
@@ -291,7 +315,7 @@ public class Gui {
     public static void gameOver() { // maakt de gameOver methode
         frame.remove(board); // verwijderd het huidige board
         frame.add(panel); // voegt het panel toe aan het frame
-        frame.setTitle("Tic Tac Toe"); //zet de titel van het frame op Tic Tac Toe
+        frame.setTitle("Game"); //zet de titel van het frame op Tic Tac Toe
         frame.revalidate(); // herlaad het frame
         frame.repaint(); // herlaad het frame
     }

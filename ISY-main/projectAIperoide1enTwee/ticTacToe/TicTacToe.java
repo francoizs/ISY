@@ -127,6 +127,7 @@ public class TicTacToe extends Game {
 
         TicTacToe convertedboard = convertTicTacToeBoard(Game.width, Game.height); // maakt een nieuw bord met de breedte en hoogte van het bord
         int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1; // maakt een int met de waarde van de move van de AiForTicTacToe
+        System.out.println(move);
         try { // probeert
             Connection.send("move " + move); // stuurt move + de waarde van move naar de server
         } catch (IOException e) { // als er een error is
@@ -150,7 +151,9 @@ public class TicTacToe extends Game {
     @Override
     public void enableButtons(char piece) { // maakt de enableAllButtons methode
         for (JButton button : Gui.JButtons) { // loopt door de array
-            if (button.getText().equals("")) { // kijkt of de tekst van de button leeg is
+            if (!button.getText().equals("")) { // kijkt of de tekst van de button niet leeg is
+                button.setEnabled(false); // zet de button op disabled
+            } else { // als de tekst van de button leeg is
                 button.setEnabled(true); // zet de button op enabled
             }
         }

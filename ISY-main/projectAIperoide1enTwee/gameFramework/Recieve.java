@@ -59,38 +59,37 @@ class Recieve extends Thread { // maakt de reciever voor de input
         playerToMove = parsedInput[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler die aan de beurt is
         if (gametype.equals("Tic-tac-toe")) { // als het speltype tic-tac-toe is
             if (Objects.equals(playerToMove, Gui.userNamePub)) { // als de speler aan de beurt is
-                piece = 'X'; // zet het stukje op O
+                player = new Player(1, 'X', Gui.userNamePub); // zet het stukje op X
             } else { // als de tegenstander aan de beurt is
-                piece = 'O'; // zet het stukje op X
+                player = new Player(2, 'O', Gui.userNamePub); // zet het stukje op O
             }
             game = new TicTacToe(3, 3, piece); // maakt het spel
             Gui.putOnTitle("Tic Tac Toe - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
         } else if (gametype.equals("Reversi")) {
             if (Objects.equals(playerToMove, Gui.userNamePub)) {
-                player = new Player(1, '◦', Gui.userNamePub);
+                player = new Player(1, '◦', Gui.userNamePub); // zet het stukje op ◦
             } else {
-                player = new Player(2, '•', Gui.userNamePub);
+                player = new Player(2, '•', Gui.userNamePub); // zet het stukje op •
             }
             game = new Othello(8, 8, piece);
             Gui.putOnTitle("Othello - " + playerToMove + " is aan de beurt"); // zet de titel op de eerste speler
         }
     }
     
-    private void yourTurn() throws InterruptedException {
-        Gui.putOnTitle("U bent aan de beurt");
-        if (!Gui.isAI) {
-            game.enableButtons(player.getPiece());
+    private void yourTurn() throws InterruptedException { // de methode die de beurt van de speler regelt
+        Gui.putOnTitle("U bent aan de beurt"); 
+        if (!Gui.isAI) { // als de tegenstander geen AI is
+            game.enableButtons(player.getPiece()); // zet de knoppen aan
         }
         else if (Gui.isAI) { // als de tegenstander een AI is
             Gui.disableAllButtons(); // zet de knoppen uit
             TimeUnit.MILLISECONDS.sleep(100); // wacht 100 milliseconden
             game.moveAI(player.getPiece(), player.getPlayernumber()); // laat de AI een zet doen
         }
-        Gui.putOnTitle("Tegenstander is aan de beurt");
+        Gui.putOnTitle("Tegenstander is aan de beurt"); 
     }
     
     private void move(String[] parsedInput) {
-        int moves = Board.movesCounter++; // maakt de int voor de moves
         int move = Integer.parseInt(parsedInput[6].replace("\"", "").replace(",", "")); // maakt de int voor de move
         String serverPlayer = parsedInput[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler
         if (serverPlayer.equals(player.getName())) { // als de speler de move heeft gedaan
