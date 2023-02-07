@@ -31,7 +31,7 @@ public class AiForTicTacToe extends Player{
             return move;
         }
 
-        for (int position = 1; position < 10; position++) {
+        for (int position = 0; position < 9; position++) {
             if (AIBoard.allowMove((position))) {
                 // checks every position and places a piece when a position is free, removes this piece again after minimax is done
                 AIBoard.add(piece, position);
@@ -92,16 +92,16 @@ public class AiForTicTacToe extends Player{
 
         if(AIBoard.isEmpty()){
             // If AI moves first, place a piece in the top left corner.
-            move = 1;
+            move = 0;
         } else if(cornerCheck(AIBoard)){
             // If opponent put a piece in the corner, place your piece in the middle
-            move = 5;
+            move = 4;
         } else if(edgeCheck(AIBoard)){
             // If opponent put a piece on the edge, place your piece in the middle
-            move = 5;
+            move = 4;
         } else {
             // Place a piece in the corner anyway, biggest chance of winning
-            move = 1;
+            move = 0;
         }
 
         return move;
