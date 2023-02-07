@@ -21,7 +21,7 @@ public class AiForTicTacToe extends Player{
      * @author Aaldert Kroes, Mart de Vries
      * @return move position integer ranging 1-9
      */
-    public static int moveSelect(TicTacToe AIBoard, char piece){
+    public int moveSelect(TicTacToe AIBoard, char piece){
         int move = 0;
         int bestValue = Integer.MIN_VALUE;
 
@@ -87,6 +87,8 @@ public class AiForTicTacToe extends Player{
      */
     private static int firstMove(TicTacToe AIBoard){
         int move = 0;
+
+        System.out.println(AIBoard.isEmpty());
 
         if(AIBoard.isEmpty()){
             // If AI moves first, place a piece in the top left corner.

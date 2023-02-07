@@ -131,8 +131,8 @@ public class TicTacToe extends Game {
     @Override
     public void moveAI(char piece, int playernumber) { // maakt de moveAI methode
 
-        TicTacToe convertedboard = convertTicTacToeBoard(Game.width, Game.height); // maakt een nieuw bord met de breedte en hoogte van het bord
-        int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1; // maakt een int met de waarde van de move van de AiForTicTacToe
+        AiForTicTacToe ai = new AiForTicTacToe(playernumber, piece); // maakt een nieuwe AiForTicTacToe
+        int move = ai.moveSelect(this, piece) - 1; // maakt een int met de waarde van de move van de AiForTicTacToe
         System.out.println(move);
         try { // probeert
             Connection.send("move " + move); // stuurt move + de waarde van move naar de server
@@ -184,6 +184,7 @@ public class TicTacToe extends Game {
      */
     @Override
     public void serverAdd(int position, char piece) {
+        add(piece, position + 1);
         Gui.JButtons[position].setText(String.valueOf(piece)); // zet de tekst van de button op de waarde van piece
         Gui.JButtons[position].setEnabled(false); // zet de button op disabled
     }

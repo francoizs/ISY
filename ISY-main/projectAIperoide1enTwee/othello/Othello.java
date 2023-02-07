@@ -253,7 +253,7 @@ public class Othello extends Game {
      */
     @Override
     public void moveAI(char piece, int playernumber) {
-        AiOthello ai = new AiOthello(playernumber, piece); // maakt een AiForOthello object\
+        AiOthello ai = new AiOthello(playernumber, piece); // maakt een AiForOthello object
         int move = ai.AiMove(this, piece, 25); // roept de moveselectOthello methode aan van AiForOthello
         try { // probeert
             Connection.send("move " + move); // stuurt move + de waarde van move naar de server

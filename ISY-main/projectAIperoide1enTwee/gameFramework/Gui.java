@@ -197,10 +197,7 @@ public class Gui {
             isAI = true; // zet isAI op true
             yes.setForeground(new Color(0, 255, 0)); // zet de button op enabled
             no.setForeground(new Color(0, 0, 0)); // zet de button op disabled
-            panel.remove(yes); // verwijderd de button van het panel
-            panel.remove(no); // verwijderd de button van het panel
-            panel.add(no); // voegt de button toe aan het panel
-            panel.add(yes); // voegt de button toe aan het panel
+            panel.repaint(); // repaint het panel
 
         });
 
@@ -210,10 +207,7 @@ public class Gui {
             isAI = false; // zet isAI op false
             yes.setForeground(new Color(0, 0, 0)); // zet de button op disabled
             no.setForeground(new Color(0, 255, 0)); // zet de button op enabled
-            panel.remove(yes); // verwijderd de button van het panel
-            panel.remove(no); // verwijderd de button van het panel
-            panel.add(no); // voegt de button toe aan het panel
-            panel.add(yes); // voegt de button toe aan het panel
+            panel.repaint(); // repaint het panel
         });
         if (isAI) { // als isAI true is
             yes.setForeground(new Color(0, 255, 0)); // zet de button op enabled

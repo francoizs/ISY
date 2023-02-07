@@ -89,13 +89,13 @@ class Recieve extends Thread { // maakt de reciever voor de input
             TimeUnit.MILLISECONDS.sleep(100); // wacht 100 milliseconden
             game.moveAI(player.getPiece(), player.getPlayernumber()); // laat de AI een zet doen
         }
-        Gui.putOnTitle("Tegenstander is aan de beurt"); 
     }
     
     private void move(String[] parsedInput) {
         int move = Integer.parseInt(parsedInput[6].replace("\"", "").replace(",", "")); // maakt de int voor de move
         String serverPlayer = parsedInput[4].replace("\"", "").replace(",", ""); // maakt de string voor de speler
         if (serverPlayer.equals(player.getName())) { // als de speler de move heeft gedaan
+            Gui.putOnTitle("Tegenstander is aan de beurt"); 
             game.serverAdd(move, player.getPiece());
         } else { // als de tegenstander de move heeft gedaan
             game.serverAdd(move, game.oppPiece(player.getPiece()));
