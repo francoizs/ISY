@@ -132,6 +132,7 @@ public class TicTacToe extends Game {
     public void moveAI(char piece, int playernumber) { // maakt de moveAI methode
 
         TicTacToe convertedboard = convertTicTacToeBoard(Game.width, Game.height); // maakt een nieuw bord met de breedte en hoogte van het bord
+        System.out.println("Hallooooo");
         int move = AiForTicTacToe.moveSelect(convertedboard, piece) - 1; // maakt een int met de waarde van de move van de AiForTicTacToe
         System.out.println(move);
         try { // probeert
