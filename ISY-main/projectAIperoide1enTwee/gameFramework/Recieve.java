@@ -1,6 +1,5 @@
 package gameFramework;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -11,7 +10,7 @@ import ticTacToe.TicTacToe;
 
 /**
 * de class die de alles leest van de server
-* @version 0.3
+* @version 0.4
 * @author Francois Dieleman
 */
 class Recieve extends Thread { // maakt de reciever voor de input

@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * de class die de connectie legt met de server
- * @version 0.1
+ * de class die de GUI maakt
+ * @version 0.3
  * @author Francois Dieleman
  */
 public class Gui {

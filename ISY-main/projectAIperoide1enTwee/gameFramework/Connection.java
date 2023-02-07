@@ -8,7 +8,7 @@ import java.net.Socket;
 
 /**
 * de class die de connectie legt met de server
-* @version 0.2
+* @version 0.3
 * @author Francois Dieleman
 */
 public class Connection {
@@ -45,10 +45,6 @@ public class Connection {
             e.printStackTrace();
         }
     }
-    /**
-     * geeft de commando's aan de server
-     * @author Francois Dieleman
-     */
 
     public void run(){ // de run methode die de commando's naar de server stuurt
         // try catch voor de input
@@ -56,11 +52,11 @@ public class Connection {
         reciever.start(); // start de reciever
 
     }
-    public static void login(String userName) throws IOException {
-        output.println("login " + userName);
+    public static void login(String userName) throws IOException { // de methode die de login stuurt
+        output.println("login " + userName); // stuurt de login naar de server
     }
-    public static void send(String command) throws IOException {
-        output.println(command);
+    public static void send(String command) throws IOException { // de methode die de commando's naar de server stuurt
+        output.println(command); // stuurt de commando's naar de server
     }
     
 }

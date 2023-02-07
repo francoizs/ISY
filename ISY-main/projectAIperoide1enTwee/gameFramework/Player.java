@@ -15,7 +15,7 @@ public class Player
      *
      * @param playernumber
      * @param piece
-     * @author Anton Bijker
+     * @author Anton Bijker, Francois Dieleman
      */
     public Player(int playernumber, char piece, String name) {
         this.playernumber = playernumber;
@@ -42,8 +42,8 @@ public class Player
     }
     
     /**
-     * Setter voor piece
-     * @author Aaldert Kroes
+     * @author Francois Dieleman
+     * @return name
      */
     public String getName() {
         return this.name;

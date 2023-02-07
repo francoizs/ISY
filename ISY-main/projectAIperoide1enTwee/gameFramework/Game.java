@@ -26,7 +26,7 @@ abstract public class Game extends Board{
 
     public static int[] coordinate(int position){
         /**
-         * // Deze methode neemt de position die de speler wil doen, en geeft de coordinates op het board terug.
+         * Deze methode neemt de position die de speler wil doen, en geeft de coordinates op het board terug.
          * Vervolgens  worden de coordinates gestuurd naar de add methode om een zet te doen op het board
          */
         int counter =  -1;
@@ -68,11 +68,29 @@ abstract public class Game extends Board{
         }
     }
     
+    /**
+     * @author Francois Dieleman
+     * @param piece
+     */
     abstract public void enableButtons(char piece); // enable buttons for the player
 
+    /**
+     * @author Francois Dieleman
+     * @param piece
+     * @param playernumber
+     */
     abstract public void moveAI(char piece, int playernumber); // move the AI
     
+    /**
+     * @author Francois Dieleman
+     * @param position
+     * @param piece
+     */
     abstract public void serverAdd(int position, char piece); // add a move to the server
 
+    /**
+     * @author Francois Dieleman
+     * @param piece
+     */
     abstract public char oppPiece(char piece); // get the opponent piece
 }

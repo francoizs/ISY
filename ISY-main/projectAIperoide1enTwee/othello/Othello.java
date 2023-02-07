@@ -205,6 +205,7 @@ public class Othello extends Game {
 
     /**
      * @author Francois Dieleman
+     * @param piece
      */
     public void convertToJButtons() { // converts the board to JButtons
         int counter = 0; // counter for the JButtons
@@ -218,11 +219,11 @@ public class Othello extends Game {
         }
     }
 
-
     /**
      * @author Francois Dieleman
+     * @param piece
+     * @return allowedMoves
      */
-
     public ArrayList<Integer> allowedMoves(char piece) {
         ArrayList<Integer> allowedMoves = new ArrayList<Integer>();
         for (int i = 0; i < Game.width * Game.height; i++) {
@@ -233,9 +234,10 @@ public class Othello extends Game {
         return allowedMoves;
     }
 
-
-
-
+    /**
+     * @author Francois Dieleman
+     * @param piece
+     */
     @Override
     public void enableButtons(char piece) { // enables the buttons
         ArrayList<Integer> allowedMoves = allowedMoves(piece);
@@ -243,7 +245,12 @@ public class Othello extends Game {
             Gui.JButtons[allowedMoves.get(i)].setEnabled(true); // enables the JButtons
         }
     }
-
+    
+    /**
+     * @author Francois Dieleman
+     * @param piece
+     * @param position
+     */
     @Override
     public void moveAI(char piece, int playernumber) {
         AiOthello ai = new AiOthello(playernumber, piece); // maakt een AiForOthello object\
@@ -255,6 +262,11 @@ public class Othello extends Game {
         }
     }
 
+    /**
+     * @author Francois Dieleman
+     * @param position
+     * @param piece
+     */
     @Override
     public void serverAdd(int position, char piece) { // maakt de serverAdd method
         add(piece, position); // roept de add methode aan van Othello
@@ -262,6 +274,11 @@ public class Othello extends Game {
         convertToJButtons(); // roept de convertToJButtons methode aan van Othello
     }
 
+    /**
+     * @author Francois Dieleman
+     * @param piece
+     * @return oppPiece
+     */
     @Override
     public char oppPiece(char piece){
         if(piece == '•'){return '◦';}
