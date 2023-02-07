@@ -1,5 +1,6 @@
 package gameFramework;
 
+import java.io.IOException;
 
 /**
  * @author Ihab Al-Safadi
@@ -9,6 +10,7 @@ abstract public class Game extends Board{
     public Game(int size) {
         super(size);
     }
+    
     
     public static String gameName;
     public static int width;
@@ -67,6 +69,13 @@ abstract public class Game extends Board{
             System.out.println("Deze plek is niet beschikbaar");
         }
     }
+
+    
+
+    
+
+    
+    
     
     /**
      * @author Francois Dieleman

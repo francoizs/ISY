@@ -34,6 +34,8 @@ public class Gui {
     private static int width; // maakt een int die de breedte van het board opslaat
     private static int height; // maakt een int die de hoogte van het board opslaat
 
+    private static String playername; // maakt een string aan
+
 
 
     public Gui() { // maakt de constructor
@@ -81,8 +83,7 @@ public class Gui {
                 } else { // als de textfield geen spatie bevat
                     try {
                         userNamePub = userText.getText(); // zet de gebruikersnaam gelijk aan de textfield
-                        Connection connection = new Connection(); // maakt een nieuwe connectie
-                        connection.run(); // roept de run methode aan
+                        Connection.connect(); // roept de connect methode aan
                         Connection.login(userNamePub); // roept de login methode aan met de gebruikersnaam
                         TimeUnit.MILLISECONDS.sleep(200); // wacht 100 milliseconden
                         if (Recieve.answers.get(Recieve.answers.size() -1).equals("OK")) { // als de laatste antwoord van de server OK is
@@ -124,14 +125,22 @@ public class Gui {
         yes.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
         yes.addActionListener(e -> { // voegt een actionlistener toe aan de button
             isAI = true; // zet isAI op true
-            pauseScreen(); // roept de pauseScreen methode aan
+            try {
+                pauseScreen();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } // roept de pauseScreen methode aan
         });
         JButton no = new JButton("Nee"); // maakt een button met de tekst Nee
         no.setBounds(120, 80, 100, 25); // zet de positie en grootte van de button
         no.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
         no.addActionListener(e -> { // voegt een actionlistener toe aan de button
             isAI = false; // zet isAI op false
-            pauseScreen(); // roept de pauseScreen methode aan
+            try {
+                pauseScreen();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } // roept de pauseScreen methode aan
         });
 
 
@@ -142,8 +151,9 @@ public class Gui {
         panel.add(no); // voegt de button toe aan het panel
     }
 
-    private void pauseScreen() { // maakt de pauseScreen methode
+    private void pauseScreen() throws IOException { // maakt de pauseScreen methode
         reset(); // roept de reset methode aan
+
         JLabel game = new JLabel("Kies een spel:"); // maakt een label met de tekst Kies een spel:
         game.setBounds(10, 20, 100, 40); // zet de positie en grootte van de label
         game.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
@@ -154,11 +164,10 @@ public class Gui {
         TicTacToe.addActionListener(e -> { // voegt een actionlistener toe aan de button
             displayOnScreen("De server is er mee bezig..."); // roept de displayOnScreen methode aan met de tekst De server is er mee bezig...
             try {
-                Connection.send("subscribe tic-tac-toe"); // stuurt subscribe tic-tac-toe naar de server
-
-            } catch (IOException ex) {
-                throw new RuntimeException(ex); // print de error naar de console
-            }
+                Connection.subscribe("tic-tac-toe");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } // stuurt subscribe tic-tac-toe naar de server
         });
         JButton Othello = new JButton("Othello"); // maakt een button met de tekst Othello
         Othello.setBounds(10, 110, 200, 25); // zet de positie en grootte van de button
@@ -166,7 +175,7 @@ public class Gui {
         Othello.addActionListener(e -> {
             displayOnScreen("De server is er mee bezig..."); // roept de displayOnScreen methode aan met de tekst De server is er mee bezig...
             try {
-                Connection.send("subscribe reversi"); // stuurt subscribe othello naar de server
+                Connection.subscribe("reversi");
             } catch (IOException ex) {
                 throw new RuntimeException(ex); // print de error naar de console
             }
@@ -184,21 +193,20 @@ public class Gui {
         yes.addActionListener(e -> { // voegt een actionlistener toe aan de button
             isAI = true; // zet isAI op true
             yes.setForeground(new Color(0, 255, 0)); // zet de button op enabled
-            no.setForeground(new Color(0,0,0)); // zet de button op disabled
+            no.setForeground(new Color(0, 0, 0)); // zet de button op disabled
             panel.remove(yes); // verwijderd de button van het panel
             panel.remove(no); // verwijderd de button van het panel
             panel.add(no); // voegt de button toe aan het panel
             panel.add(yes); // voegt de button toe aan het panel
-            
+
         });
 
-        
         no.setBounds(120, 80, 100, 25); // zet de positie en grootte van de button
         no.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
         no.addActionListener(e -> { // voegt een actionlistener toe aan de button
             isAI = false; // zet isAI op false
-            yes.setForeground(new Color(0,0,0)); // zet de button op disabled
-            no.setForeground( new Color(0, 255, 0)); // zet de button op enabled
+            yes.setForeground(new Color(0, 0, 0)); // zet de button op disabled
+            no.setForeground(new Color(0, 255, 0)); // zet de button op enabled
             panel.remove(yes); // verwijderd de button van het panel
             panel.remove(no); // verwijderd de button van het panel
             panel.add(no); // voegt de button toe aan het panel
@@ -206,20 +214,34 @@ public class Gui {
         });
         if (isAI) { // als isAI true is
             yes.setForeground(new Color(0, 255, 0)); // zet de button op enabled
-            no.setForeground(new Color(0,0,0)); // zet de button op disabled
+            no.setForeground(new Color(0, 0, 0)); // zet de button op disabled
         } else { // als isAI false is
-            yes.setForeground(new Color(0,0,0)); // zet de button op disabled
-            no.setForeground( new Color(0, 255, 0)); // zet de button op enabled
+            yes.setForeground(new Color(0, 0, 0)); // zet de button op disabled
+            no.setForeground(new Color(0, 255, 0)); // zet de button op enabled
         }
-        
+
+        JLabel challenge = new JLabel("Challenge iemand"); // maakt een label met de tekst Wil je een challenge?
+        challenge.setBounds(10, 20, 100, 40); // zet de positie en grootte van de label
+        challenge.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
+
+        JButton challengeButton = new JButton("Challenge"); // maakt een button met de tekst Challenge
+        challengeButton.setBounds(10, 80, 200, 25); // zet de positie en grootte van de button
+        challengeButton.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
+        challengeButton.addActionListener(e -> { // voegt een actionlistener toe aan de button
+            try {
+                challengeScreen();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } // roept de challengeScreen methode aan
+        });
 
         JLabel command = new JLabel("Of stuur een ander command naar de server:"); // maakt een label met de tekst Of stuur een ander command naar de server:
         command.setBounds(10, 140, 300, 100); // zet de positie en grootte van de label
         command.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
         Border border = command.getBorder(); // maakt een border
-        Border margin = new EmptyBorder(100,10,10,10); // maakt een margin
-
-        command.setBorder(new CompoundBorder(border, margin));  // zet de border en margin van de label
+        Border margin = new EmptyBorder(60, 10, 10, 10); // maakt een margin
+        command.setBorder(new CompoundBorder(border, margin)); // zet de border en margin van de label
+        
         JTextField commandText = new JTextField(20); // maakt een textfield
         commandText.setBounds(10, 180, 300, 25); // zet de positie en grootte van de textfield
         commandText.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de textfield
@@ -239,16 +261,13 @@ public class Gui {
                     String responseConn = Recieve.answers.get(Recieve.answers.size() - 1); // maakt een string met de laatste antwoord van de server
 
                     response.setText(responseConn); // zet de tekst van de label op de string
-
-
-                    panel.revalidate(); // herlaad het panel
-                    panel.repaint(); // herlaad het panel
+                    panel.remove(response); // verwijderd de label van het panel
+                    panel.add(response); // voegt de label toe aan het panel
 
                 } catch (IOException | InterruptedException ex) {
                     throw new RuntimeException(ex); // print de error naar de console
                 }
-            }
-            else {
+            } else {
                 displayOnScreen("Vul een command in"); // roept de displayOnScreen methode aan met de tekst Vul een command in
             }
         });
@@ -259,11 +278,67 @@ public class Gui {
         panel.add(player); // voegt de label toe aan het panel
         panel.add(yes); // voegt de button toe aan het panel
         panel.add(no); // voegt de button toe aan het panel
+        panel.add(challenge); // voegt de label toe aan het panel
+        panel.add(challengeButton); // voegt de button toe aan het panel
         panel.add(command); // voegt de label toe aan het panel
         panel.add(commandText); // voegt de textfield toe aan het panel
         panel.add(send); // voegt de button toe aan het panel
         panel.add(response); // voegt de label toe aan het panel
 
+    }
+    
+    public void challengeScreen() throws IOException {
+        panel.removeAll(); // verwijderd alle componenten van het panel
+        panel.revalidate(); // valideerd het panel
+        panel.repaint(); // repainted het panel
+
+        JLabel challenge = new JLabel("Challenge iemand"); // maakt een label met de tekst Challenge iemand
+        challenge.setBounds(10, 20, 100, 40); // zet de positie en grootte van de label
+        challenge.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
+
+        JLabel game = new JLabel("Welk spel wil je spelen?"); // maakt een label met de tekst Welk spel wil je spelen?
+        game.setBounds(50, 40, 200, 40); // zet de positie en grootte van de label
+        game.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
+        Border border = game.getBorder(); // maakt een border
+        Border margin = new EmptyBorder(40, 10, 10, 10); // maakt een margin
+        game.setBorder(new CompoundBorder(border, margin)); // zet de border en margin van de label
+
+        JButton TicTacToe = new JButton("Tic Tac Toe"); // maakt een button met de tekst Tic Tac Toe
+        TicTacToe.setBounds(10, 80, 200, 25); // zet de positie en grootte van de button
+        TicTacToe.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
+        TicTacToe.addActionListener(e -> { // voegt een actionlistener toe aan de button
+            displayOnScreen("De server is er mee bezig..."); // roept de displayOnScreen methode aan met de tekst De server is er mee bezig...
+            try {
+                Connection.challenge(playername, "tic-tac-toe");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } // stuurt subscribe tic-tac-toe naar de server
+        });
+        JButton Othello = new JButton("Othello"); // maakt een button met de tekst Othello
+        Othello.setBounds(10, 110, 200, 25); // zet de positie en grootte van de button
+        Othello.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
+        Othello.addActionListener(e -> {
+            displayOnScreen("De server is er mee bezig..."); // roept de displayOnScreen methode aan met de tekst De server is er mee bezig...
+            try {
+                Connection.challenge(playername, "reversi");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex); // print de error naar de console
+            }
+        });
+
+        String[] playerlist = Connection.getPlayers(); // maakt een array met de spelers
+        JComboBox<String> players = new JComboBox<String>(playerlist); // maakt een combobox
+        players.setBounds(10, 60, 200, 25); // zet de positie en grootte van de combobox
+        players.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de combobox
+        players.addActionListener(e -> { // voegt een actionlistener toe aan de combobox
+            playername = (String) players.getSelectedItem(); // zet de geselecteerde speler in de variabele playername
+            panel.add(game); // voegt de label toe aan het panel
+            panel.add(TicTacToe); // voegt de button toe aan het panel
+            panel.add(Othello); // voegt de button toe aan het panel
+        });
+        
+        panel.add(challenge); // voegt de label toe aan het panel
+        panel.add(players); // voegt de combobox toe aan het panel
     }
 
     public static void gameScreen(int width, int height) { // maakt de gameScreen methode
@@ -319,8 +394,6 @@ public class Gui {
         frame.revalidate(); // herlaad het frame
         frame.repaint(); // herlaad het frame
     }
-
-    
 
 
     public static void putOnTitle(String message) {
