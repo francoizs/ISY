@@ -151,7 +151,7 @@ public class Gui {
         panel.add(no); // voegt de button toe aan het panel
     }
 
-    private void pauseScreen() throws IOException { // maakt de pauseScreen methode
+    private static void pauseScreen() throws IOException { // maakt de pauseScreen methode
         reset(); // roept de reset methode aan
 
         JLabel game = new JLabel("Kies een spel:"); // maakt een label met de tekst Kies een spel:
@@ -184,6 +184,9 @@ public class Gui {
         JLabel player = new JLabel("Wil je toch veranderen van speler?"); // maakt een label met de tekst Is de speler een AI?
         player.setBounds(10, 20, 100, 40); // zet de positie en grootte van de label
         player.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
+        Border playerBorder = player.getBorder(); // maakt een border voor de label
+        Border borderMargin = new EmptyBorder(15, 10, 10, 10); // maakt een margin
+        player.setBorder(new CompoundBorder(playerBorder, borderMargin)); // zet de border en margin op de label
 
         JButton yes = new JButton("AI"); // maakt een button met de tekst Ja
         JButton no = new JButton("Human"); // maakt een button met de tekst Nee
@@ -223,6 +226,9 @@ public class Gui {
         JLabel challenge = new JLabel("Challenge iemand"); // maakt een label met de tekst Wil je een challenge?
         challenge.setBounds(10, 20, 100, 40); // zet de positie en grootte van de label
         challenge.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
+        Border challengeBorder = challenge.getBorder(); // maakt een border voor de label
+        Border challengeBorderMargin = new EmptyBorder(15, 10, 10, 10); // maakt een margin
+        challenge.setBorder(new CompoundBorder(challengeBorder, challengeBorderMargin)); // zet de border en margin op de label
 
         JButton challengeButton = new JButton("Challenge"); // maakt een button met de tekst Challenge
         challengeButton.setBounds(10, 80, 200, 25); // zet de positie en grootte van de button
@@ -239,7 +245,7 @@ public class Gui {
         command.setBounds(10, 140, 300, 100); // zet de positie en grootte van de label
         command.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
         Border border = command.getBorder(); // maakt een border
-        Border margin = new EmptyBorder(60, 10, 10, 10); // maakt een margin
+        Border margin = new EmptyBorder(30, 10, 10, 10); // maakt een margin
         command.setBorder(new CompoundBorder(border, margin)); // zet de border en margin van de label
         
         JTextField commandText = new JTextField(20); // maakt een textfield
@@ -287,21 +293,24 @@ public class Gui {
 
     }
     
-    public void challengeScreen() throws IOException {
-        panel.removeAll(); // verwijderd alle componenten van het panel
-        panel.revalidate(); // valideerd het panel
-        panel.repaint(); // repainted het panel
+    public static void challengeScreen() throws IOException {
+        reset(); // roept de reset methode aan
+
+        Box box = Box.createVerticalBox(); // maakt een box
 
         JLabel challenge = new JLabel("Challenge iemand"); // maakt een label met de tekst Challenge iemand
-        challenge.setBounds(10, 20, 100, 40); // zet de positie en grootte van de label
+        challenge.setBounds(10, 20, 200, 40); // zet de positie en grootte van de label
         challenge.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
+        challenge.setAlignmentX(Component.CENTER_ALIGNMENT); // zet de positie van de label
 
         JLabel game = new JLabel("Welk spel wil je spelen?"); // maakt een label met de tekst Welk spel wil je spelen?
-        game.setBounds(50, 40, 200, 40); // zet de positie en grootte van de label
+        game.setBounds(10, 20, 300, 40); // zet de positie en grootte van de label
         game.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
         Border border = game.getBorder(); // maakt een border
-        Border margin = new EmptyBorder(40, 10, 10, 10); // maakt een margin
+        Border margin = new EmptyBorder(50, 10, 0, 10); // maakt een margin
         game.setBorder(new CompoundBorder(border, margin)); // zet de border en margin van de label
+        game.setAlignmentX(Component.CENTER_ALIGNMENT); // zet de positie van de label
+        game.setVisible(false); // maakt de label onzichtbaar
 
         JButton TicTacToe = new JButton("Tic Tac Toe"); // maakt een button met de tekst Tic Tac Toe
         TicTacToe.setBounds(10, 80, 200, 25); // zet de positie en grootte van de button
@@ -314,6 +323,8 @@ public class Gui {
                 e1.printStackTrace();
             } // stuurt subscribe tic-tac-toe naar de server
         });
+        TicTacToe.setVisible(false); // maakt de button onzichtbaar
+
         JButton Othello = new JButton("Othello"); // maakt een button met de tekst Othello
         Othello.setBounds(10, 110, 200, 25); // zet de positie en grootte van de button
         Othello.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
@@ -325,6 +336,7 @@ public class Gui {
                 throw new RuntimeException(ex); // print de error naar de console
             }
         });
+        Othello.setVisible(false); // maakt de button onzichtbaar
 
         String[] playerlist = Connection.getPlayers(); // maakt een array met de spelers
         JComboBox<String> players = new JComboBox<String>(playerlist); // maakt een combobox
@@ -332,13 +344,67 @@ public class Gui {
         players.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de combobox
         players.addActionListener(e -> { // voegt een actionlistener toe aan de combobox
             playername = (String) players.getSelectedItem(); // zet de geselecteerde speler in de variabele playername
-            panel.add(game); // voegt de label toe aan het panel
-            panel.add(TicTacToe); // voegt de button toe aan het panel
-            panel.add(Othello); // voegt de button toe aan het panel
+            game.setVisible(true); // maakt de label zichtbaar
+            TicTacToe.setVisible(true); // maakt de button zichtbaar
+            Othello.setVisible(true); // maakt de button zichtbaar
         });
+
+        JLabel nothing = new JLabel(""); // maakt een label
+        nothing.setBounds(10, 20, 200, 40); // zet de positie en grootte van de label
+        nothing.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de label
+        nothing.setAlignmentX(Component.CENTER_ALIGNMENT); // zet de positie van de label
+        Border nothingBorder = nothing.getBorder(); // maakt een border
+        Border nothingMargin = new EmptyBorder(100, 10, 0, 10); // maakt een margin
+        nothing.setBorder(new CompoundBorder(nothingBorder, nothingMargin)); // zet de border en margin van de label
+
+        JButton back = new JButton("Terug"); // maakt een button met de tekst Terug
+        back.setBounds(10, 10, 100, 25); // zet de positie en grootte van de button
+        back.setFont(new Font("Arial", Font.PLAIN, 20)); // zet het font van de button
+        back.addActionListener(e -> { // voegt een actionlistener toe aan de button
+            try {
+                pauseScreen();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } // roept de mainScreen methode aan
+        });
+
+        box.add(challenge); // voegt de label toe aan het panel
+        box.add(players); // voegt de combobox toe aan het panel
+        box.add(game); // voegt de label toe aan het panel
+        box.add(TicTacToe); // voegt de button toe aan het panel
+        box.add(Othello); // voegt de button toe aan het panel
+        box.add(nothing); // voegt de label toe aan het panel
+        box.add(back); // voegt de button toe aan het panel
+
+        panel.add(box); // voegt de box toe aan het panel
+    }
+    
+    public static void challengeRecieve(String challenger, String gameType, String challengeNumber) {
+        // show JOptionPane with accept and decline buttons
+        // create JOptionPane
+        JOptionPane pane = new JOptionPane("Ga je de uitdaging aan met " + challenger + ", in " + gameType + "?",
+                JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+
+        JDialog dialog = pane.createDialog("Uitdaging");
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+
+        Object selectedValue = pane.getValue();
+        if (selectedValue != null) {
+            int selectedOption = (int) selectedValue;
+            if (selectedOption == JOptionPane.YES_OPTION) {
+                // accept
+                try {
+                    System.out.println("challenge accept " + challengeNumber);
+                    Connection.send("challenge accept " + challengeNumber);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        }
         
-        panel.add(challenge); // voegt de label toe aan het panel
-        panel.add(players); // voegt de combobox toe aan het panel
+        
     }
 
     public static void gameScreen(int width, int height) { // maakt de gameScreen methode
@@ -372,9 +438,9 @@ public class Gui {
 
 
             }
-            board.add(JButtons[i]); // voegt de button toe aan het panel
-            board.revalidate(); // herlaad het panel
-            board.repaint(); // herlaad het panel
+            board.add(JButtons[i]); // voegt de button toe aan het board
+            board.revalidate(); // herlaad het board
+            board.repaint(); // herlaad het board
         }
 
 
@@ -387,12 +453,15 @@ public class Gui {
         }
     }
 
-    public static void gameOver() { // maakt de gameOver methode
+    public static void gameOver() throws IOException { // maakt de gameOver methode
         frame.remove(board); // verwijderd het huidige board
         frame.add(panel); // voegt het panel toe aan het frame
         frame.setTitle("Game"); //zet de titel van het frame op Tic Tac Toe
+        pauseScreen(); // roept de pauseScreen methode aan
         frame.revalidate(); // herlaad het frame
         frame.repaint(); // herlaad het frame
+        
+        
     }
 
 
@@ -404,7 +473,7 @@ public class Gui {
         JOptionPane.showMessageDialog(frame, message);
     } // maakt een popup met de message
 
-    private void reset() { // maakt de reset methode
+    private static void reset() { // maakt de reset methode
         panel.removeAll(); // verwijderd alle componenten van het panel
         panel.revalidate(); // herlaad het panel
         panel.repaint(); // herlaad het panel

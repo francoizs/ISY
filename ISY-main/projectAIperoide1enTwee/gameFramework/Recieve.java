@@ -42,6 +42,10 @@ class Recieve extends Thread { // maakt de reciever voor de input
                     if (input.contains("DRAW") || input.contains("WIN") || input.contains("LOSS")) { // als de input een winnaar of gelijkspel is
                         gameOver(input);
                     }
+                    if (input.contains("SVR GAME CHALLENGE")) { // als de input een challenge is
+                        String[] parsed = input.split(" "); // split de input
+                        challenge(parsed);
+                    }
                 }
             }
         } catch (IOException | InterruptedException e) { // catch voor de input
@@ -99,11 +103,18 @@ class Recieve extends Thread { // maakt de reciever voor de input
 
     }
     
-    public void gameOver(String input) {
+    public void gameOver(String input) throws IOException {
         Board.movesCounter = 0; // zet de movesCounter op 0
         Gui.putOnTitle("Game over");
 
         Gui.displayOnScreen(input); // zet de game over
         Gui.gameOver(); // pauzeer het scherm
+    }
+
+    public void challenge(String[] parsedInput){
+        String challenger = parsedInput[4].replace("\"", "").replace(",", ""); // maakt de string voor de challenger
+        String gameType = parsedInput[8].replace("\"", "").replace("}", ""); // maakt de string voor het speltype
+        String challengeNumber = parsedInput[6].replace("\"", "").replace(",", ""); // maakt de string voor de challengenumber
+        Gui.challengeRecieve(challenger, gameType, challengeNumber);
     }
 }

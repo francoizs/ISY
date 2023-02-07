@@ -102,11 +102,26 @@ public class Connection {
         String[] players = new String[splitplayers.length - 2];
         for (int i = 2; i < splitplayers.length; i++) {
             if (i == 2) {
-                players[i - 2] = splitplayers[i].replace("[", "").replace("\"", "").replace(",", ""); // maakt de string voor het speltype
+                String player = splitplayers[i].replace("[", "").replace("\"", "").replace(",", ""); // maakt de string voor het speltype
+                if (player.equals(Gui.userNamePub)) {
+                    players[i - 2] = player + " (you)";
+                } else {
+                    players[i - 2] = player;
+                }
             } else if (i == splitplayers.length - 1) {
-                players[i - 2] = splitplayers[i].replace("]", "").replace("\"", ""); // maakt de string voor het speltype
+                String player = splitplayers[i].replace("]", "").replace("\"", "").replace(",", ""); // maakt de string voor het speltype
+                if (player.equals(Gui.userNamePub)) {
+                    players[i - 2] = player + " (you)";
+                } else {
+                    players[i - 2] = player;
+                }
             } else {
-                players[i - 2] = splitplayers[i].replace("\"", "").replace(",", ""); // maakt de string voor het speltype
+                String player = splitplayers[i].replace("\"", "").replace(",", ""); // maakt de string voor het speltype
+                if (player.equals(Gui.userNamePub)) {
+                    players[i - 2] = player + " (you)";
+                } else {
+                    players[i - 2] = player;
+                }
             }
         }
         return players;
