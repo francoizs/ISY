@@ -1,6 +1,5 @@
 package gameFramework;
 
-import java.io.IOException;
 
 /**
  * @author Ihab Al-Safadi

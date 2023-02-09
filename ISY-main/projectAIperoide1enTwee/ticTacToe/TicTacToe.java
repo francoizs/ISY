@@ -18,7 +18,7 @@ public class TicTacToe extends Game {
 
     /**
      * Adds a move to the board.
-     * @authur Ihab Al-Safadi
+     * @author Ihab Al-Safadi
      */
 
 
@@ -26,7 +26,7 @@ public class TicTacToe extends Game {
      *
      * @param position
      * @return
-     * @authur Ihab Al-Safadi
+     * @author Ihab Al-Safadi
      */
 
     public boolean allowMove(int position){
@@ -40,7 +40,7 @@ public class TicTacToe extends Game {
      *
      * @param piecs
      * @return
-     * @authur Ihab Al-Safadi
+     * @author Ihab Al-Safadi
      */
 
     public boolean win(char piecs){
@@ -51,7 +51,7 @@ public class TicTacToe extends Game {
      *
      * @param piecs // Dit wordt toegevoergd vanuit de game class bv X en O.
      * @return
-     * @authur Ihab Al-Safadi
+     * @author Ihab Al-Safadi
      */
     public Boolean winvertical(char piecs){
 
@@ -69,7 +69,7 @@ public class TicTacToe extends Game {
      *
      * @param piecs
      * @return
-     * @authur Ihab Al-Safadi
+     * @author Ihab Al-Safadi
      */
     public Boolean winHorizontal(char piecs){
 
@@ -87,7 +87,7 @@ public class TicTacToe extends Game {
      *
      * @param piecs
      * @return
-     * @authur Ihab Al-Safadi
+     * @author Ihab Al-Safadi
      */
     public Boolean winDiagonalLeft(char piecs){
 
@@ -103,7 +103,7 @@ public class TicTacToe extends Game {
     }
 
     /***
-     * @authur Ihab Al-Safadi
+     * @author Ihab Al-Safadi
      * @param piecs
      * @return
      */
@@ -123,7 +123,7 @@ public class TicTacToe extends Game {
     }
     
     /***
-     * @authur Francois Dieleman
+     * @author Francois Dieleman
      * @param piece
      * @param playernumber
      */
@@ -141,29 +141,8 @@ public class TicTacToe extends Game {
         }
     }
 
-
     /***
-     * @authur Francois Dieleman
-     * @param width
-     * @param height
-     * @return board
-     */
-
-    private static TicTacToe convertTicTacToeBoard(int width, int height) { // maakt de convertBoard methode
-        TicTacToe board = new TicTacToe(width, height, piece); // maakt een nieuw bord met de breedte en hoogte van het bord
-        for (int i = 0; i < width * height; i++) { // loopt door het bord
-            if (Gui.JButtons[i].getText().equals("X")) { // kijkt of de tekst van de button X is
-                board.add('X', i + 1); // voegt X toe aan het bord op de positie van i + 1
-            } else if (Gui.JButtons[i].getText().equals("O")) { // kijkt of de tekst van de button O is
-                board.add('O', i + 1); // voegt O toe aan het bord op de positie van i + 1
-            }
-
-        }
-        return board; // geeft het bord terug
-    }
-
-    /***
-     * @authur Francois Dieleman
+     * @author Francois Dieleman
      * @param piece
      */
     @Override
@@ -178,7 +157,7 @@ public class TicTacToe extends Game {
     }
     
     /***
-     * @authur Francois Dieleman
+     * @author Francois Dieleman
      * @param position
      * @param piece
      */
@@ -190,7 +169,7 @@ public class TicTacToe extends Game {
     }
 
     /***
-     * @authur Francois Dieleman
+     * @author Francois Dieleman
      * @param piece
      * @return oppPiece
      */
